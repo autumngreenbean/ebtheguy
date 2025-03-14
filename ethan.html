@@ -1,0 +1,274 @@
+<!-- references
+visual > https://www.pcjs.org/software/pcx86/sys/windows/win95/4.00.950/
+
+animations > https://infinitemac.org/1990/System%206.0.5
+-->
+
+<style>
+    @import url('https://fonts.cdnfonts.com/css/w95fa');
+
+    @font-face {
+      font-family: '95';
+      src: url('https://raw.githubusercontent.com/grassmunk/Chicago95/master/Fonts/vga_font/LessPerfectDOSVGA.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    .jersey-20-regular {
+        font-family: "Jersey 20", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    * {
+        font-family: '95', sans-serif;
+        background-color: 008080;
+        color: white;
+    }
+
+    .window-box {
+        width: 500px;
+        height: 300px;
+        background-color: #c0c0c0;
+        box-sizing: border-box;
+        position: relative;
+        padding: 3px;
+        box-shadow: 
+        inset -1px -1px #808080,
+        inset 1px 1px #ffffff,
+        inset -1px 0px #ffffff,
+        -1px -1px 0 0 #dfdfdf,
+        0px -1px 0 0 #dfdfdf,
+        -1px 0px 0 0 #dfdfdf,
+        0px 1px 0 0 #000,
+        1px 1px 0 0 #000,
+        -1px 1px 0 0 #000,
+        1px -1px 0 0 #000;
+}
+
+    .body-container {
+        width: 50%;
+        height: 50%;
+        background-color: #c0c0c0;
+    }
+
+    #body {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        position: relative;
+        box-shadow: 
+        inset -1px -1px #dfdfdf,
+        inset 1px 1px #808080;
+    }
+
+    .header-container {
+        width: 100%;
+        height: 18px;
+        background-color: #c0c0c0;
+        position: relative;
+        padding-bottom: 2px;
+    }
+#header {
+    background-color: #000080;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 10px;
+    padding: 2px;
+    box-sizing: border-box;
+    position: relative;
+
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+#header .text-left {
+    background-color: #000080;
+    flex: 1; 
+    text-align: left; 
+}
+
+#header .window-box {
+    width: 12px; 
+    height: 12px; 
+    padding: 1px;
+    padding-top:2px;
+    margin-left: 5px; 
+    color: black;
+    text-align: center;
+    align-items: center;
+}
+
+/* Icon blocks */
+.audio {
+    padding-top:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.block {
+    margin: 22px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    cursor: grab;
+    width: 50px; /* Match image size */
+    height: 50px;
+}
+
+.block img {
+    image-rendering: pixelated;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.block:active::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, transparent 49%, rgba(0, 0, 128, 0.5) 50%, rgba(0, 0, 128, 0.5) 51%, transparent 100%),
+                      linear-gradient(to bottom, transparent 49%, rgba(0, 0, 128, 0.5) 50%, rgba(0, 0, 128, 0.5) 51%, transparent 100%);
+    background-size: 1px 1px;
+    z-index: 2;
+    -webkit-mask-image: var(--mask-url);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: var(--mask-url);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    cursor:grabbing;
+}
+
+
+
+.text-icon {
+    padding-top: 5px;
+    font-size: 14px;
+    font-family: 'w95fa';
+}
+
+img {
+    width: 50px;
+    height: 50px;
+    
+   
+}
+
+.video {
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.misc {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+
+</style>
+
+
+ audio
+ <div class="audio">
+    <div class="block"><img src="icons/audio/audio-file.png" alt=""><div class="text-icon">audio-file.png</div></div>
+    <div class="block"><img src="icons/audio/cd-drive.png" alt=""><div class="text-icon">cd-drive.png</div></div>
+    <div class="block"><img src="icons/audio/cd-file.png" alt=""><div class="text-icon">cd-file.png</div></div>
+    <div class="block"><img src="icons/audio/cd-node.png" alt=""><div class="text-icon">cd-node.png</div></div>
+    <div class="block"><img src="icons/audio/cd.png" alt=""><div class="text-icon">cd.png</div></div>
+    <div class="block"><img src="icons/audio/drum.png" alt=""><div class="text-icon">drum.png</div></div>
+    <div class="block"><img src="icons/audio/keyboard-node.png" alt=""><div class="text-icon">keyboard-node.png</div></div>
+    <div class="block"><img src="icons/audio/midi-drive.png" alt=""><div class="text-icon">midi-drive.png</div></div>
+    <div class="block"><img src="icons/audio/midi-green.png" alt=""><div class="text-icon">midi-green.png</div></div>
+    <div class="block"><img src="icons/audio/midi-purple.png" alt=""><div class="text-icon">midi-purple.png</div></div>
+    <div class="block"><img src="icons/audio/midi-teal.png" alt=""><div class="text-icon">midi-teal.png</div></div>
+    <div class="block"><img src="icons/audio/midi-interface.png" alt=""><div class="text-icon">midi-interface.png</div></div>
+    <div class="block"><img src="icons/audio/mixer-node.png" alt=""><div class="text-icon">mixer-node.png</div></div>
+    <div class="block"><img src="icons/audio/music-file.png" alt=""><div class="text-icon">music-file.png</div></div>
+    <div class="block"><img src="icons/audio/musicbox.png" alt=""><div class="text-icon">musicbox.png</div></div>
+    <div class="block"><img src="icons/audio/scandisk.png" alt=""><div class="text-icon">scandisk.png</div></div>
+    <div class="block"><img src="icons/audio/soundwave.png" alt=""><div class="text-icon">soundwave.png</div></div>
+    <div class="block"><img src="icons/audio/speaker.png" alt=""><div class="text-icon">speaker.png</div></div>
+</div>
+
+
+<br><br><br>
+
+video
+<div class="video">
+    <div class="block"><img src="icons/video/video-file.png" alt=""><div class="text-icon">video-file.png</div></div>
+    <div class="block"><img src="icons/video/white-video-pad.png" alt=""><div class="text-icon">white-video-pad.png</div></div>
+    <div class="block"><img src="icons/video/yellow-video-pad.png" alt=""><div class="text-icon">yellow-video-pad.png</div></div>
+</div>
+
+<br><br><br>
+misc
+  <div class = "misc">
+    <div class="block"><img src="icons/misc/blocks.png" alt=""><div class="text-icon">video-file.png</div></div>
+    <div class="block"><img src="icons/misc/globe-html.png" alt=""><div class="text-icon">white-video-pad.png</div></div>
+    <div class="block"><img src="icons/misc/mouse-trails.png" alt=""><div class="text-icon">video-file.png</div></div>
+    <div class="block"><img src="icons/misc/night-monitor.png" alt=""><div class="text-icon">white-video-pad.png</div></div>
+    <div class="block"><img src="icons/misc/phone.png" alt=""><div class="text-icon">video-file.png</div></div>
+    <div class="block"><img src="icons/misc/printer-question.png" alt=""><div class="text-icon">white-video-pad.png</div></div>
+    <div class="block"><img src="icons/misc/question-mark.png" alt=""><div class="text-icon">video-file.png</div></div>
+    <div class="block"><img src="icons/misc/search-file.png" alt=""><div class="text-icon">white-video-pad.png</div></div>
+
+  </div>
+
+  <br><br><br>
+
+notes
+  <div class = "notes">
+    <div class="block"><img src="icons/notes/a-file.png" alt=""><div class="text-icon">a-file.png</div></div>
+    <div class="block"><img src="icons/notes/notepad.png" alt=""><div class="text-icon">notepad.png</div></div>
+    <div class="block"><img src="icons/notes/white-notes.png" alt=""><div class="text-icon">white-notes.png</div></div>
+    <div class="block"><img src="icons/notes/yellow-notes.png" alt=""><div class="text-icon">yellow-notes.png</div></div>
+
+  </div>
+  <script type="module" src="/modules/createForm.js"></script>
+
+<script>
+
+document.querySelectorAll('.block').forEach(block => {
+    let img = block.querySelector('img');
+    block.style.setProperty('--mask-url', `url(${img.src})`);
+});
+
+document.addEventListener("click", function (event) {
+    // Find the closest .block that was clicked
+    const block = event.target.closest(".block");
+
+    if (block) {
+        // Find the closest parent that is one of the category divs
+        const parentCategory = block.closest(".audio, .misc, .notes, .video");
+
+        if (parentCategory) {
+            // Get the category class name (audio, misc, notes, video)
+            const selectedClass = parentCategory.classList.contains("audio") ? "audio" :
+                                  parentCategory.classList.contains("misc") ? "misc" :
+                                  parentCategory.classList.contains("notes") ? "notes" :
+                                  parentCategory.classList.contains("video") ? "video" : null;
+
+            if (selectedClass) {
+                createForm(selectedClass);
+            }
+        }
+    }
+});
+
+
+ 
+
+</script>
