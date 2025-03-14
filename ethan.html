@@ -4,6 +4,9 @@ visual > https://www.pcjs.org/software/pcx86/sys/windows/win95/4.00.950/
 animations > https://infinitemac.org/1990/System%206.0.5
 -->
 
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
     @import url('https://fonts.cdnfonts.com/css/w95fa');
 
@@ -102,22 +105,17 @@ animations > https://infinitemac.org/1990/System%206.0.5
 }
 
 /* Icon blocks */
-.audio {
-    /* padding-top:30px; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 
 .block {
-    margin: 10px;
+    /* margin: 10px; */
     display: inline-block;
     text-align: center;
     position: relative;
     cursor: grab;
-    width: 50px; /* Match image size */
-    height: 50px;
+    width: 45px; 
+    height: 45px;
+    padding:15px;
 }
 
 .block img {
@@ -149,37 +147,20 @@ animations > https://infinitemac.org/1990/System%206.0.5
     cursor:grabbing;
 }
 
-
-
 .text-icon {
     padding-top: 5px;
     font-size: 14px;
     font-family: 'w95fa';
 }
 
-img {
-    width: 50px;
-    height: 50px;
-    
-   
+
+
+
+@media (min-width: 320px) {
+
 }
-
-.video {
-
-    display: flex;
-    justify-content: left;
-    align-items: center;
-}
-
-.misc {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-}
-
-
 </style>
-
+</head>
 
  audio
  <div class="audio">
@@ -237,7 +218,7 @@ notes
     <div class="block"><img src="icons/notes/yellow-notes.png" alt=""><div class="text-icon">yellow-notes.png</div></div>
 
   </div>
-  <script type="module" src="/modules/createForm.js"></script>
+  <!-- <script type="module" src="/modules/createForm.js"></script> -->
 
 <script>
 
@@ -262,7 +243,7 @@ document.addEventListener("click", function (event) {
                                   parentCategory.classList.contains("video") ? "video" : null;
 
             if (selectedClass) {
-                createForm(selectedClass);
+                // createForm(selectedClass);
             }
         }
     }
