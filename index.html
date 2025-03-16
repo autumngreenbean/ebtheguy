@@ -196,7 +196,7 @@ html, body {
 
  <script type="module"> 
 
-import { makeDraggable } from '/modules/makeDraggable.js';
+import { makeDraggable } from './modules/makeDraggable.js';
 
 
 // Icon click effect
@@ -215,7 +215,7 @@ document.addEventListener("click", function (event) {
 
         if (parentCategory) {
             const selectedClass = parentCategory.id; 
-            console.log(selectedClass); // Debugging: Check if it's returning the correct ID
+            console.log(selectedClass); 
 
             if (selectedClass) {
                 console.log('Clicked ' + selectedClass);
