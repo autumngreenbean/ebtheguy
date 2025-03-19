@@ -1,0 +1,496 @@
+<!-- references
+visual > https://www.pcjs.org/software/pcx86/sys/windows/win95/4.00.950/
+
+animations > https://infinitemac.org/1990/System%206.0.5
+-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@import url('https://fonts.cdnfonts.com/css/w95fa');
+
+@font-face {
+    font-family: '95';
+    src: url('https://raw.githubusercontent.com/grassmunk/Chicago95/master/Fonts/vga_font/LessPerfectDOSVGA.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+}
+
+.jersey-20-regular {
+    font-family: "Jersey 20", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    font-family: '95';
+    background-color: 008080;
+    color: white;
+    user-select:none;
+}
+
+.window-box {
+    font-family: 'w95fa';
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: #c0c0c0;
+    /* box-sizing: border-box; */
+    /* position: relative; */
+    padding: 3px;
+    box-shadow: 
+    inset -1px -1px #808080,
+    inset 1px 1px #ffffff,
+    inset -1px 0px #ffffff,
+    -1px -1px 0 0 #dfdfdf,
+    0px -1px 0 0 #dfdfdf,
+    -1px 0px 0 0 #dfdfdf,
+    0px 1px 0 0 #000,
+    1px 1px 0 0 #000,
+    -1px 1px 0 0 #000,
+    1px -1px 0 0 #000;
+}
+
+.body-container {
+    width: 98.8%;
+    background-color: #c0c0c0;
+    position:relative;
+}
+
+ #media-player {
+    background-color: red;
+    display: flex;
+    position: absolute;
+    bottom: 0px;
+}
+
+#white-body {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    position: relative;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+}
+
+#grey-body {
+    width: 60px;
+    height: 28px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #c0c0c0;
+    position: relative;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+    color:black;
+    font-family: 'w95fa';
+}
+
+.header-container {
+    width: 100%;
+    height: 25px;
+    background-color: #c0c0c0;
+    position: relative;
+    padding-bottom: 2px;
+}
+#header {
+    background-color: #000080;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 14px;
+    padding: 2px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+#header .window-title {
+    align-items: center;
+    display: inline-flex;
+    background-color: #000080;
+    flex: 1; 
+    text-align: left; 
+}
+
+#header .window-box {
+    width: 15px; 
+    height: 15px; 
+    display: flex;
+    margin: 2px;
+    color: black;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Icon blocks */
+.block {
+    margin: 15px;
+    display: block;
+    text-align: center;
+    position: relative;
+    cursor: grab;
+    width: 50px; 
+    height: 50px;
+    margin-bottom:50px;
+}
+
+.block img {
+    image-rendering: pixelated;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.block:active::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, transparent 49%, rgba(0, 0, 128, 0.5) 50%, rgba(0, 0, 128, 0.5) 51%, transparent 100%),
+                      linear-gradient(to bottom, transparent 49%, rgba(0, 0, 128, 0.5) 50%, rgba(0, 0, 128, 0.5) 51%, transparent 100%);
+    background-size: 1px 1px;
+    z-index: 2;
+    -webkit-mask-image: var(--mask-url);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: var(--mask-url);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    cursor:grabbing;
+}
+
+.text-icon {
+    padding-top: 5px;
+    font-size: 14px;
+    font-family: 'w95fa';
+}
+
+.dock {
+    position: fixed;
+    width: 100%;
+    height: 34px;
+    background-color: #c0c0c0;
+    display: flex;    
+    align-items: center;
+    color: black;
+    left:0;
+    bottom:0;
+    box-shadow: 
+    inset -1px -1px #808080,
+    inset 1px 1px #ffffff,
+    inset -1px 0px #ffffff,
+    -1px -1px 0 0 #dfdfdf,
+    0px -1px 0 0 #dfdfdf,
+    -1px 0px 0 0 #dfdfdf,
+    0px 1px 0 0 #000,
+    1px 1px 0 0 #000,
+    -1px 1px 0 0 #000,
+    1px -1px 0 0 #000;
+}
+
+.dock .window-box {
+    width: 150px; 
+    height: 24px; 
+    display: flex;
+    margin: 2px;
+    color: black;
+    text-align: left;
+    align-items: center;
+    justify-content: left;
+    font-family: 'w95fa';
+}
+
+
+
+@media (max-width: 768px) {
+  * {
+        background-color: pink;
+    }
+    .window-box {
+    z-index: 1;
+    width: 350px;
+    height: 300px;
+}
+
+
+}
+
+.media-button {
+    color: black;
+    background-color: transparent;
+    image-rendering: pixelated;
+    text-rendering: geometricPrecision;
+    /* bottom:0; */
+    filter: drop-shadow(.5px .5px 0px white);
+
+}
+
+.inactive {
+   color: #808080;
+   background-color: transparent;
+}
+
+.media-button svg {
+    background-color: inherit;
+
+    width: 16;
+    height: 16;
+    /* fill: black;  */
+
+
+}
+
+.media-button path {
+    background-color: inherit;
+    width: 16;
+    height: 16;
+    fill: #808080; 
+}
+</style>
+</head>
+<!-- <div class="window-box">
+    <div class="header-container">
+        <div id="header">
+            <div class="window-title">Window Title</div>
+            <div class="window-box">X</div>
+        </div>
+    </div>
+    <div class="body-container">
+        <div id="white-body">
+        </div>
+    </div>
+</div> -->
+
+
+<!-- note: use Windowcontainer-{selectedID} to check for existing windows  -->
+
+<div id="windowContainer-audio" style="display: flex; cursor: grab; width:500px; height: 300px;">
+    <div class="window-box" style ="right:0;">
+        <div class="header-container">
+            <div id="header">
+                <div class="window-title"><img src="icons/cd.png" alt="" style="width:20px; height: 20px; display: inline; background-color:#000080;"> &nbsp;Audio Production </div>
+                <div class="window-box">X</div>
+                <div class="window-box">Y</div>
+                <div class="window-box">Z</div>
+            </div>
+        </div>
+        <div class="body-container" style="">        
+            <div id = "media-player" style="bottom:0px;">
+                <div class="window-box" style = " height: 20px; width: 70px; text-align: center; color: black; justify-content: center; align-items: center; display: flex; margin-right:2px;">
+                    <div id = "media-button" class = "media-button inactive" style="background-color: transparent;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-backward-fill" viewBox="0 0 16 16">
+                            <path d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V8.753l6.267 3.636c.54.313 1.233-.066 1.233-.697v-2.94l6.267 3.636c.54.314 1.233-.065 1.233-.696V4.308c0-.63-.693-1.01-1.233-.696L8.5 7.248v-2.94c0-.63-.692-1.01-1.233-.696L1 7.248V4a.5.5 0 0 0-.5-.5"/>
+                          </svg>
+                    </div>
+                </div>
+                <div class="window-box" style = "  height: 20px; width: 70px; text-align: center; color: black; justify-content: center; align-items: center; display: flex; margin-right:2px;">
+                    <div id = "media-button" class = "media-button inactive" style="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-forward-fill" viewBox="0 0 16 16">
+                            <path d="M15.5 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V8.753l-6.267 3.636c-.54.313-1.233-.066-1.233-.697v-2.94l-6.267 3.636C.693 12.703 0 12.324 0 11.693V4.308c0-.63.693-1.01 1.233-.696L7.5 7.248v-2.94c0-.63.693-1.01 1.233-.696L15 7.248V4a.5.5 0 0 1 .5-.5"/>
+                          </svg>
+                    </div>
+                </div>
+                <div class="window-box" style = " height: 20px; width: 70px; text-align: center; color: black; justify-content: center; align-items: center; display: flex;  margin-right:2px;">
+                    <div id = "media-button" class = "media-button inactive" style="background-color: transparent;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+                          </svg>                    
+                        </div>
+                </div>
+                <div class="window-box" style = " height: 20px; width: 70px; text-align: center; color: black; justify-content: center; align-items: center; display: flex;  margin-right:2px;">
+                    <div id = "media-button" class = "media-button inactive" style="background-color: transparent;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-fill" viewBox="0 0 16 16">
+                            <path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5"/>
+                          </svg>                 
+                        </div>
+                </div>
+
+
+        </div>
+
+    </div>
+    </div>
+<div>
+
+<div class = "dock">
+    <div class ="window-box" style = "font-family: '95'; width: 70px">Start</div>
+    
+    <div class ="window-box">
+        <img src="icons/cd.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent;">
+        Music Catalog</div>
+
+        <div class ="window-box" style = "width: 110px;">
+            &lt; Previous Song</div>
+            <div class ="window-box" style = "width:60px;">
+                Pause ||</div>
+                <div class ="window-box" style = "width:85px; justify-content: right;">
+                    Next Song &gt;</div>
+        <div id="grey-body">12:00</div>
+    </div>
+
+    <div id="windowContainer-audio" style="display: flex; cursor: grab; width:500px; height: 300px;">
+        <div class="window-box" style ="">
+            <div class="header-container">
+                <div id="header">
+                    <div class="window-title"><img src="icons/cd.png" alt="" style="width:20px; height: 20px; display: inline; background-color:#000080;"> &nbsp;Audio Production </div>
+                        <div class="window-title"></div>
+                        <div class="window-box">X</div>
+                        <div class="window-box">Y</div>
+                        <div class="window-box">Z</div>
+                    </div>
+                </div>
+            <div class="body-container" style="">
+                <div id = "media-player" style="bottom:0px;">
+                                    
+                     <!-- previous (1)-->
+                    <div class="window-box" id = "media-control-button" data-id="1">
+                        <div id = "media-svg" class = "media-svg inactive">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-backward-fill" viewBox="0 0 16 16">
+                                <path d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V8.753l6.267 3.636c.54.313 1.233-.066 1.233-.697v-2.94l6.267 3.636c.54.314 1.233-.065 1.233-.696V4.308c0-.63-.693-1.01-1.233-.696L8.5 7.248v-2.94c0-.63-.692-1.01-1.233-.696L1 7.248V4a.5.5 0 0 0-.5-.5"/>
+                              </svg>
+                        </div>
+                    </div>
+                    <!-- skip (2)-->
+                    <div class="window-box" id = "media-control-button" data-id="2">
+                        <div id = "media-svg" class = "media-svg inactive">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-forward-fill" viewBox="0 0 16 16">
+                                <path d="M15.5 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V8.753l-6.267 3.636c-.54.313-1.233-.066-1.233-.697v-2.94l-6.267 3.636C.693 12.703 0 12.324 0 11.693V4.308c0-.63.693-1.01 1.233-.696L7.5 7.248v-2.94c0-.63.693-1.01 1.233-.696L15 7.248V4a.5.5 0 0 1 .5-.5"/>
+                            </svg>
+                        </div>
+                    </div>
+                     <!-- play (3)-->
+                    <div class="window-box" id = "media-control-button" data-id="3">
+                        <div id = "media-svg" class = "media-svg inactive">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+                            </svg>                    
+                        </div>
+                    </div>
+                    <!-- pause (4)-->
+                    <div class="window-box" id = "media-control-button" data-id="4">
+                        <div id = "media-svg" class = "media-svg inactive">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-fill" viewBox="0 0 16 16">
+                                <path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5"/>
+                            </svg>                 
+                        </div>
+                     </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+<div class="block" id="audio"><img src="icons/cd.png" alt=""><div class="text-icon">audio.wav</div></div>
+<div class="block" id="video"><img src="icons/video-file.png" alt=""><div class="text-icon">video.mp4</div></div>
+<div class="block" id="about"><img src="icons/globe-html.png" alt=""><div class="text-icon">about.txt</div></div>
+<div class="block" id="journal"><img src="icons/white-notes.png" alt=""><div class="text-icon">journal.dat</div></div>
+
+
+
+ <script type="module"> 
+
+
+// Icon click effect
+document.querySelectorAll('.block').forEach(block => {
+    let img = block.querySelector('img');
+    block.style.setProperty('--mask-url', `url(${img.src})`);
+});
+
+import { makeDraggable } from './modules/makeDraggable.js';
+let windowCounter = 0; 
+
+document.addEventListener("click", function (event) {
+    const block = event.target.closest(".block");
+
+    if (block) {
+        const parentCategory = block.closest("#audio, #video, #about, #journal"); 
+
+        if (parentCategory) {
+            const selectedClass = parentCategory.id; 
+            console.log(selectedClass); 
+
+            if (selectedClass) {
+                console.log('Clicked ' + selectedClass);
+                const windowContainer = document.createElement('div');
+                windowContainer.id = `windowContainer-${selectedClass}`;
+
+                let nextLeft = 50 + windowCounter * 40; 
+                let nextTop = 20 + windowCounter * 40;  
+
+                windowContainer.style.top = `${nextTop}px`; 
+                windowContainer.style.left = `${nextLeft}px`; 
+                windowContainer.style.position = 'absolute';
+                windowCounter++;
+
+                windowContainer.addEventListener('mousedown', (e) => {
+                    windowContainer.style.cursor = 'grabbing';
+                });
+
+
+                document.addEventListener('mouseup', () => {
+                    windowContainer.style.cursor = 'grab';
+                });      
+                
+                windowContainer.innerHTML = `
+                    <div class="window-box" style = "width: 500px; height:300px;">
+                        <div class="header-container">
+                            <div id="header">
+                                <div class="window-title"></div>
+                                <div class="window-box">X</div>
+                                <div class="window-box">Y</div>
+                                <div class="window-box">Z</div>
+
+
+                            </div>
+                        </div>
+                        <div class="body-container">
+
+                        </div>
+                    </div>
+                `;
+
+                if (selectedClass === "audio") {
+                    windowContainer.querySelector(".window-title").innerHTML = '<img src="icons/cd.png" alt="" style="width:20px; height: 20px; display: inline; background-color:#000080;"></div> &nbsp;Audio Production ';
+                    windowContainer.querySelector(".body-container").innerHTML = "Audio content goes here";
+                } else if (selectedClass === "video") {
+                    windowContainer.querySelector(".window-title").innerHTML = '<img src="icons/video-file.png" alt="" style="width:20px; height: 20px; display: inline; background-color:#000080;"></div> &nbsp;Video ';
+                    windowContainer.querySelector(".body-container").innerHTML = "<video controls><source src='video.mp4' type='video/mp4'></video>";
+                } else if (selectedClass === "about") {
+                    windowContainer.querySelector(".window-title").textContent = "About ";
+                    windowContainer.querySelector(".body-container").innerHTML = "about me content";
+                } else if (selectedClass === "journal") {
+                    windowContainer.querySelector(".window-title").textContent = "Journal";
+                    windowContainer.querySelector(".body-container").innerHTML = "<textarea style = 'background-color:white; color: black; width: 100%; height: 200px;' placeholder='Write here...'></textarea>";
+                } 
+                console.log('I tried...');
+                
+                document.body.appendChild(windowContainer);
+                const windowBox = windowContainer.querySelector('.window-box'); 
+                const header = windowContainer.querySelector('#header'); 
+                makeDraggable(windowBox, header);
+            }
+        }
+    }
+
+});
+
+</script>

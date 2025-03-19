@@ -5,7 +5,6 @@ animations > https://infinitemac.org/1990/System%206.0.5
 -->
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 @import url('https://fonts.cdnfonts.com/css/w95fa');
 
@@ -40,11 +39,13 @@ html, body {
 .window-box {
     font-family: 'w95fa';
     z-index: 1;
-    width: 500px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     background-color: #c0c0c0;
     box-sizing: border-box;
     position: relative;
+    justify-content: center;
+    align-items: center;
     padding: 3px;
     box-shadow: 
     inset -1px -1px #808080,
@@ -60,11 +61,75 @@ html, body {
 }
 
 .body-container {
-    width: 98.8%;
+    width: 100%;
+    background-color: transparent;
+    position: relative;
+    height: 91%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes content to the bottom */
+}
+
+#media-player {
+    background-color: transparent;
+    display: flex;
+    width: 100%;
     height: auto;
-    background-color: #c0c0c0;
-    position:absolute;
- }
+    /* align-items: center; */
+    justify-content: center;
+    /* min-height: 50px; Adjust based on needed height */
+}
+
+
+.window-box #media-control-button {
+    height: 20px; 
+    width: 70px; 
+    text-align: center; 
+    color: #808080; 
+    justify-content: center; 
+    align-items: center; 
+    display: flex; 
+    margin-right:2px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.window-box #media-control-button:active {
+    height: 20px; 
+    width: 70px; 
+    text-align: center; 
+    justify-content: center; 
+    align-items: center; 
+    display: flex; 
+    margin-right:2px;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+    outline: 1px dotted black; 
+    outline-offset: -4px; /* Moves the outline inside */
+
+}
+
+.media-svg.clicked svg path {
+    fill: black !important;
+    stroke: black;
+    stroke-width: .1px ;
+    filter: none;
+    border-style: dotted;
+    border-width: 1px;
+    border-color:#000;
+}
+
+
+
+.window-box #media-control-button:active svg path{
+    fill: black !important;
+    stroke: black;
+    stroke-width: .1px ;
+    filter: none;
+
+}
+
 
 #white-body {
     width: 100%;
@@ -77,18 +142,19 @@ html, body {
 }
 
 #grey-body {
-    width: 60px;
+    width: 80px;
     height: 28px;
     justify-content: center;
     align-items: center;
     display: flex;
     background-color: #c0c0c0;
-    position: relative;
+    position: absolute;
     box-shadow: 
     inset -1px -1px #dfdfdf,
     inset 1px 1px #808080;
-    color:black;
-    font-family: 'w95fa';
+    right: 0;
+    margin-right: 5px;
+
 }
 
 .header-container {
@@ -214,6 +280,7 @@ html, body {
 }
 
 
+
 @media (max-width: 768px) {
   * {
         background-color: pink;
@@ -224,21 +291,39 @@ html, body {
     height: 300px;
 }
 
+
+}
+
+
+.media-svg {
+    background-color: transparent;
+    filter: drop-shadow(.5px .5px 0px white);
+}
+
+.window-box #media-control-button:active .media-svg {
+    filter: none;
+}
+
+
+
+.media-svg svg {
+    background-color: inherit;
+}
+
+.media-svg path {
+    fill: #808080; 
 }
 </style>
 </head>
-<!-- <div class="window-box">
-    <div class="header-container">
-        <div id="header">
-            <div class="window-title">Window Title</div>
-            <div class="window-box">X</div>
-        </div>
-    </div>
-    <div class="body-container">
-        <div id="white-body">
-        </div>
-    </div>
-</div> -->
+
+
+<div class="block" id="audio"><img src="icons/cd.png" alt=""><div class="text-icon">audio.wav</div></div>
+<div class="block" id="video"><img src="icons/video-file.png" alt=""><div class="text-icon">video.mp4</div></div>
+<div class="block" id="about"><img src="icons/globe-html.png" alt=""><div class="text-icon">about.txt</div></div>
+<div class="block" id="journal"><img src="icons/white-notes.png" alt=""><div class="text-icon">journal.dat</div></div>
+
+
+
 
 <div class = "dock">
     <div class ="window-box" style = "font-family: '95'; width: 70px">Start</div>
@@ -253,16 +338,46 @@ html, body {
                 Pause ||</div>
                 <div class ="window-box" style = "width:85px; justify-content: right;">
                     Next Song &gt;</div>
-        <div id="grey-body">12:00</div>
+        <div id="grey-body">
+            <span id="time" style="color:black; font-family: 'w95fa'; background-color: inherit;"></span>
+        </div>
     </div>
-    
 
-<div class="block" id="audio"><img src="icons/cd.png" alt=""><div class="text-icon">audio.wav</div></div>
-<div class="block" id="video"><img src="icons/video-file.png" alt=""><div class="text-icon">video.mp4</div></div>
-<div class="block" id="about"><img src="icons/globe-html.png" alt=""><div class="text-icon">about.txt</div></div>
-<div class="block" id="journal"><img src="icons/white-notes.png" alt=""><div class="text-icon">journal.dat</div></div>
+
 
  <script type="module"> 
+function updateTime() {
+    const timeElement = document.getElementById("time");
+    if (!timeElement) {
+        console.error("Element with ID 'time' not found.");
+        return;
+    }
+
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const ampm = hours >= 12 ? "PM" : "AM";
+
+    hours = hours % 12 || 12; // Convert 0 to 12 for AM/PM format
+
+    timeElement.textContent = `${hours}:${minutes} ${ampm}`;
+}
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    updateTime(); // Update time immediately
+    setInterval(updateTime, 60000); // Update every minute
+
+
+
+
+});
+
+
+
+
 
 
 // Icon click effect
@@ -307,7 +422,7 @@ document.addEventListener("click", function (event) {
                 });      
                 
                 windowContainer.innerHTML = `
-                    <div class="window-box">
+                    <div class="window-box" style = "width: 500px; height:300px;">
                         <div class="header-container">
                             <div id="header">
                                 <div class="window-title"></div>
@@ -326,7 +441,60 @@ document.addEventListener("click", function (event) {
 
                 if (selectedClass === "audio") {
                     windowContainer.querySelector(".window-title").innerHTML = '<img src="icons/cd.png" alt="" style="width:20px; height: 20px; display: inline; background-color:#000080;"></div> &nbsp;Audio Production ';
-                    windowContainer.querySelector(".body-container").innerHTML = "Audio content goes here";
+                    // Assuming windowContainer is defined earlier in your code and points to a container element
+
+                    fetch('/modules/templates.html')
+                        .then(response => response.text()) // Get the text content of the HTML file
+                        .then(data => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(data, 'text/html');
+                            
+                            // Get the div with id 'media-player' from the fetched template
+                            const mediaPlayerDiv = doc.querySelector('#media-player');
+                            
+                            if (mediaPlayerDiv) {
+                                console.log("Media Player found:", mediaPlayerDiv); // Debugging step
+                                windowContainer.querySelector('.body-container').innerHTML = mediaPlayerDiv.outerHTML;
+
+                                function setupButtonListeners() {
+                            // Make sure buttons with data-id 3 and 4 exist before attaching listeners
+                            const stopButton = document.querySelector('.window-box[data-id="4"]');
+                            if (stopButton) {
+                                const stopSvg = stopButton.querySelector('.media-svg');
+                                stopSvg.classList.add('clicked');
+                            }
+
+                            document.querySelectorAll('.window-box').forEach(button => {
+                                if (button.dataset.id === "3") {
+                                    button.addEventListener('click', function() {
+                                        let svgContainer = this.querySelector('.media-svg');
+                                        svgContainer.classList.toggle('clicked');
+                                        const stopSvg = document.querySelector('.window-box[data-id="4"] .media-svg');
+                                        stopSvg.classList.remove('clicked');
+                                    });
+                                }
+                                
+                                if (button.dataset.id === "4") {
+                                    button.addEventListener('click', function() {
+                                        let svgContainer = this.querySelector('.media-svg');
+                                        svgContainer.classList.toggle('clicked');
+                                        const playSvg = document.querySelector('.window-box[data-id="3"] .media-svg');
+                                        playSvg.classList.remove('clicked');
+                                    });
+                                }
+                            });
+                        }
+
+                        setupButtonListeners();
+
+                            } else {
+                                console.error('media-player div not found in templates.html');
+                            }
+                        })
+                        .catch(error => console.error('Error loading the template:', error));
+
+
+
                 } else if (selectedClass === "video") {
                     windowContainer.querySelector(".window-title").innerHTML = '<img src="icons/video-file.png" alt="" style="width:20px; height: 20px; display: inline; background-color:#000080;"></div> &nbsp;Video ';
                     windowContainer.querySelector(".body-container").innerHTML = "<video controls><source src='video.mp4' type='video/mp4'></video>";
@@ -337,7 +505,6 @@ document.addEventListener("click", function (event) {
                     windowContainer.querySelector(".window-title").textContent = "Journal";
                     windowContainer.querySelector(".body-container").innerHTML = "<textarea style = 'background-color:white; color: black; width: 100%; height: 200px;' placeholder='Write here...'></textarea>";
                 } 
-                console.log('I tried...');
                 
                 document.body.appendChild(windowContainer);
                 const windowBox = windowContainer.querySelector('.window-box'); 
