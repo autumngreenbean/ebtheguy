@@ -386,7 +386,7 @@ document.querySelectorAll('.block').forEach(block => {
     block.style.setProperty('--mask-url', `url(${img.src})`);
 });
 
-import { makeDraggable } from '/modules/makeDraggable.js';
+import { makeDraggable } from './modules/makeDraggable.js';
 let windowCounter = 0; 
 
 document.addEventListener("click", function (event) {
@@ -443,7 +443,7 @@ document.addEventListener("click", function (event) {
                     windowContainer.querySelector(".window-title").innerHTML = '<img src="icons/cd.png" alt="" style="width:20px; height: 20px; display: inline; background-color:#000080;"></div> &nbsp;Audio Production ';
                     // Assuming windowContainer is defined earlier in your code and points to a container element
 
-                    fetch('/modules/templates.html')
+                    fetch('./modules/templates.html')
                         .then(response => response.text()) // Get the text content of the HTML file
                         .then(data => {
                             const parser = new DOMParser();
