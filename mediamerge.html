@@ -1,0 +1,530 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@import url('https://fonts.cdnfonts.com/css/w95fa');
+
+@font-face {
+    font-family: '95';
+    src: url('https://raw.githubusercontent.com/grassmunk/Chicago95/master/Fonts/vga_font/LessPerfectDOSVGA.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+}
+
+.jersey-20-regular {
+    font-family: "Jersey 20", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    font-family: '95';
+    background-color: 008080;
+    color: white;
+    user-select:none;
+}
+
+.window-box {
+    font-family: 'w95fa';
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: #c0c0c0;
+    box-sizing: border-box;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    box-shadow: 
+    inset -1px -1px #808080,
+    inset 1px 1px #ffffff,
+    inset -1px 0px #ffffff,
+    -1px -1px 0 0 #dfdfdf,
+    0px -1px 0 0 #dfdfdf,
+    -1px 0px 0 0 #dfdfdf,
+    0px 1px 0 0 #000,
+    1px 1px 0 0 #000,
+    -1px 1px 0 0 #000,
+    1px -1px 0 0 #000;
+}
+
+.body-container {
+    width: 100%;
+    background-color: transparent;
+    position: relative;
+    height: 91%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes content to the bottom */
+}
+
+#media-player {
+    background-color: transparent;
+    display: flex;
+    width: 100%;
+    height: auto;
+    /* position: fixed; */
+    /* align-items: center; */
+    justify-content: right;
+    /* min-height: 50px; Adjust based on needed height */
+}
+
+#windowContainer-audio #header {
+    background: linear-gradient(to right, #3d0806, #a2556e);
+}
+
+.window-box #media-control-button {
+    height: 20px; 
+    width: 70px; 
+    text-align: center; 
+    color: #808080; 
+    justify-content: center; 
+    align-items: center; 
+    display: flex; 
+    margin-right:2px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.window-box #media-control-button:active {
+    height: 20px; 
+    width: 70px; 
+    text-align: center; 
+    justify-content: center; 
+    align-items: center; 
+    display: flex; 
+    margin-right:2px;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+    outline: 1px dotted black; 
+    outline-offset: -4px; /* Moves the outline inside */
+
+}
+
+#media-control-container {
+    display:flex;
+    bottom: 25px;
+    position: absolute;
+    right: 10px;
+    background-color: transparent;
+}
+
+#volume-control-container {
+    bottom: 60px;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+    background-color: transparent;
+    height: 25px;;
+    width: 300px;
+    position: absolute;
+    right: 10px;
+}
+
+.media-svg.clicked svg path {
+    fill: black !important;
+    stroke: black;
+    stroke-width: .1px ;
+    filter: none;
+    border-style: dotted;
+    border-width: 1px;
+    border-color:#000;
+}
+
+.window-box #media-control-button:active svg path{
+    fill: black !important;
+    stroke: black;
+    stroke-width: .1px ;
+    filter: none;
+
+}
+
+.header-container {
+    width: 100%;
+    height: 25px;
+    background-color: #c0c0c0;
+    position: relative;
+    padding-bottom: 2px;
+}
+
+#header {
+    background-color: #000080;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 14px;
+    padding: 2px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+#header .window-title {
+    align-items: center;
+    display: inline-flex;
+    background-color: inherit;
+    flex: 1; 
+    text-align: left; 
+    font-size: 18px;
+    font-family: 'w95fa';
+}
+
+#header .window-box {
+    width: 15px; 
+    height: 15px; 
+    display: flex;
+    margin: 2px;
+    color: black;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.dock .window-box {
+    width: 150px; 
+    height: 24px; 
+    display: flex;
+    margin: 2px;
+    color: black;
+    text-align: left;
+    align-items: center;
+    justify-content: left;
+    font-family: 'w95fa';
+}
+
+.window-box #albumCover-container {
+    background-color: transparent;
+    position: absolute;
+    top:15px;
+    left: 10px;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#albumCover-container img {
+    width: 98%;
+    height:98%;
+}
+
+.white-body {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    position: absolute;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+}
+
+#audioInfo {
+    position: absolute;
+    top: 15px; 
+    width: 330px;
+    right: 0; 
+    background-color: transparent;
+}
+
+.audioInfo-label {
+    position: absolute;
+    left: 0;
+    width: 50px;
+    /* background-color: blue; */
+}
+
+#audioInfo div {
+    font-family: 'w95fa';
+    color: black;
+    background-color: transparent;
+    margin-bottom: 2px; /* Space between the two lines */
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin-right: 5px;
+}
+
+#audioInfo .white-body {
+    width: 80%;
+    background-color: white;
+    height: 25px;
+    color: black;
+    font-family: 'w95fa';
+    padding-left: 5px;
+    justify-content: left;
+}
+
+.grey-body {
+    width: 80px;
+    height: 28px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #c0c0c0;
+    position: absolute;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+
+}
+
+#audioControl {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    top:50%; right:0; display: inline-flex; 
+    background-color: transparent;
+}
+
+@media (max-width: 768px) {
+  * {
+        background-color: pink;
+    }
+    .window-box {
+    z-index: 1;
+    width: 350px;
+    height: 300px;
+}
+
+
+}
+
+.media-svg {
+    background-color: transparent;
+    filter: drop-shadow(.5px .5px 0px white);
+}
+
+.window-box #media-control-button:active .media-svg {
+    filter: none;
+}
+
+.media-svg svg {
+    background-color: inherit;
+}
+
+.media-svg path {
+    fill: #808080; 
+}
+</style>
+</head>
+
+<div id="windowContainer-audio" style="top: 20px; left: 50px; position: absolute; cursor: grab;">
+    <div class="window-box" style="width: 500px; height: 220px; position: absolute; left: 0px; top: 0.0464981px;">
+        <div class="header-container">
+            <div id="header">
+                <div class="window-title"><img src="icons/cd.png" alt="" style="bottom: 1.5px; position: relative; width:23px; height: 23px; display: inline; background-color: inherit;"> &nbsp;CD Player </div>
+                <div class="window-box">X</div>
+            </div>
+        </div>
+        <div class="body-container">
+            
+            
+    <div id="media-player" style="">
+        
+        <div class="white-body" id="albumCover-container">
+            <img id="albumCover" src="" alt="Album Cover">
+        </div> 
+       
+        <div id="audioInfo">
+            <div>
+                <div class = "audioInfo-label">
+                    album:
+                </div>
+                <div class="white-body" style="position:relative; margin-left: 20px;">Basement Candy</div>
+                <div class="window-box" style = "width:16; height: 21px; position: absolute; right: 7px; background-color: #c0c0c0; justify-content: center; align-items: center; display: flex; padding-top: 5px;">&#9207;
+                </div>
+            </div>
+            <div>
+                <div class = "audioInfo-label">
+                    track:
+                </div>
+                <div class="white-body" id="trackTitle" style="position:relative; margin-left: 20px;">Loading 'trackTitle'...</div>
+                <div class="window-box" style = "width:16; height: 21px; position: absolute; right: 7px; background-color: #c0c0c0; justify-content: center; align-items: center; display: flex; padding-top: 5px;">&#9207;
+                </div>
+            </div>
+            <div>
+                <div class = "audioInfo-label">
+                    artist:
+                </div>
+                <div class="white-body" id="artistName" style="position:relative; margin-left: 20px;">Loading 'artistName'...</div>
+                <div class="window-box" style = "width:16; height: 21px; position: absolute; right: 7px; background-color: #c0c0c0; justify-content: center; align-items: center; display: flex; padding-top: 5px;">&#9207;
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div id = "volume-control-container">
+
+            </div>
+
+<!-- previous (1)-->
+<div id = "media-control-container">
+<div class="window-box" id="media-control-button" data-id="1">
+<div id="media-svg" class="media-svg inactive">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-backward-fill" viewBox="0 0 16 16">
+    <path d="M.5 3.5A.5.5 0 0 0 0 4v8a.5.5 0 0 0 1 0V8.753l6.267 3.636c.54.313 1.233-.066 1.233-.697v-2.94l6.267 3.636c.54.314 1.233-.065 1.233-.696V4.308c0-.63-.693-1.01-1.233-.696L8.5 7.248v-2.94c0-.63-.692-1.01-1.233-.696L1 7.248V4a.5.5 0 0 0-.5-.5"></path>
+  </svg>
+</div>
+</div>
+<!-- skip (2)-->
+<div class="window-box" id="media-control-button" data-id="2">
+<div id="media-svg" class="media-svg inactive">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-skip-forward-fill" viewBox="0 0 16 16">
+    <path d="M15.5 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V8.753l-6.267 3.636c-.54.313-1.233-.066-1.233-.697v-2.94l-6.267 3.636C.693 12.703 0 12.324 0 11.693V4.308c0-.63.693-1.01 1.233-.696L7.5 7.248v-2.94c0-.63.693-1.01 1.233-.696L15 7.248V4a.5.5 0 0 1 .5-.5"></path>
+</svg>
+</div>
+</div>
+<!-- play (3)-->
+<div class="window-box" id="media-control-button" data-id="3">
+<div id="media-svg" class="media-svg inactive">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"></path>
+</svg>                    
+</div>
+</div>
+<!-- pause (4)-->
+<div class="window-box" id="media-control-button" data-id="4">
+<div id="media-svg" class="media-svg inactive clicked">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stop-fill" viewBox="0 0 16 16">
+    <path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5"></path>
+</svg>                 
+</div>
+</div>
+
+</div>    
+
+</div>
+    </div>
+
+    
+</div>
+</div>
+<audio id="audioPlayer"></audio>
+
+
+<script type="module"> 
+    let currentTrackIndex = 0;
+    let tracks = [];
+    let isPlaying = false;
+
+    const audioPlayer = document.getElementById("audioPlayer");
+        const albumCover = document.getElementById("albumCover");
+        const trackTitle = document.getElementById("trackTitle");
+        const artistName = document.getElementById("artistName");
+
+
+// temp for prototyping
+function setupButtonListeners() {
+    document.querySelectorAll('.window-box').forEach(button => {
+    if (button.dataset.id === "3") { // Play button
+        button.addEventListener('click', function() {
+            let svgContainer = this.querySelector('.media-svg');
+            svgContainer.classList.toggle('clicked');
+            const stopSvg = document.querySelector('.window-box[data-id="4"] .media-svg');
+            stopSvg.classList.remove('clicked');
+            togglePlayPause();
+        });
+    }
+
+    if (button.dataset.id === "4") { // Pause button
+        button.addEventListener('click', function() {
+            let svgContainer = this.querySelector('.media-svg');
+            svgContainer.classList.toggle('clicked');
+            const playSvg = document.querySelector('.window-box[data-id="3"] .media-svg');
+            playSvg.classList.remove('clicked');
+            togglePlayPause();
+        });
+    }
+
+    if (button.dataset.id === "2") { // Skip button (no toggle)
+        button.addEventListener('click', function() {
+            nextTrack();
+        });
+    }
+
+    if (button.dataset.id === "1") { // Previous button (no toggle)
+        button.addEventListener('click', function() {
+            prevTrack();
+        });
+    }
+});
+
+async function fetchAlbumTracks() {
+    const albumName = "Basement Candy - EP"; // Correct album name
+    const artistName = "Murdock Street"; // The artist's name
+
+    const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(albumName)}&entity=musicTrack`);
+    const trackData = await trackResponse.json();
+
+    console.log("Full trackData:", trackData); // Check full response
+
+    // Filter results: only tracks by the correct artist
+    if (trackData.results && trackData.results.length > 1) {
+        tracks = trackData.results.filter(item => 
+            item.wrapperType === "track" && item.artistName === artistName
+        );
+
+        if (tracks.length > 0) {
+            updatePlayer();
+        } else {
+            trackTitle.innerText = "No tracks found.";
+        }
+    } else {
+        trackTitle.innerText = "No tracks found.";
+    }
+}
+
+        function updatePlayer() {
+            const track = tracks[currentTrackIndex];
+            audioPlayer.src = track.previewUrl;
+            albumCover.src = track.artworkUrl100.replace("100x100", "300x300");
+            trackTitle.innerText = track.trackName;
+            artistName.innerText = track.artistName;
+        }
+
+        function togglePlayPause() {
+            if (isPlaying) {
+                audioPlayer.pause();
+            } else {
+                audioPlayer.play();
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            updatePlayer();
+            audioPlayer.play();
+            isPlaying = true;
+        }
+
+        function prevTrack() {
+            if (currentTrackIndex === 0) {
+                audioPlayer.currentTime = 0; 
+            } else {
+                currentTrackIndex--;
+            }
+            updatePlayer();
+            audioPlayer.play();
+            isPlaying = true;
+        }
+        audioPlayer.addEventListener("ended", nextTrack);
+        fetchAlbumTracks();
+
+}
+
+
+setupButtonListeners();
+</script>

@@ -1,6 +1,6 @@
 
 
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,9 +14,414 @@
         .controls { display: flex; justify-content: space-around; margin-top: 15px; }
         button { background: #ff0055; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; }
         button:hover { background: #ff3366; }
+    
+    
+@import url('https://fonts.cdnfonts.com/css/w95fa');
+
+@font-face {
+    font-family: '95';
+    src: url('https://raw.githubusercontent.com/grassmunk/Chicago95/master/Fonts/vga_font/LessPerfectDOSVGA.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+}
+
+.jersey-20-regular {
+    font-family: "Jersey 20", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+* {
+    font-family: '95';
+    background-color: 008080;
+    color: white;
+    user-select:none;
+}
+
+.window-box {
+    font-family: 'w95fa';
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: #c0c0c0;
+    box-sizing: border-box;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    box-shadow: 
+    inset -1px -1px #808080,
+    inset 1px 1px #ffffff,
+    inset -1px 0px #ffffff,
+    -1px -1px 0 0 #dfdfdf,
+    0px -1px 0 0 #dfdfdf,
+    -1px 0px 0 0 #dfdfdf,
+    0px 1px 0 0 #000,
+    1px 1px 0 0 #000,
+    -1px 1px 0 0 #000,
+    1px -1px 0 0 #000;
+}
+
+.body-container {
+    width: 100%;
+    background-color: transparent;
+    position: relative;
+    height: 91%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes content to the bottom */
+}
+
+#media-player {
+    background-color: transparent;
+    display: flex;
+    width: 100%;
+    height: auto;
+    /* position: fixed; */
+    /* align-items: center; */
+    justify-content: right;
+    /* min-height: 50px; Adjust based on needed height */
+}
+
+#windowContainer-audio #header {
+    background: linear-gradient(to right, #3d0806, #a2556e);
+}
+
+
+.window-box #media-control-button {
+    height: 20px; 
+    width: 70px; 
+    text-align: center; 
+    color: #808080; 
+    justify-content: center; 
+    align-items: center; 
+    display: flex; 
+    margin-right:2px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.window-box #media-control-button:active {
+    height: 20px; 
+    width: 70px; 
+    text-align: center; 
+    justify-content: center; 
+    align-items: center; 
+    display: flex; 
+    margin-right:2px;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+    outline: 1px dotted black; 
+    outline-offset: -4px; /* Moves the outline inside */
+
+}
+
+#media-control-container {
+    display:flex;
+    bottom: 25px;
+    position: absolute;
+    right: 10px;
+    background-color: transparent;
+}
+
+#volume-control-container {
+    bottom: 60px;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+    background-color: transparent;
+    height: 25px;;
+    width: 300px;
+    position: absolute;
+    right: 10px;
+}
+
+
+.media-svg.clicked svg path {
+    fill: black !important;
+    stroke: black;
+    stroke-width: .1px ;
+    filter: none;
+    border-style: dotted;
+    border-width: 1px;
+    border-color:#000;
+}
+
+
+
+.window-box #media-control-button:active svg path{
+    fill: black !important;
+    stroke: black;
+    stroke-width: .1px ;
+    filter: none;
+
+}
+
+
+
+
+
+
+.header-container {
+    width: 100%;
+    height: 25px;
+    background-color: #c0c0c0;
+    position: relative;
+    padding-bottom: 2px;
+}
+#header {
+    background-color: #000080;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 14px;
+    padding: 2px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+
+
+
+#header .window-title {
+    align-items: center;
+    display: inline-flex;
+    background-color: inherit;
+    flex: 1; 
+    text-align: left; 
+    font-size: 18px;
+    font-family: 'w95fa';
+}
+
+#header .window-box {
+    width: 15px; 
+    height: 15px; 
+    display: flex;
+    margin: 2px;
+    color: black;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Icon blocks */
+.block {
+    margin: 15px;
+    display: block;
+    text-align: center;
+    position: relative;
+    cursor: grab;
+    width: 50px; 
+    height: 50px;
+    margin-bottom:50px;
+}
+
+.block img {
+    image-rendering: pixelated;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.block:active::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, transparent 49%, rgba(0, 0, 128, 0.5) 50%, rgba(0, 0, 128, 0.5) 51%, transparent 100%),
+                      linear-gradient(to bottom, transparent 49%, rgba(0, 0, 128, 0.5) 50%, rgba(0, 0, 128, 0.5) 51%, transparent 100%);
+    background-size: 1px 1px;
+    z-index: 2;
+    -webkit-mask-image: var(--mask-url);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: var(--mask-url);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    cursor:grabbing;
+}
+
+.text-icon {
+    padding-top: 5px;
+    font-size: 14px;
+    font-family: 'w95fa';
+}
+
+.dock {
+    position: fixed;
+    width: 100%;
+    height: 34px;
+    background-color: #c0c0c0;
+    display: flex;    
+    align-items: center;
+    color: black;
+    left:0;
+    bottom:0;
+    box-shadow: 
+    inset -1px -1px #808080,
+    inset 1px 1px #ffffff,
+    inset -1px 0px #ffffff,
+    -1px -1px 0 0 #dfdfdf,
+    0px -1px 0 0 #dfdfdf,
+    -1px 0px 0 0 #dfdfdf,
+    0px 1px 0 0 #000,
+    1px 1px 0 0 #000,
+    -1px 1px 0 0 #000,
+    1px -1px 0 0 #000;
+}
+
+.dock .window-box {
+    width: 150px; 
+    height: 24px; 
+    display: flex;
+    margin: 2px;
+    color: black;
+    text-align: left;
+    align-items: center;
+    justify-content: left;
+    font-family: 'w95fa';
+}
+
+.window-box #albumCover {
+    background-color: transparent;
+    position: absolute;
+    top:15px;
+    left: 10px;
+    width: 150px;
+    height: 150px;
+}
+
+
+
+.white-body {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    position: absolute;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+}
+
+#audioInfo {
+    position: absolute;
+    top: 15px; 
+    width: 330px;
+    right: 0; 
+    background-color: transparent;
+}
+
+#audioInfo-label {
+    position: absolute;
+    left: 0;
+    width: 50px;
+    /* background-color: blue; */
+}
+
+#audioInfo div {
+    font-family: 'w95fa';
+    color: black;
+    background-color: transparent;
+    margin-bottom: 2px; /* Space between the two lines */
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin-right: 5px;
+}
+
+#audioInfo .white-body {
+    width: 80%;
+    background-color: white;
+    height: 25px;
+    color: black;
+    font-family: 'w95fa';
+    padding-left: 5px;
+    justify-content: left;
+}
+
+
+
+.grey-body {
+    width: 80px;
+    height: 28px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #c0c0c0;
+    position: absolute;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+
+}
+
+#audioControl {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    top:50%; right:0; display: inline-flex; 
+    background-color: transparent;
+}
+
+
+
+@media (max-width: 768px) {
+  * {
+        background-color: pink;
+    }
+    .window-box {
+    z-index: 1;
+    width: 350px;
+    height: 300px;
+}
+
+
+}
+
+
+.media-svg {
+    background-color: transparent;
+    filter: drop-shadow(.5px .5px 0px white);
+}
+
+.window-box #media-control-button:active .media-svg {
+    filter: none;
+}
+
+
+
+
+.media-svg svg {
+    background-color: inherit;
+}
+
+.media-svg path {
+    fill: #808080; 
+}
     </style>
 </head>
 <body>
+
+
+
+
 
     <div class="player-container">
         <img id="albumCover" src="" alt="Album Cover">
@@ -30,6 +435,8 @@
             <button onclick="nextTrack()">⏭ Next</button>
         </div>
     </div>
+
+
 
     <script>
         let currentTrackIndex = 0;
@@ -117,4 +524,4 @@
     </script>
 
 </body>
-</html> -->
+</html> 
