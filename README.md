@@ -1,6 +1,8 @@
 A Windows 95 web theme for ethan's portfolio website made from scratch w/ HTML, CSS, and Javascript
 
-Features:
+**Features:
+**
+
 An 'emulated' desktop interface with interactable icons
 
 Adaptive window interfaces: pixel-perfect replicas of original Windows 95 UI
