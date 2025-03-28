@@ -223,7 +223,7 @@ html, body {
 }
 
 .window-box #albumCover-container {
-    background-color: transparent;
+    /* background-color: red; */
     position: absolute;
     top:15px;
     left: 10px;
@@ -237,6 +237,9 @@ html, body {
 #albumCover-container img {
     width: 98%;
     height:98%;
+    display: flex;
+    position: absolute;
+    background-color: #c0c0c0;
 }
 
 .white-body {
@@ -437,9 +440,10 @@ html, body {
         </div>
     </div>
 
-    <div class="block audio" data-title="Basement Candy"><img src="icons/cd.png" alt=""><div class="text-icon">Basement-Candy.wav</div></div>
+    <div class="block audio" data-title="Basement Candy - EP"><img src="icons/cd.png" alt=""><div class="text-icon">Basement-Candy.wav</div></div>
     <div class="block audio" data-title="Ode to You"><img src="icons/cd.png" alt=""><div class="text-icon">Ode-to-You.wav</div></div>
-    
+    <audio id="audioPlayer"></audio>
+
 
 <script type="module">
     import { spawnPlayer } from './modules/spawnPlayer.js';

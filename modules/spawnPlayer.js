@@ -1,5 +1,17 @@
+/* Welcome to SpawnPlayer.js! 
+This module is responsible for creating the CD Player window and its contents. 
+The spawnPlayer function is called when the user clicks on an album icon on the desktop.
+The function:
+- creates a new windowContainer div element.
+- fetches templates.html to inject content into the windowContainer.
+- appends the windowContainer to the body of the document, with draggable functionality from makeDraggable.js.
+- calls albumSelect to display the selected album's tracks in the CD Player.
+- sets up event listeners for the media player buttons and dropdown buttons.
+
+~ signalkitten <3
+*/
 import { makeDraggable } from './makeDraggable.js';
-import { albumSelect, trackSelect, artistSelect, } from './selector.js';
+import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePlayPause } from './selector.js';
 
     export function spawnPlayer(type, title) {
         const existingPlayer = document.getElementById('windowContainer-audio');
@@ -9,11 +21,10 @@ import { albumSelect, trackSelect, artistSelect, } from './selector.js';
         } else {
             const windowContainer = document.createElement('div');
             windowContainer.id = 'windowContainer-audio';
-            let nextLeft = 50 + 40;
-            let nextTop = 20 + 40;
+            let nextLeft = '200px';
 
-            windowContainer.style.top = `${nextTop}px`; 
-            windowContainer.style.left = `${nextLeft}px`; 
+            windowContainer.style.top = nextLeft; 
+            windowContainer.style.left = nextLeft; 
             windowContainer.style.position = 'absolute';
 
             windowContainer.addEventListener('mousedown', (e) => {
@@ -57,8 +68,21 @@ import { albumSelect, trackSelect, artistSelect, } from './selector.js';
                             if (stopButton) {
                                 const stopSvg = stopButton.querySelector('.media-svg');
                                 stopSvg.classList.add('clicked');
+                                
                             }
                             document.querySelectorAll('.window-box#media-control-button').forEach(button => {
+                                if (button.dataset.id === "1") { // Previous button (no toggle)
+                                    button.addEventListener('click', function() {
+                                        prevTrack();
+                                    });
+                                }
+
+                                if (button.dataset.id === "2") { // Skip button (no toggle)
+                                    button.addEventListener('click', function() {
+                                        nextTrack();
+                                    });
+                                }
+
                                 if (button.dataset.id === "3") { 
                                     button.addEventListener('click', function() {
                                         let svgContainer = this.querySelector('.media-svg');
@@ -69,6 +93,7 @@ import { albumSelect, trackSelect, artistSelect, } from './selector.js';
                                         if (stopSvg) {
                                             stopSvg.classList.remove('clicked');
                                         }
+                                        togglePlayPause();
                                     });
                                 }
                                 if (button.dataset.id === "4") { 
@@ -81,18 +106,19 @@ import { albumSelect, trackSelect, artistSelect, } from './selector.js';
                                         if (playSvg) {
                                             playSvg.classList.remove('clicked');
                                         }
+                                        togglePlayPause();
                                     });
                                 }
                             });
                             //<--dropdown buttons--> 
                             document.querySelectorAll('.window-box#dropdown-button[data-id="1"]').forEach(btn => 
-                                btn.addEventListener("click", () => albumSelect(null)) // Explicitly pass null
+                                btn.addEventListener("click", () => albumSelect(null)) 
                             );
                             document.querySelectorAll('.window-box#dropdown-button[data-id="2"]').forEach(btn => 
-                                btn.addEventListener("click", () => trackSelect(null)) // Explicitly pass null
+                                btn.addEventListener("click", () => trackSelect(null)) 
                             );
                             document.querySelectorAll('.window-box#dropdown-button[data-id="3"]').forEach(btn => 
-                                btn.addEventListener("click", () => artistSelect(null)) // Explicitly pass null
+                                btn.addEventListener("click", () => artistSelect(null)) 
                             );
                         }
                         setupButtonListeners();
@@ -106,13 +132,10 @@ import { albumSelect, trackSelect, artistSelect, } from './selector.js';
                     
                 document.body.appendChild(windowContainer);
 
-                // Updated selector to target window-section instead of window-box
-                const windowBox = windowContainer.querySelector('#window-section'); // Selecting window-section now
-                const header = windowContainer.querySelector('#header'); // Selecting header inside window-section
-                console.log(windowBox);
-                makeDraggable(windowBox, header);
+                const windowBox = windowContainer.querySelector('#window-section'); 
+                const header = windowContainer.querySelector('#header'); 
+                makeDraggable(windowContainer, header);
 
-                
         requestAnimationFrame(() => {
             albumSelect(title);
         });
