@@ -1,6 +1,4 @@
 export function makeDraggable(element, header) {
-    console.log('makeDraggable(); called');
-
     let offsetX = 0;
     let offsetY = 0;
     let isDragging = false;
@@ -14,7 +12,6 @@ export function makeDraggable(element, header) {
     function startDrag(e) {
         isDragging = true;
         element.style.position = "absolute";
-        console.log('yoooo');
         cancelAnimationFrame(animationFrameId);
 
         const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;

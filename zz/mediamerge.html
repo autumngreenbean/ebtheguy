@@ -108,22 +108,7 @@ html, body {
     inset 1px 1px #808080;
     outline: 1px dotted black; 
     outline-offset: -4px; /* Moves the outline inside */
-}
 
-.window-box #dropdown-button {
-    background-color: #c0c0c0;
-    width:16; height: 21px; 
-    position: absolute; right: 7px;  justify-content: center; align-items: center; display: flex; padding-top: 5px;
-}
-
-.window-box #dropdown-button:active {
-    background-color: #c0c0c0;
-    width:17; height: 22px; 
-    position: absolute; right: 7px;  justify-content: center; align-items: center; display: flex; padding-top: 5px;
-    box-shadow: 
-    inset -1px -1px #dfdfdf,
-    inset 1px 1px #808080;
-    outline: 1px dotted black; 
 }
 
 #media-control-container {
@@ -163,7 +148,6 @@ html, body {
     filter: none;
 
 }
-
 
 .header-container {
     width: 100%;
@@ -259,14 +243,13 @@ html, body {
     position: absolute;
     left: 0;
     width: 50px;
-    /* background-color: blue; */
 }
 
 #audioInfo div {
     font-family: 'w95fa';
     color: black;
     background-color: transparent;
-    margin-bottom: 2px; /* Space between the two lines */
+    margin-bottom: 2px; 
     display: flex;
     align-items: center;
     justify-content: right;
@@ -335,10 +318,6 @@ html, body {
 .media-svg path {
     fill: #808080; 
 }
-
-#menu-container {
-    
-}
 </style>
 </head>
 
@@ -361,30 +340,27 @@ html, body {
        
         <div id="audioInfo">
             <div>
-                <!-- album -->
                 <div class = "audioInfo-label">
                     album:
                 </div>
-                <div class="white-body" id = "albumTitle" style="position:relative; margin-left: 20px;"></div> 
-                <div class="window-box" id = "dropdown-button" onclick="albumSelect()">&#9660;
+                <div class="white-body" style="position:relative; margin-left: 20px;">Basement Candy</div>
+                <div class="window-box" style = "width:16; height: 21px; position: absolute; right: 7px; background-color: #c0c0c0; justify-content: center; align-items: center; display: flex; padding-top: 5px;">&#9207;
                 </div>
             </div>
             <div>
-                <!-- track -->
                 <div class = "audioInfo-label">
                     track:
                 </div>
                 <div class="white-body" id="trackTitle" style="position:relative; margin-left: 20px;">Loading 'trackTitle'...</div>
-                <div class="window-box" id = "dropdown-button" onclick="trackSelect()">&#9660;
+                <div class="window-box" style = "width:16; height: 21px; position: absolute; right: 7px; background-color: #c0c0c0; justify-content: center; align-items: center; display: flex; padding-top: 5px;">&#9207;
                 </div>
             </div>
             <div>
-                <!-- artist (3)  -->
                 <div class = "audioInfo-label">
                     artist:
                 </div>
                 <div class="white-body" id="artistName" style="position:relative; margin-left: 20px;">Loading 'artistName'...</div>
-                <div class="window-box" id = "dropdown-button" data-id="3" onclick="artistSelect();">&#9660;
+                <div class="window-box" style = "width:16; height: 21px; position: absolute; right: 7px; background-color: #c0c0c0; justify-content: center; align-items: center; display: flex; padding-top: 5px;">&#9207;
                 </div>
             </div>
         </div>
@@ -438,83 +414,8 @@ html, body {
 </div>
 <audio id="audioPlayer"></audio>
 
-<script>
-
-function artistSelect() {
-  // Array of artist names
-  const artists = ['Murdock Street', 'Lokadonna', 'Tsuname'];
-
-  // Find the dropdown button with data-id="3"
-  const dropdownButton = document.querySelector('[data-id="3"]');
-  
-  // If the button is not found, return early
-  if (!dropdownButton) return;
-
-  // Check if the menu already exists, and remove it if necessary
-  const existingMenu = document.getElementById('menu-container');
-  if (existingMenu) {
-    existingMenu.remove();
-  }
-
-  // Create the menu container div with fixed width
-  const menuContainer = document.createElement('div');
-  menuContainer.id = 'menu-container';
-  menuContainer.style.position = 'absolute';
-  menuContainer.style.backgroundColor = 'white';
-  menuContainer.style.border = '1px solid black';
-  menuContainer.style.padding = '1px';
-  menuContainer.style.zIndex = '1000'; // Ensure the menu appears above other elements
-  menuContainer.style.width = '260px'; // Set fixed width for the menu
-
-  // Create the custom scrollbar (inactive, just for decoration)
-  const scrollbar = document.createElement('div');
-  scrollbar.style.position = 'absolute';
-  scrollbar.style.top = '0';
-  scrollbar.style.right = '0';
-  scrollbar.style.width = '17px'; // Adjust this width for scrollbar thickness
-  scrollbar.style.backgroundColor = '#ccc'; // Light grey color
-  scrollbar.style.height = '100%'; // Full height of the menu
-  
-  // Get the position of the dropdown button
-  const rect = dropdownButton.getBoundingClientRect();
-
-  // Temporarily append the menuContainer to calculate its width and height
-  document.body.appendChild(menuContainer);
-
-  // Position the menu below the dropdown button, aligned by right edges
-  menuContainer.style.top = (window.scrollY + rect.bottom) + 'px'; // Account for scroll position
-  menuContainer.style.left = (rect.right - menuContainer.offsetWidth + 1) + 'px'; // Right edge alignment
-
-  // Create a div for each artist and append it to the menu container
-  artists.forEach(artist => {
-    const artistDiv = document.createElement('div');
-    artistDiv.textContent = artist;
-    artistDiv.style.paddingLeft = '2px';
-    artistDiv.style.fontFamily = 'w95fa';
-    artistDiv.style.backgroundColor = 'transparent';
-    artistDiv.style.color = 'black';
-    artistDiv.style.marginBottom = '1px';
-    artistDiv.style.cursor = 'pointer'; // Change cursor to pointer
-    artistDiv.addEventListener('click', () => {
-      alert(`You selected ${artist}`); // Perform desired action here
-    });
-    menuContainer.appendChild(artistDiv);
-  });
-
-  // Append the scrollbar to the menu container
-  menuContainer.appendChild(scrollbar);
-
-  // Append the menu to the body
-  document.body.appendChild(menuContainer);
-}
-
-
-</script>
 
 <script type="module"> 
-
-
-
     let currentTrackIndex = 0;
     let tracks = [];
     let isPlaying = false;
@@ -523,19 +424,12 @@ function artistSelect() {
         const albumCover = document.getElementById("albumCover");
         const trackTitle = document.getElementById("trackTitle");
         const artistName = document.getElementById("artistName");
-        const albumTitle = document.getElementById("albumTitle");
 
 
-
-
+// temp for prototyping
 function setupButtonListeners() {
-    // dropdown buttons (album, track, artist )
-
-
-
-    // media controls (play, pause, skip, previous)
-    document.querySelectorAll('#media-control-button').forEach(button => {
-        if (button.dataset.id === "3") { // Play button
+    document.querySelectorAll('.window-box').forEach(button => {
+    if (button.dataset.id === "3") { // Play button
         button.addEventListener('click', function() {
             let svgContainer = this.querySelector('.media-svg');
             svgContainer.classList.toggle('clicked');
@@ -599,7 +493,6 @@ async function fetchAlbumTracks() {
             albumCover.src = track.artworkUrl100.replace("100x100", "300x300");
             trackTitle.innerText = track.trackName;
             artistName.innerText = track.artistName;
-            albumTitle.innerText = track.collectionName; 
         }
 
         function togglePlayPause() {
