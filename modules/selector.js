@@ -127,7 +127,8 @@ export function spawnDropdown(type) {
               artistSelect(currentArtist);
           } else if (type === 'album') {
               currentAlbum = item;
-              albumSelect(currentAlbum);
+              
+              setTimeout(() =>albumSelect(album), 0);
           } else if (type === 'track') {
               currentTrack = item;
               trackSelect(currentTrack);
@@ -142,7 +143,7 @@ export function spawnDropdown(type) {
 
 let currentTrackIndex = 0;
 const audioPlayer = document.getElementById("audioPlayer");
-const albumCover = document.getElementById("album-Cover");
+const albumCover = document.getElementById("albumCover-container");
 const trackTitle = document.getElementById("trackTitle");
 const artistName = document.getElementById("artistName");
 const albumTitle = document.getElementById("albumTitle");
@@ -150,32 +151,31 @@ const albumTitle = document.getElementById("albumTitle");
 
 
 function updatePlayer() {
-    artistSelect(currentArtist);
+    // Get the elements after confirming their scope
+    const trackTitle = document.getElementById("trackTitle");
+    const artistName = document.getElementById("artistName");
+    const albumTitle = document.getElementById("albumTitle");
+    const albumCover = document.getElementById("albumCover-container");
+    const audioPlayer = document.getElementById("audioPlayer");
+
+  
 
     const track = tracks[currentTrackIndex];
-    console.log("Track being played:", track);
-    if (audioPlayer) console.log('audioPlayerpresent');
-    if (albumCover) console.log('albumCoverpresent');
-    if (trackTitle) console.log('trackTitlepresnet');
+    albumCover.src = track.artworkUrl30.replace("100x100", "300x300");
+    console.log(track);
+    
 
-
-    if (audioPlayer && albumCover) {
-        audioPlayer.src = track.previewUrl;
-
-        // Set the background image for the album cover (using the div)
-        albumCover.src = track.artworkUrl100.replace("100x100", "300x300");
-        
-        trackTitle.innerText = track.trackName;
-        artistName.innerText = currentArtist;
-        albumSelect(currentArtist);
-    } else {
-        console.log("audioPlayer or albumCover element not found!");
-    }
+    audioPlayer.src = track.previewUrl;
+    trackTitle.innerText = track.trackName;
+    artistName.innerText = currentArtist;
+    albumTitle.innerText = currentAlbum;
 }
 
 
+
 export async function fetchTracks(album) {
-    const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}&entity=musicTrack`);
+    console.log(currentAlbum);
+    const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}+${encodeURIComponent(artistName)}&entity=musicTrack`);
     const trackData = await trackResponse.json();
 
     if (trackData.results && trackData.results.length > 1) {
@@ -184,15 +184,18 @@ export async function fetchTracks(album) {
         );
         if (tracks.length > 0) {
             trackNames = tracks.map(item => item.trackName); 
-            updatePlayer();
+            setTimeout(() =>updatePlayer(), 0);
+
             return;
         } else {
             trackTitle.innerText = "No tracks found.";
-            updatePlayer();
+            setTimeout(() =>updatePlayer(), 0);
+
         }
     } else {
         trackTitle.innerText = "No tracks found.";
-        updatePlayer();
+        setTimeout(() =>updatePlayer(), 0);
+
     }
 }
 
@@ -206,7 +209,8 @@ export function albumSelect(album = null) {
     if (album === 'Ode To You' || album === 'Basement Candy - EP') {
       currentArtist = 'Murdock Street';
     }
-    fetchTracks();
+    setTimeout(() =>fetchTracks(), 0);
+
 
     albumTitle.innerHTML = `${album}`; 
     currentAlbum = `${album}`;
@@ -221,7 +225,9 @@ export function albumSelect(album = null) {
               albumTitle.innerText = `${album}`;
             //   console.log('Album Title set to:', `${album}`);
               currentAlbum = `${album}`;
-              albumSelect(album); //finalization
+              setTimeout(() =>albumSelect(album), 0);
+
+               //finalization
           }
       });
       observer.observe(document.body, { childList: true, subtree: true });

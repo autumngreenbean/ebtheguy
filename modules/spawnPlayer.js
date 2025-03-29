@@ -137,7 +137,7 @@ import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePla
                 makeDraggable(windowContainer, header);
 
         requestAnimationFrame(() => {
-            albumSelect(title);
-        });
+            setTimeout(() =>albumSelect(title), 0);
+                    });
     }
 }
