@@ -18,10 +18,18 @@ The functions:
 
 let currentArtist;
 let currentAlbum;
+let currentTrack;
 let initialize = false;
 let tracks = [];
 let trackNames = [];  
 let isPlaying = false;
+
+let currentTrackIndex = 0;    
+const audioPlayer = document.getElementById("audioPlayer");
+const albumCover = document.getElementById("albumCover-container");
+const trackTitle = document.getElementById("trackTitle");
+const artistName = document.getElementById("artistName");
+const albumTitle = document.getElementById("albumTitle");
 
 function playSelectedTrack(trackName) {
     const trackIndex = tracks.findIndex(track => track.trackName === trackName);
@@ -38,8 +46,7 @@ function playSelectedTrack(trackName) {
     updatePlayer();
     audioPlayer.play();
     isPlaying = true;
-}
-
+} 
 
 export function spawnDropdown(type) {
   let dropdownButton = '';
@@ -58,10 +65,18 @@ export function spawnDropdown(type) {
       dropdownButton = document.querySelector('[data-id="3"]');
   }
 
-  if (type == 'album' && currentArtist == 'Murdock Street') {
-      list = ['Basement Candy - EP', 'Ode to You'];
-      targetDisplay = document.getElementById("albumTitle");
-      dropdownButton = document.querySelector('[data-id="1"]');
+  if (type == 'album') {
+        if (currentAritst == 'Murdock Street') {
+            list = ['Basement Candy - EP', 'Ode to You'];
+            targetDisplay = document.getElementById("albumTitle");
+            dropdownButton = document.querySelector('[data-id="1"]');
+        }
+    }   
+
+  if (type == 'track') {
+    list = trackNames;
+    targetDisplay = document.getElementById("trackTitle");
+    dropdownButton = document.querySelector('[data-id="2"]');
   }
 
   if (!dropdownButton) return;
@@ -131,7 +146,10 @@ export function spawnDropdown(type) {
               setTimeout(() =>albumSelect(album), 0);
           } else if (type === 'track') {
               currentTrack = item;
+              console.log(item);
               trackSelect(currentTrack);
+              playSelectedTrack(currentTrack);
+
           }
           console.log(item + ' selected for ' + type);
       });
@@ -141,12 +159,7 @@ export function spawnDropdown(type) {
   menuContainer.appendChild(scrollbar);
 }
 
-let currentTrackIndex = 0;
-const audioPlayer = document.getElementById("audioPlayer");
-const albumCover = document.getElementById("albumCover-container");
-const trackTitle = document.getElementById("trackTitle");
-const artistName = document.getElementById("artistName");
-const albumTitle = document.getElementById("albumTitle");
+
 
 
 
@@ -158,11 +171,11 @@ function updatePlayer() {
     const albumCover = document.getElementById("albumCover");
     const audioPlayer = document.getElementById("audioPlayer");
 
-    if(albumCover) console.log("found the cover babe :D");
+    // if(albumCover) console.log("found the cover babe :D");
 
     const track = tracks[currentTrackIndex];
     albumCover.src = track.artworkUrl100.replace("100x100", "300x300");
-    console.log(track);
+    // console.log(track);
     
 
     audioPlayer.src = track.previewUrl;
@@ -208,7 +221,8 @@ export function albumSelect(album = null) {
   }
   
   if (albumTitle && album) { 
-    if (album === 'Ode To You' || album === 'Basement Candy - EP') {
+
+    if (album === 'Ode to You' || album === 'Basement Candy - EP') {
       currentArtist = 'Murdock Street';
     }
     setTimeout(() =>fetchTracks(), 0);
@@ -251,6 +265,8 @@ export function artistSelect(artist = null) {
 
 
 export function trackSelect() {
+    console.log(trackNames);
+    spawnDropdown('track');
   
 }
 

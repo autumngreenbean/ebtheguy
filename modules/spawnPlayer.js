@@ -14,14 +14,12 @@ import { makeDraggable } from './makeDraggable.js';
 import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePlayPause } from './selector.js';
 
     export function spawnPlayer(type, title) {
-        if (type && title) {
-
-        }
+     
         const existingPlayer = document.getElementById('windowContainer-audio');
-
+        
         if (existingPlayer) {
-            console.log("oh hello there!");
             albumSelect(title);
+            existingPlayer.style.display = ''; 
             return;
         } else {
             const windowContainer = document.createElement('div');
@@ -127,6 +125,9 @@ import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePla
                             );
                         }
                         setupButtonListeners();
+                        const existingPlayer = document.getElementById('windowContainer-audio');
+                        existingPlayer.style.display = 'none'; 
+                
 
                     } else {
                         console.error('media-player div not found in templates.html');
@@ -141,8 +142,8 @@ import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePla
                 const header = windowContainer.querySelector('#header'); 
                 makeDraggable(windowContainer, header);
 
-        requestAnimationFrame(() => {
-            setTimeout(() =>albumSelect(title), 0);
-                    });
+        // requestAnimationFrame(() => {
+        //     setTimeout(() =>albumSelect(title), 0);
+        //             });
     }
 }
