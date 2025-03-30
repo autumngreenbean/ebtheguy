@@ -14,8 +14,13 @@ import { makeDraggable } from './makeDraggable.js';
 import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePlayPause } from './selector.js';
 
     export function spawnPlayer(type, title) {
+        if (type && title) {
+
+        }
         const existingPlayer = document.getElementById('windowContainer-audio');
+
         if (existingPlayer) {
+            console.log("oh hello there!");
             albumSelect(title);
             return;
         } else {

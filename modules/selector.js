@@ -155,13 +155,13 @@ function updatePlayer() {
     const trackTitle = document.getElementById("trackTitle");
     const artistName = document.getElementById("artistName");
     const albumTitle = document.getElementById("albumTitle");
-    const albumCover = document.getElementById("albumCover-container");
+    const albumCover = document.getElementById("albumCover");
     const audioPlayer = document.getElementById("audioPlayer");
 
-  
+    if(albumCover) console.log("found the cover babe :D");
 
     const track = tracks[currentTrackIndex];
-    albumCover.src = track.artworkUrl30.replace("100x100", "300x300");
+    albumCover.src = track.artworkUrl100.replace("100x100", "300x300");
     console.log(track);
     
 
@@ -175,7 +175,7 @@ function updatePlayer() {
 
 export async function fetchTracks(album) {
     console.log(currentAlbum);
-    const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}+${encodeURIComponent(artistName)}&entity=musicTrack`);
+    const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}+${encodeURIComponent(currentArtist)}&entity=musicTrack`);
     const trackData = await trackResponse.json();
 
     if (trackData.results && trackData.results.length > 1) {
@@ -201,6 +201,8 @@ export async function fetchTracks(album) {
 
 export function albumSelect(album = null) {
   const albumTitle = document.getElementById("albumTitle");
+  const artistName = document.getElementById('artistName');
+
   if (album === null) {
     spawnDropdown('album');
   }
@@ -211,8 +213,9 @@ export function albumSelect(album = null) {
     }
     setTimeout(() =>fetchTracks(), 0);
 
-
+    artistName.innerHTML = currentArtist;
     albumTitle.innerHTML = `${album}`; 
+
     currentAlbum = `${album}`;
   }
 
@@ -254,6 +257,7 @@ export function trackSelect() {
 export function initializePlayer(title) {
   const observer = new MutationObserver(() => {
     const albumTitle = document.getElementById('albumTitle');
+
     if (albumTitle) {
         observer.disconnect(); 
         albumTitle.innerText = title;
