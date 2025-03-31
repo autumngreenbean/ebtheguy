@@ -60,13 +60,13 @@ export function spawnDropdown(type) {
   }
 
   if (type == 'artist') {
-      list = ['Murdock Street', 'Lokadonna', 'tsunxme'];
+      list = ['Murdock Street', 'Lokadonna', 'tsunamë'];
       targetDisplay = document.getElementById("artistName");
       dropdownButton = document.querySelector('[data-id="3"]');
   }
 
   if (type == 'album') {
-        if (currentAritst == 'Murdock Street') {
+        if (currentArtist == 'Murdock Street') {
             list = ['Basement Candy - EP', 'Ode to You'];
             targetDisplay = document.getElementById("albumTitle");
             dropdownButton = document.querySelector('[data-id="1"]');
@@ -142,7 +142,7 @@ export function spawnDropdown(type) {
               artistSelect(currentArtist);
           } else if (type === 'album') {
               currentAlbum = item;
-              
+              let album = item;
               setTimeout(() =>albumSelect(album), 0);
           } else if (type === 'track') {
               currentTrack = item;
@@ -181,13 +181,13 @@ function updatePlayer() {
     audioPlayer.src = track.previewUrl;
     trackTitle.innerText = track.trackName;
     artistName.innerText = currentArtist;
-    albumTitle.innerText = currentAlbum;
 }
 
 
 
 export async function fetchTracks(album) {
-    console.log(currentAlbum);
+  console.log(currentAlbum);
+  console.log(currentArtist);
     const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}+${encodeURIComponent(currentArtist)}&entity=musicTrack`);
     const trackData = await trackResponse.json();
 
@@ -225,31 +225,23 @@ export function albumSelect(album = null) {
     if (album === 'Ode to You' || album === 'Basement Candy - EP') {
       currentArtist = 'Murdock Street';
     }
+
+    if (album === '99 Side A') {
+      currentArtist = "tsunamë";
+    }
+    if (album==="code:GRÄ–Ä–N") {
+      albumTitle.innerHTML = `code:GREEN`; 
+      currentAlbum='code:GRĖĖN (feat. Prod.eb) - EP';
+      currentArtist = 'Lokadonna';
+      console.log(currentAlbum);
+    } else {
+      currentAlbum = `${album}`;
+      albumTitle.innerHTML = `${album}`; 
+    }
+    artistName.innerHTML = currentArtist;
+
     setTimeout(() =>fetchTracks(), 0);
 
-    artistName.innerHTML = currentArtist;
-    albumTitle.innerHTML = `${album}`; 
-
-    currentAlbum = `${album}`;
-  }
-
-  //Initalization
-  if (!albumTitle) {
-      const observer = new MutationObserver(() => {
-          const albumTitle = document.getElementById('albumTitle');
-          if (albumTitle) {
-              observer.disconnect(); 
-              albumTitle.innerText = `${album}`;
-            //   console.log('Album Title set to:', `${album}`);
-              currentAlbum = `${album}`;
-              setTimeout(() =>albumSelect(album), 0);
-
-               //finalization
-          }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-      initialize = true; 
-      return;  
   }
 }
 
@@ -258,6 +250,10 @@ export function artistSelect(artist = null) {
       const artistName = document.getElementById("artistName");
       artistName.innerHTML = `${artist}`; 
       currentArtist=artist;
+      if (artist ==='Murdock Street') albumSelect('Basement Candy - EP');
+      if (artist ==='tsunamë') albumSelect('99 Side A');
+      if (artist ==='Lokadonna') albumSelect('code:GRĖĖN (feat. Prod.eb) - EP');
+
     } else {
     spawnDropdown('artist');
   }
@@ -276,7 +272,13 @@ export function initializePlayer(title) {
 
     if (albumTitle) {
         observer.disconnect(); 
-        albumTitle.innerText = title;
+        if (title==='code:GRÄ–Ä–N') {
+          albumTitle.innerText = 'code:GREEN';
+
+        } else {
+          albumTitle.innerText = title;
+
+        }
         // console.log('Album Title set to:', title);
     }
 });

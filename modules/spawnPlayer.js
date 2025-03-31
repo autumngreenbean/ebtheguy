@@ -10,6 +10,7 @@ The function:
 
 ~ signalkitten <3
 */
+let visible = false;
 import { makeDraggable } from './makeDraggable.js';
 import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePlayPause } from './selector.js';
 
@@ -20,6 +21,7 @@ import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePla
         if (existingPlayer) {
             albumSelect(title);
             existingPlayer.style.display = ''; 
+            visible = true;
             return;
         } else {
             const windowContainer = document.createElement('div');
@@ -43,7 +45,7 @@ import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePla
                     <div class="header-container">
                         <div id="header">
                             <div class="window-title"><img src="icons/cd.png" alt="" style="bottom: 1.5px; position: relative; width:23px; height: 23px; display: inline; background-color: inherit;"> &nbsp;CD Player </div>
-                            <div class="window-box">X</div>
+                            <div class="window-box" id="close-button">X</div>
                         </div>
                     </div>
                     <div class="body-container">
@@ -53,6 +55,7 @@ import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePla
             `;
 
             windowContainer.querySelector(".window-title").innerHTML = '<img src="icons/cd.png" alt="" style="width:20px; height: 20px; display: inline; background-color:#000080;"></div> &nbsp;Audio Production ';
+
 
             fetch('./modules/templates.html')
                 .then(response => response.text()) 
@@ -123,11 +126,18 @@ import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePla
                             document.querySelectorAll('.window-box#dropdown-button[data-id="3"]').forEach(btn => 
                                 btn.addEventListener("click", () => artistSelect(null)) 
                             );
+
+                            const closeButton = document.getElementById("close-button");
+                            closeButton.addEventListener("click", function() {
+                                console.log("Close button clicked"); 
+                                existingPlayer.style.display = 'none'; 
+                                visible = false;
+                            });
                         }
                         setupButtonListeners();
                         const existingPlayer = document.getElementById('windowContainer-audio');
                         existingPlayer.style.display = 'none'; 
-                
+                        visible = false;
 
                     } else {
                         console.error('media-player div not found in templates.html');
@@ -141,7 +151,6 @@ import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePla
                 const windowBox = windowContainer.querySelector('#window-section'); 
                 const header = windowContainer.querySelector('#header'); 
                 makeDraggable(windowContainer, header);
-
         // requestAnimationFrame(() => {
         //     setTimeout(() =>albumSelect(title), 0);
         //             });
