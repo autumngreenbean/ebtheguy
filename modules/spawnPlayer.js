@@ -10,6 +10,8 @@ The function:
 
 ~ signalkitten <3
 */
+
+
 let visible = false;
 import { makeDraggable } from './makeDraggable.js';
 import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePlayPause } from './selector.js';
@@ -151,6 +153,7 @@ import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePla
                 const windowBox = windowContainer.querySelector('#window-section'); 
                 const header = windowContainer.querySelector('#header'); 
                 makeDraggable(windowContainer, header);
+                
         // requestAnimationFrame(() => {
         //     setTimeout(() =>albumSelect(title), 0);
         //             });
