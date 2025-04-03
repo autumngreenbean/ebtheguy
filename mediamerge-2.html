@@ -57,33 +57,6 @@ html, body {
     1px -1px 0 0 #000;
 }
 
-.window-box.aboutbox{
-    bottom:0;
-}
-.aboutbox {
-    font-family: 'w95fa';
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    background-color: #c0c0c0;
-    box-sizing: border-box;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
-
-    padding: 3px;
-    box-shadow: 
-    inset -1px -1px #808080,
-    inset 1px 1px #ffffff,
-    inset -1px 0px #ffffff,
-    -1px -1px 0 0 #dfdfdf,
-    0px -1px 0 0 #dfdfdf,
-    -1px 0px 0 0 #dfdfdf,
-    0px 1px 0 0 #000,
-    1px 1px 0 0 #000,
-    -1px 1px 0 0 #000,
-    1px -1px 0 0 #000;
-}
 
 
 
@@ -97,90 +70,10 @@ html, body {
     justify-content: flex-end; /* Pushes content to the bottom */
 }
 
-.body-container#about{
-    width: 100%;
-    
-    /* background-color: red; */
-    position: relative;
-    height: 75%;
-    /* display: flex; */
-    flex-direction: column;
-    justify-content: center; /* Pushes content to the bottom */
-    align-content: center;
-    align-items: center;
-}
+
 
 /* about */
 
-.body-container .window-box#about-tab{
-    color: black;
-    width:75px;
-    z-index: 0;
-    top:3.5%;
-    left: 2%;
-    position: absolute;
-    height: 14%;
-    border-radius: 2px;
-    margin: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;;
-    box-shadow: 
-    /* inset -1px -1px #808080, */
-    inset 1px 1px #ffffff,
-    inset -1px 0px #ffffff,
-    -1px -1px 0 0 #dfdfdf,
-    0px -1px 0 0 #dfdfdf,
-    -1px 0px 0 0 #dfdfdf,
-    /* 0px 1px 0 0 #000, */
-    /* 1px 1px 0 0 #000, */
-    /* -1px 1px 0 0 #000, */
-    1px -1px 0 0 #000; 
-
-
-}
-
-.body-container .window-box#about-tab-inactive{
-    color: black;
-    width:75px;
-    z-index: -2;
-    top:3.5%;
-    left: 2%;
-    position: absolute;
-    height: 14%;
-    border-radius: 2px;
-    margin: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;;
-    box-shadow: 
-    /* inset -1px -1px #808080, */
-    inset 1px 1px #ffffff,
-    inset -1px 0px #ffffff,
-    -1px -1px 0 0 #dfdfdf,
-    0px -1px 0 0 #dfdfdf,
-    -1px 0px 0 0 #dfdfdf,
-    /* 0px 1px 0 0 #000, */
-    /* 1px 1px 0 0 #000, */
-    /* -1px 1px 0 0 #000, */
-    1px -1px 0 0 #000; 
-
-}
-.body-container .window-box#about{
-    z-index: -1;
-    top:18%;
-    position: absolute;
-    height: 67%;
-    width: 98%;
-}
-.body-container .window-box#about div{
-    background-color: transparent;
-    font-family: 'w95fa';
-    color: black;
-    padding: 5px;
-}
 
 
 #media-player {
@@ -578,12 +471,40 @@ width:50%;}
 
 
 #trackTitle.white-body {
-    background-color: red;
+    /* background-color: red; */
     white-space: nowrap; 
     overflow: hidden; 
 
 }
 
+.window-box#about .body-container{
+
+   position: relative;
+   height: 83%;
+   top: 0;
+   /* background-color: red; */
+   text-align: center;
+   justify-content: center;
+   align-items: center;
+   font-family: 'w95fa';
+   color: black;
+}
+
+
+.window-box#about .body-container .text-container {
+    padding: 20px; 
+    display: inline-block;  
+    font-family: 'w95fa';
+    color: black;
+    background-color: transparent;
+
+}
+
+.window-box#about {
+    justify-content: center;
+    align-items: center;
+    width: 500px; height: 160px; position: absolute; 
+}
 
 
 </style>
@@ -606,56 +527,25 @@ width:50%;}
     <div style = "top:20%; right:20%;" class="block audio" data-title="code:GRĖĖN"><img src="icons/cd.png" alt=""><div class="text-icon">code:GREEN.wav</div></div>
     <div style = "top:50%; right:50%;" class="block audio" data-title="99 Side A"><img src="icons/cd.png" alt=""><div class="text-icon">99 Side A.wav</div></div>
 
-    <div class="window-box"  style="width: 500px; height: 220px; position: absolute; left: 0px; top: 0.0464981px;">
+    <div class="window-box"  id= "about" style="">
         <div class="header-container">
             <div id="header">
                 <div class="window-title"><img src="icons/search-file.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
-                    &nbsp;about ethan </div>
+                    &nbsp;Message box </div>
                 <div class="window-box" id="close-button-about">X</div>
             </div>
         </div>
-        <div class="body-container" id="about">
-            <div class = "window-box" id = "about-tab-inactive" data-title = "Contact" style = "margin-left: 80px;">Contact</div>
-            <div class = "window-box" id = "about-tab" data-title = "About">About</div>
-
-            <div class="window-box" id="about" style="color: black;">
-                <div style = "padding-top: 10px; padding-bottom: none;">name:</div>
-                
-                <div class="white-body" style="position:relative; background-color: white; top: 0; width: 230px; height: 15px; margin-left: 3%; color: black; font-family: 'w95fa'; display: flex; align-items: center; padding-left: 1%;">ebtheguy                 
-                    <div class="window-box" style = "background-color: #c0c0c0; height: 89%; right:0; width: 16px; margin-right: 2px; padding-bottom: 1px;" id= "dropdown-button">&#9660;
-                </div>
-                
+        <div class="body-container">
+            <div class = "text-container"> <span style = "font-family: '95'; background-color: transparent; color: black;">Welcome!</span> <br>This is a short about section for ethan's audio production website. Who knows what will be written here? It could be long, or short - but not too long. 
+            </div>
+            <div class="window-box" style = "width: 30%; height: 20%; justify-content: center; display: flex; align-items: center; "> 
+                <div class = "text-container" style="font-family: '95';">OK</div>
+            </div>
+        </div>
     </div>
     
         
-            </div>
-            <div class = "window-box" id = "" data-title = "" style = "
-            height: 25px; 
-            width: 75px; 
-            position: absolute;
-            top: 93%;
-            right: 1%;
-            color: black;
-            display: flex;
-            align-items: center;">
-            Instagram</div>
-        <div class = "window-box" id = "" data-title = "" style = "
-            height: 25px; 
-            width: 75px; 
-            position: absolute;
-            top: 93%;
-            right: 19%;
-            color: black;
-            display: flex;
-            align-items: center;">
-            Spotify</div>
-            </div>
-  
-
-
-        </div>
-
-    </div>
+    
 
     <audio id="audioPlayer"></audio>
 
