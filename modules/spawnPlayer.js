@@ -33,6 +33,7 @@ import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePla
             windowContainer.style.top = nextLeft; 
             windowContainer.style.left = nextLeft; 
             windowContainer.style.position = 'absolute';
+            windowContainer.style.zIndex = '10';
 
             windowContainer.addEventListener('mousedown', (e) => {
                     windowContainer.style.cursor = 'grabbing';

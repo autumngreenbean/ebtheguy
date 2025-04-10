@@ -216,6 +216,11 @@ html, body {
     display: flex;
     justify-content: space-between; 
     align-items: center; 
+    cursor: grab;
+}
+
+#header:active {
+    cursor: grabbing;
 }
 
 #header .window-title {
@@ -248,6 +253,12 @@ html, body {
     text-align: center;
     align-items: center;
     justify-content: center;
+    cursor: grab;
+}
+
+#header .aboutbox:active {
+   cursor: grabbing;
+    
 }
 .window-title img {
     background-color: transparent;
@@ -501,6 +512,7 @@ width:50%;}
 }
 
 .window-box#about {
+    display: '';
     justify-content: center;
     align-items: center;
     width: 500px; height: 160px; position: absolute; 
@@ -527,20 +539,52 @@ width:50%;}
     <div style = "top:20%; right:20%;" class="block audio" data-title="code:GRĖĖN"><img src="icons/cd.png" alt=""><div class="text-icon">code:GREEN.wav</div></div>
     <div style = "top:50%; right:50%;" class="block audio" data-title="99 Side A"><img src="icons/cd.png" alt=""><div class="text-icon">99 Side A.wav</div></div>
 
-    <div class="window-box"  id= "about" style="">
+    <div class="window-box"  id= "about" data-id="window1" style="height:170px;">
         <div class="header-container">
             <div id="header">
                 <div class="window-title"><img src="icons/search-file.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
                     &nbsp;Message box </div>
-                <div class="window-box" id="close-button-about">X</div>
+                <div class="window-box" id="close-button-about" data-id="window1">X</div>
             </div>
         </div>
-        <div class="body-container">
-            <div class = "text-container"> <span style = "font-family: '95'; background-color: transparent; color: black;">Welcome!</span> <br>This is a short about section for ethan's audio production website. Who knows what will be written here? It could be long, or short - but not too long. 
+        <div class="body-container" style="">
+            <div class = "text-container"> <span style = "font-family: '95'; background-color: transparent; color: black;">Welcome!</span> 
+                <br>This is a short about section for ethan's audio production website. Who knows what will be written here? It could be long, or short - but not too long. 
             </div>
             <div class="window-box" style = "width: 30%; height: 20%; justify-content: center; display: flex; align-items: center; "> 
                 <div class = "text-container" style="font-family: '95';">OK</div>
             </div>
+        </div>
+    </div>
+
+    <div class="window-box"  id= "about" data-id="window2" style="bottom:50%; right: 500; height: 197px;">
+        <div class="header-container">
+            <div id="header">
+                <div class="window-title"><img src="icons/search-file.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                    &nbsp;Contact </div>
+                <div class="window-box" id="close-button-about" data-id="window2">X</div>
+            </div>
+        </div>
+
+        
+        <div class="body-container" style = "margin-top: 0px;">
+                        <div class = "text-container"> <span style = "font-family: '95'; background-color: transparent; color: black;">            
+                            <img src="icons/speaker.png" alt="" style=" width:50px; height: 50px; background-color: transparent; ">
+                            <br><br>
+                            Email me @:</span> myemail@email.com<br>
+                <span style = "font-family: '95'; background-color: transparent; color: black;"> contact @:</span> another-contact-field
+            </div>
+            
+            <div style="background-color: transparent; height: 30px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <div class="window-box" style = "width: 160px; height: 100%; justify-content: center; display: flex; align-items: center; "> 
+                    <div class = "text-container" style="font-family: '95';">Link here</div>
+                </div>
+                <div class="window-box" style = "width: 160px; height: 100%; justify-content: center; display: flex; align-items: center; margin-left: 30px;"> 
+                    <div class = "text-container" style="font-family: '95';">Spotify</div>
+                </div>
+            </div>
+            
+
         </div>
     </div>
     
@@ -551,11 +595,11 @@ width:50%;}
 
 
 <script type="module">
+    import { makeDraggable } from './modules/makeDraggable.js';
     import { spawnPlayer } from './modules/spawnPlayer.js';
     import { initializePlayer } from './modules/selector.js';
     import { updateTime } from './modules/time.js';
     import { about } from './modules/about.js';
-
     spawnPlayer();
 
     const aboutBox = document.getElementById('about-box');
@@ -563,6 +607,17 @@ width:50%;}
     aboutBox.addEventListener('click', function() {
         about();
     });
+
+    const closeButtons = document.querySelectorAll('#close-button-about'); 
+        
+        if (closeButtons.length > 0) {
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const dataId = button.dataset.id;
+                    about(dataId);
+                });
+            });
+        }
   
     document.querySelectorAll('.block.audio').forEach(block => {
             block.addEventListener('click', () => {
@@ -575,10 +630,27 @@ width:50%;}
         aboutBox.addEventListener("click", () => {
         about(); 
     });
-
+    about();
     initializePlayer();
     updateTime();
     setInterval(updateTime, 60000); 
+
+    const aboutWindows = document.querySelectorAll('#about');
+
+    aboutWindows.forEach(win => {
+        const header = win.querySelector('#header');
+        if (header) {
+            makeDraggable(win, header);
+        } else {
+            console.warn('No header found for draggable window:', win);
+        }
+    });
+    const blocks = document.querySelectorAll('.block.audio');
+
+    blocks.forEach(block => {
+        // Apply makeDraggable to each block, and make the entire block draggable (the block itself is the handle)
+        makeDraggable(block, block);
+    });
 });
 
 document.querySelectorAll('.block').forEach(block => {
