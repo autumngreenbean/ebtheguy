@@ -295,6 +295,179 @@ width:50%;}
     inset 1px 1px #808080;
 }
 
+.body-container #white-body { /*blog*/
+    top: 30px;
+    margin-top: 5px;
+    width: 90%;
+    height: 80%;
+    font-family: 'w95fa';
+    color: black;
+    justify-content: left;
+    align-items: left;
+    /* padding-left: 5px; */
+    padding-top: 1px;
+    padding-bottom: .5px;
+    padding-right:1px;
+    background-color: white;
+    position: absolute;
+    display: flex;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+    overflow-x: none;
+}
+
+#blog-item-container {
+    display: block;
+    left: 0;
+    background-color: transparent;
+    width: 100%;
+    top:0;
+    /* height: 99%; */
+    overflow-y: auto;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  box-shadow: 
+    inset -1px -1px #808080,
+    inset 1px 1px #ffffff,
+    inset -1px 0px #ffffff,
+    -1px -1px 0 0 #dfdfdf,
+    0px -1px 0 0 #dfdfdf,
+    -1px 0px 0 0 #dfdfdf,
+    0px 1px 0 0 #000,
+    1px 1px 0 0 #000,
+    -1px 1px 0 0 #000,
+    1px -1px 0 0 #000;}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+#white-body-blog {
+    /* bottom:0; */
+    /* margin-top: 5px; */
+    top: 25px;
+    width: 98%;
+    height: 85%;
+    font-family: 'w95fa';
+    color: black;
+    justify-content: left;
+    display: block;
+    padding-left: 5px;
+    padding-top: 0px;
+    background-color: white;
+    position: absolute;
+    box-shadow: 
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+}
+
+
+#white-body-blog #text-container {
+    margin-top: 0px;
+    top: 2px;
+    width: 98%;
+    height: 96.5%;
+    overflow-y: auto;
+    /* background-color: red; */
+}
+
+#white-body-blog #text-container:focus {
+    outline:none;
+    cursor: text;
+}
+
+.body-container #text-container { /*blog*/
+    margin-top: 5px;
+    top: 0;
+    /* padding-left: 10px; */
+    background-color: transparent;
+    width: 90%;
+    justify-content: left;
+    align-items: left;
+    text-align: left;
+    height: 20px;
+    font-family: 'w95fa';
+    color: black;
+    justify-content: left;
+    display: flex;
+    /* padding-left: 5px; */
+    padding-top: 10px;
+    position: absolute;
+   
+}
+
+
+
+#blog-item {
+    width:fit-content;
+    /* background-color: red; */
+    /* outline-style: dotted; */
+    display:flex;
+    cursor: pointer;
+    background-color: transparent;
+    color: black;
+    font-family: 'w95fa';
+    height: 20px;
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+    /* padding-top: 2px; */
+    padding-left: 2px;
+    padding-right: 5px;
+    margin-top: 5px;
+}
+#blog-item-text{
+    width:fit-content;
+    position: relative;
+    /* outline-style: dotted; */
+    cursor: pointer;
+    background-color: transparent;
+    color: black;
+    font-family: 'w95fa';
+    height: auto;
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+    /* padding-top: 2px; */
+    padding-left: 2px;
+    padding-right: 5px;
+    margin-top: 5px;
+}
+
+#blog-item-text:active {
+    width:fit-content;
+    cursor: pointer;
+    color: black;
+    font-family: 'w95fa';
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+    outline-style: dotted;
+    background-image: linear-gradient(to right, transparent 49%, rgba(0, 0, 128, 0.5) 50%, rgba(0, 0, 128, 0.5) 51%, transparent 100%),
+                      linear-gradient(to bottom, transparent 49%, rgba(0, 0, 128, 0.5) 50%, rgba(0, 0, 128, 0.5) 51%, transparent 100%);
+    background-size: 1px 1px;
+    z-index: 2;
+    -webkit-mask-image: var(--mask-url);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-image: var(--mask-url);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    cursor:grabbing;
+}
+
 #audioInfo {
     position: absolute;
     top: 15px; 
@@ -511,6 +684,13 @@ width:50%;}
 
 }
 
+#text-container u {
+    all: unset; 
+    text-decoration: underline;
+    font: inherit;
+    color: inherit;
+}
+
 .window-box#about {
     display: '';
     justify-content: center;
@@ -519,15 +699,45 @@ width:50%;}
 }
 
 
+.window-box#blog .body-container{
+
+position: relative;
+height: 100%;
+top: 0;
+/* background-color: red; */
+text-align: center;
+justify-content: center;
+align-items: center;
+font-family: 'w95fa';
+color: black;
+}
+
+
+.window-box#blog .body-container .text-container {
+ padding: 20px; 
+ display: inline-block;  
+ font-family: 'w95fa';
+ color: black;
+ background-color: transparent;
+
+}
+
+.window-box#blog {
+ display: '';
+ justify-content: center;
+ align-items: center;
+ width: 500px; height: 160px; position: absolute; 
+}
+
 </style>
 </head>
 <div class = "dock">
     <div class ="window-box" id = "about-box">
         <img src="icons/search-file.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
         About eb</div> 
-     <div class ="window-box">
+     <div class ="window-box" id = "blog-box">
         <img src="icons/scandisk.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
-        Journal</div> 
+        Notes</div> 
 
         <div class="grey-body" style = "position: absolute; right:0; margin-right: 5px;">
             <span id="time" style="color:black; font-family: 'w95fa'; background-color: inherit;"></span>
@@ -588,8 +798,117 @@ width:50%;}
         </div>
     </div>
     
-        
+    <div class="window-box"  id= "blog" data-id="blog1" style="height:500px; width: 400px; right: 50%;">
+        <div class="header-container">
+            <div id="header">
+                <div class="window-title"><img src="icons/search-file.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                    &nbsp;Notepad Editor - title</div>
+                <div class="window-box" id="close-button-about" data-id="blog1">X</div>
+            </div>
+        </div>
+        <div class="body-container" style="">
+            <div id="text-container" style = "width:100%; padding-left: 15px; padding-top: 0px;">
+                <u>F</u>ile &nbsp; <u>E</u>dit &nbsp; <u>S</u>earch &nbsp; <u>H</u>elp
+            </div>
+            <div id="white-body-blog" style="">
+                <div id="text-container" contenteditable="true">
+                    Example text here is for blog data for writing from a blog blah blah blah
+                </div>
+            </div>
+        </div>
+    </div>
     
+    <div class="window-box"  id= "blog" data-id="blog2" style="height:500px; width: 300px;">
+        <div class="header-container">
+            <div id="header">
+                <div class="window-title"><img src="icons/search-file.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                    &nbsp;Notes Archive </div>
+                <div class="window-box" id="close-button-about" data-id="blog2">X</div>
+            </div>
+        </div>
+
+        <div class="body-container" style="">
+            <div id = "text-container">Click an item to open in Notepad editor.</div>
+            <div id = "white-body"> 
+                <div id = "blog-item-container">
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                    <div id = "blog-item">
+                        <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        <div id = "blog-item-text">blog item - month/date/year</div>
+                    </div> 
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
 
     <audio id="audioPlayer"></audio>
 
@@ -600,12 +919,20 @@ width:50%;}
     import { initializePlayer } from './modules/selector.js';
     import { updateTime } from './modules/time.js';
     import { about } from './modules/about.js';
+    import { blog } from './modules/blog.js';
+
     spawnPlayer();
 
     const aboutBox = document.getElementById('about-box');
 
-    aboutBox.addEventListener('click', function() {
+    aboutBox.addEventListener('click', function() {     
         about();
+    });
+
+    const blogBox = document.getElementById('blog-box');
+
+    blogBox.addEventListener('click', function() {     
+        blog();
     });
 
     const closeButtons = document.querySelectorAll('#close-button-about'); 
@@ -630,6 +957,7 @@ width:50%;}
         aboutBox.addEventListener("click", () => {
         about(); 
     });
+    blog();
     about();
     initializePlayer();
     updateTime();
@@ -645,6 +973,19 @@ width:50%;}
             console.warn('No header found for draggable window:', win);
         }
     });
+
+    const blogWindows = document.querySelectorAll('#blog');
+
+    blogWindows.forEach(win => {
+    const header = win.querySelector('#header');
+    if (header) {
+        makeDraggable(win, header);
+    } else {
+        console.warn('No header found for draggable window:', win);
+    }
+});
+
+
     const blocks = document.querySelectorAll('.block.audio');
 
     blocks.forEach(block => {
