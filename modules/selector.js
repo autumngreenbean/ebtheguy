@@ -221,7 +221,7 @@ export function albumSelect(album = null) {
   }
   
   if (albumTitle && album) { 
-
+    console.log('!!! ALBUM IS: ' + album)
     if (album === 'Ode to You' || album === 'Basement Candy - EP') {
       currentArtist = 'Murdock Street';
     }
@@ -274,7 +274,7 @@ export function initializePlayer(title) {
         observer.disconnect(); 
         if (title==='code:GRÄ–Ä–N') {
           albumTitle.innerText = 'code:GREEN';
-
+          currentAlbum='code:GRĖĖN (feat. Prod.eb) - EP';
         } else {
           albumTitle.innerText = title;
 

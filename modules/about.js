@@ -21,8 +21,8 @@ export function about(dataId) {
         return;
     }
 
-    const windowToClose = document.querySelector(`#about[data-id="${dataId}"]`);
-    if (windowToClose) {
+    const windowAboutToClose = document.querySelector(`#about[data-id="${dataId}"]`);
+    if (windowAboutToClose) {
         // console.log(`Hiding #about[data-id="${dataId}"]`);
         windowToClose.style.display = 'none';
     } else {
