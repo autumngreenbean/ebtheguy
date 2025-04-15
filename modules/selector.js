@@ -180,7 +180,7 @@ function updatePlayer() {
 
     audioPlayer.src = track.previewUrl;
     trackTitle.innerText = track.trackName;
-    artistName.innerText = currentArtist;
+    // artistName.innerText = currentArtist; //??
 }
 
 
@@ -229,8 +229,8 @@ export function albumSelect(album = null) {
     if (album === '99 Side A') {
       currentArtist = "tsunamë";
     }
-    if (album==="code:GRÄ–Ä–N") {
-      albumTitle.innerHTML = `code:GREEN`; 
+    if (album==="code:GRÄ–Ä–N (feat. Prod.eb) - EP") {
+      albumTitle.innerHTML = `code:GRĖĖN (feat. Prod.eb) - EP`; 
       currentAlbum='code:GRĖĖN (feat. Prod.eb) - EP';
       currentArtist = 'Lokadonna';
       console.log(currentAlbum);
@@ -246,6 +246,7 @@ export function albumSelect(album = null) {
 }
 
 export function artistSelect(artist = null) {
+  console.log('artistSelect() '+artist)
     if (artist) { //Initialization
       const artistName = document.getElementById("artistName");
       artistName.innerHTML = `${artist}`; 
