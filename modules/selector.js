@@ -229,7 +229,7 @@ export function albumSelect(album = null) {
     if (album === '99 Side A') {
       currentArtist = "tsunamë";
     }
-    if (album==="code:GRÄ–Ä–N (feat. Prod.eb) - EP") {
+    if (album==="code:GRÄ–Ä–N (feat. Prod.eb) - EP"||"code:GRĖĖN (feat. Prod.eb) - EP") {
       albumTitle.innerHTML = `code:GRĖĖN (feat. Prod.eb) - EP`; 
       currentAlbum='code:GRĖĖN (feat. Prod.eb) - EP';
       currentArtist = 'Lokadonna';
