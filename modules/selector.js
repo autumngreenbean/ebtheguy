@@ -212,7 +212,7 @@ export async function fetchTracks(album) {
     }
 }
 
-export function albumSelect(album = null) {
+export function albumSelect(album = null) { //issue with artistName not being initialized in first lokadonna block press
   const albumTitle = document.getElementById("albumTitle");
   const artistName = document.getElementById('artistName');
 
@@ -233,7 +233,7 @@ export function albumSelect(album = null) {
       albumTitle.innerHTML = `code:GRĖĖN (feat. Prod.eb) - EP`; 
       currentAlbum='code:GRĖĖN (feat. Prod.eb) - EP';
       currentArtist = 'Lokadonna';
-      console.log(currentAlbum);
+      console.log(currentAlbum); //deug here~!!!!!~~!!!
     } else {
       currentAlbum = `${album}`;
       albumTitle.innerHTML = `${album}`; 
