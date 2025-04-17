@@ -1,30 +1,31 @@
+/* 
+about.js is a simple function that hides #about windows on page load, and spawns them on a button click. 
+Targeted windows will close if about.js is called with their data-id as the parameter.
+*/
+
 let hasInitialized = false;
 
 export function about(dataId) {
     const allAbouts = document.querySelectorAll('#about');
 
     if (!hasInitialized) {
-        // console.log("First call: hiding all visible #about elements...");
         allAbouts.forEach(el => {
             el.style.display = 'none';
         });
         hasInitialized = true;
-        return; 
+        return;
     }
 
     if (!dataId) {
-        // console.log("About button pressed — showing all #about containers...");
         allAbouts.forEach(el => {
             el.style.display = '';
-            el.style.zIndex = '2'
         });
         return;
     }
 
     const windowAboutToClose = document.querySelector(`#about[data-id="${dataId}"]`);
     if (windowAboutToClose) {
-        // console.log(`Hiding #about[data-id="${dataId}"]`);
-        windowToClose.style.display = 'none';
+        windowAboutToClose.style.display = 'none';
     } else {
         console.warn(`No #about[data-id="${dataId}"] found`);
     }
