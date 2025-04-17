@@ -4,6 +4,7 @@ eventListeners.js is a simple function that initializes all misc. event-listener
 
 import { makeDraggable } from './makeDraggable.js';
 import { initializePlayer } from './selector.js';
+import { spawnPlayer } from './spawnPlayer.js';
 import { updateTime } from './time.js';
 import { about } from './about.js';
 import { blog } from './blog.js';
