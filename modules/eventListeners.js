@@ -2,13 +2,12 @@
 eventListeners.js is a simple function that initializes all misc. event-listeners for the document 
 */
 
-import { makeDraggable } from './makeDraggable.js';
 import { initializePlayer } from './selector.js';
+import { makeDraggable } from './makeDraggable.js';
 import { spawnPlayer } from './spawnPlayer.js';
 import { updateTime } from './time.js';
 import { about } from './about.js';
 import { blog } from './blog.js';
-
 
 export function setupEventListeners() {
     const aboutBox = document.getElementById('about-box');
@@ -32,7 +31,6 @@ export function setupEventListeners() {
         });
     });
 
-
     const closeAboutButtons = document.querySelectorAll('#close-button-about');
 
     if (closeAboutButtons.length > 0) {
@@ -44,8 +42,6 @@ export function setupEventListeners() {
             });
         });
     }
-
-
 
     document.querySelectorAll('.block.audio').forEach(block => {
         block.addEventListener('click', () => {
