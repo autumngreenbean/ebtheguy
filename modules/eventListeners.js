@@ -31,7 +31,8 @@ export function setupEventListeners() {
         });
     });
 
-    const closeAboutButtons = document.querySelectorAll('#close-button-about');
+    
+    const closeAboutButtons = document.querySelectorAll('#close-button-about, #about-OK');
 
     if (closeAboutButtons.length > 0) {
         closeAboutButtons.forEach(button => {

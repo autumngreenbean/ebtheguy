@@ -1,15 +1,13 @@
-let zIndexCounter = 2;  // Start higher than block background
-
+let zIndexCounter = 2;  
 export function makeDraggable(container, handle) {
     let offsetX = 0, offsetY = 0;
     let isDragging = false;
     const isBlock = container.classList.contains("block");
 
-    // Set initial z-index
     if (isBlock) {
-        container.style.zIndex = 0; // Always in the background
+        container.style.zIndex = 0; 
     } else {
-        container.style.zIndex = zIndexCounter++; // Always spawn on top
+        container.style.zIndex = zIndexCounter++; 
     }
 
     handle.addEventListener('mousedown', (e) => {
@@ -17,7 +15,6 @@ export function makeDraggable(container, handle) {
         offsetX = e.clientX - container.getBoundingClientRect().left;
         offsetY = e.clientY - container.getBoundingClientRect().top;
 
-        // Bring to front if it's a non-block
         if (!isBlock) {
             container.style.zIndex = zIndexCounter++;
         }

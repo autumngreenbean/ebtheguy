@@ -147,6 +147,8 @@ body {
     outline: 1px dotted black;
 }
 
+
+
 #media-control-container {
     display: flex;
     bottom: 25px;
@@ -697,6 +699,13 @@ body {
     color: black;
 }
 
+.window-box#about-button:active {
+    /*zz*/
+    box-shadow:
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+    outline: 1px dotted black;
+}
 
 .window-box#about .body-container .text-container {
     padding: 20px;

@@ -12,7 +12,7 @@ The function:
 
 let visible = false;
 import { makeDraggable } from './makeDraggable.js';
-import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, togglePlayPause } from './selector.js';
+import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, play, pause } from './selector.js';
 
 export function spawnPlayer(type, title) {
 
@@ -22,6 +22,10 @@ export function spawnPlayer(type, title) {
         albumSelect(title);
         existingPlayer.style.display = '';
         visible = true;
+        document.querySelector('.window-box[data-id="4"] .media-svg')?.classList.add('clicked'); //pause
+        document.querySelector('#media-control-button[data-id="3"] .media-svg')?.classList.remove('clicked'); //stop play
+        const existingMenu = document.getElementById('menu-container');
+        existingMenu.remove();
         return;
     } else {
         const windowContainer = document.createElement('div');
@@ -100,7 +104,7 @@ export function spawnPlayer(type, title) {
                                     if (stopSvg) {
                                         stopSvg.classList.remove('clicked');
                                     }
-                                    togglePlayPause();
+                                    play();
                                 });
                             }
                             if (button.dataset.id === "4") {
@@ -113,7 +117,7 @@ export function spawnPlayer(type, title) {
                                     if (playSvg) {
                                         playSvg.classList.remove('clicked');
                                     }
-                                    togglePlayPause();
+                                    pause();
                                 });
                             }
                         });

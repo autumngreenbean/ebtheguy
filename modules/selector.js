@@ -9,7 +9,6 @@ The functions:
 - trackSelect sets the selected track.
 - initializePlayer sets the initial album title.
 - updatePlayer updates the CD Player with the selected track.
-- togglePlayPause toggles the play/pause state of the audio player.
 - nextTrack plays the next track in the playlist.
 - prevTrack plays the previous track in the playlist.
 */
@@ -30,10 +29,12 @@ const artistName = document.getElementById("artistName");
 const albumTitle = document.getElementById("albumTitle");
 
 function playSelectedTrack(trackName) {
+  const existingMenu = document.getElementById('menu-container');
+  existingMenu.remove();
+
   const trackIndex = tracks.findIndex(track => track.trackName === trackName);
   document.querySelector('#media-control-button[data-id="3"] .media-svg')?.classList.add('clicked');
   document.querySelector('.window-box[data-id="4"] .media-svg')?.classList.remove('clicked');
-
 
   if (trackIndex === -1) {
     console.error("Track not found:", trackName);
@@ -162,26 +163,16 @@ export function spawnDropdown(type) {
 
 
 function updatePlayer() {
-  // Get the elements after confirming their scope
   const trackTitle = document.getElementById("trackTitle");
   const artistName = document.getElementById("artistName");
   const albumTitle = document.getElementById("albumTitle");
   const albumCover = document.getElementById("albumCover");
   const audioPlayer = document.getElementById("audioPlayer");
-
-  // if(albumCover) console.log("found the cover babe :D");
-
   const track = tracks[currentTrackIndex];
   albumCover.src = track.artworkUrl100.replace("100x100", "300x300");
-  // console.log(track);
-
-
   audioPlayer.src = track.previewUrl;
   trackTitle.innerText = track.trackName;
-  // artistName.innerText = currentArtist; //??
 }
-
-
 
 export async function fetchTracks(album) {
   console.log(currentAlbum);
@@ -193,24 +184,21 @@ export async function fetchTracks(album) {
     tracks = trackData.results.filter(item =>
       item.wrapperType === "track" && item.artistName === currentArtist
     );
-    if (tracks.length > 0) {
-      trackNames = tracks.map(item => item.trackName);
-      setTimeout(() => updatePlayer(), 0);
-
-      return;
-    } else {
-      trackTitle.innerText = "No tracks found.";
-      setTimeout(() => updatePlayer(), 0);
-
-    }
+  if (tracks.length > 0) {
+    trackNames = tracks.map(item => item.trackName);
+    setTimeout(() => updatePlayer(), 0);
+    return;
   } else {
     trackTitle.innerText = "No tracks found.";
     setTimeout(() => updatePlayer(), 0);
-
+  }
+  } else {
+    trackTitle.innerText = "No tracks found.";
+    setTimeout(() => updatePlayer(), 0);
   }
 }
 
-export function albumSelect(album = null) { //issue with artistName not being initialized in first lokadonna block press
+export function albumSelect(album = null) { 
   const albumTitle = document.getElementById("albumTitle");
   const artistName = document.getElementById('artistName');
 
@@ -231,15 +219,13 @@ export function albumSelect(album = null) { //issue with artistName not being in
       albumTitle.innerHTML = `code:GRĖĖN (feat. Prod.eb) - EP`;
       currentAlbum = 'code:GRĖĖN (feat. Prod.eb) - EP';
       currentArtist = 'Lokadonna';
-      console.log(currentAlbum); //deug here~!!!!!~~!!!
+      console.log(currentAlbum);
     } else {
       currentAlbum = `${album}`;
       albumTitle.innerHTML = `${album}`;
     }
     artistName.innerHTML = currentArtist;
-
     setTimeout(() => fetchTracks(), 0);
-
   }
 }
 
@@ -276,9 +262,7 @@ export function initializePlayer(title) {
         currentAlbum = 'code:GRĖĖN (feat. Prod.eb) - EP';
       } else {
         albumTitle.innerText = title;
-
       }
-      // console.log('Album Title set to:', title);
     }
   });
   observer.observe(document.body, { childList: true, subtree: true });
@@ -288,14 +272,18 @@ export function initializePlayer(title) {
 
 // <--media controls-->
 
-export function togglePlayPause() {
-  if (isPlaying) {
-    audioPlayer.pause();
-  } else {
-    audioPlayer.play();
-  }
-  isPlaying = !isPlaying;
+export function play() { //toggle
+  audioPlayer.play();
+  document.querySelector('#media-control-button[data-id="3"] .media-svg')?.classList.add('clicked'); //play
+  document.querySelector('.window-box[data-id="4"] .media-svg')?.classList.remove('clicked'); //stop pause
 }
+
+export function pause() {
+  audioPlayer.pause();
+  document.querySelector('#media-control-button[data-id="3"] .media-svg')?.classList.remove('clicked'); //stop play
+  document.querySelector('.window-box[data-id="4"] .media-svg')?.classList.add('clicked'); //pause
+}
+
 
 
 
