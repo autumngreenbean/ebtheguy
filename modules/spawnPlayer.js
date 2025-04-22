@@ -24,7 +24,9 @@ export function spawnPlayer(type, title) {
         visible = true;
         document.querySelector('.window-box[data-id="4"] .media-svg')?.classList.add('clicked'); //pause
         document.querySelector('#media-control-button[data-id="3"] .media-svg')?.classList.remove('clicked'); //stop play
+        const header = existingPlayer.querySelector('#header');
         const existingMenu = document.getElementById('menu-container');
+        if (header) makeDraggable(existingPlayer, header);
         if (existingMenu) existingMenu.remove();
         return;
     } else {

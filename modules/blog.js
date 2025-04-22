@@ -10,8 +10,10 @@ The function:
 - Displays blog content in a menu display and full-display text editor
 - Creates and displays a loading animation while blog content loads 
 
-~ signalkitten <3
+~ <3
 */
+
+import { makeDraggable } from './makeDraggable.js';
 
 let blogInitialized = false;
 let loadedContent = false;
@@ -24,8 +26,8 @@ export function blog(dataId) {
     allBlogs.forEach(el => {
       el.style.display = 'none';
     });
-    blogForum.forEach(el => {
-      el.style.display = 'none';
+    blogForum.forEach(ol => {
+      ol.style.display = 'none';
     });
     blogInitialized = true;
     return;
@@ -34,9 +36,17 @@ export function blog(dataId) {
     allBlogs.forEach(el => {
       el.style.display = '';
     });
-    blogForum.forEach(el => {
-      el.style.display = '';
-    });
+    const blogWindows = document.querySelectorAll('#blog');
+    blogWindows.forEach(blo => {
+    const blogger = blo.querySelector('#header');
+    if (blogger) {
+        makeDraggable(blo, blogger);
+    } else {
+        console.warn('No header found for draggable window:', blo);
+    }
+});
+
+
   }
   else if (dataId) {
     let windowToClose;
@@ -154,7 +164,29 @@ export function blogPost() {
     
     console.log("Form Data:", data);  // Log data to see if it's populated correctly
 
-    // Send data to Apps Script
+
+    let dotIntervalStarted = false;
+
+    function startLoadingAnimation() {
+      if (dotIntervalStarted) return;
+      dotIntervalStarted = true;
+  
+      let dotCount = 0;
+      const interval = setInterval(() => {
+        const dots = document.getElementById('dots');
+        if (!dots) {
+          clearInterval(interval);
+          return;
+        }
+        dotCount = (dotCount + 1) % 4;
+        dots.textContent = '.'.repeat(dotCount);
+      }, 500);
+    }
+    startLoadingAnimation();
+  
+    const loadingElement = document.getElementById('submit-animation');
+    const loadingInterval = startLoadingAnimation();
+  
     try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbz6g8NIBQ0FWeOnl6WJ4mMsOhcFPT-rbpSqCZjIbUG75B7N7VS5EH1DK8U7alvjFUcL/exec', { 
             method: 'POST',

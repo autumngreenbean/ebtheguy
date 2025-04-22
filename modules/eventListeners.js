@@ -17,6 +17,16 @@ export function setupEventListeners() {
             event.preventDefault(); 
             console.log('Cmd-E');
             document.querySelector(`#blogpost[data-id="blog3"]`).style.display = '';
+
+            const blogForumWindow = document.querySelectorAll('#blogpost');
+            blogForumWindow.forEach(wind => {
+                const headero = wind.querySelector('#header');
+                if (headero) {
+                    makeDraggable(wind, headero);
+                } else {
+                    console.warn('No header found for draggable window:', wind);
+                }
+            });
             blogPost();  
         }
     });
@@ -70,15 +80,15 @@ export function setupEventListeners() {
         updateTime();
         setInterval(updateTime, 60000);
 
-    const aboutWindows = document.querySelectorAll('#about');
-    aboutWindows.forEach(win => {
-        const header = win.querySelector('#header');
-        if (header) {
-            makeDraggable(win, header);
-        } else {
-            console.warn('No header found for draggable window:', win);
-        }
-    });
+    // const aboutWindows = document.querySelectorAll('#about');
+    // aboutWindows.forEach(win => {
+    //     const header = win.querySelector('#header');
+    //     if (header) {
+    //         makeDraggable(win, header);
+    //     } else {
+    //         console.warn('No header found for draggable window:', win);
+    //     }
+    // });
 
     const blogWindows = document.querySelectorAll('#blog');
     blogWindows.forEach(win => {
