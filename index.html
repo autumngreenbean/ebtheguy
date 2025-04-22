@@ -22,20 +22,12 @@
             </div>
         </div>
 
-        <div style="top:15%; right:90%;" class="block audio" data-title="Basement Candy - EP"><img src="icons/cd.png" alt="">
-            <div class="text-icon">Basement-Candy.wav</div>
-        </div>
-        <div style="top:75%; right:10%;" class="block audio" data-title="Ode to You"><img src="icons/cd.png" alt="">
-            <div class="text-icon">Ode-to-You.wav</div>
-        </div>
-        <div style="top:20%; right:20%;" class="block audio" data-title="code:GRĖĖN (feat. Prod.eb) - EP"><img
-                src="icons/cd.png" alt="">
-            <div class="text-icon">code:GREEN.wav</div>
-        </div>
-        <div style="top:50%; right:50%;" class="block audio" data-title="99 Side A"><img src="icons/cd.png" alt="">
-            <div class="text-icon">99 Side A.wav</div>
-        </div>
+        <div style="top:15%; right:90%;" class="block audio" data-title="Basement Candy - EP"><img src="icons/cd.png" alt=""><div class="text-icon">Basement-Candy.wav</div></div>
+        <div style="top:75%; right:10%;" class="block audio" data-title="Ode to You"><img src="icons/cd.png" alt=""><div class="text-icon">Ode-to-You.wav</div></div>
+        <div style="top:20%; right:20%;" class="block audio" data-title="code:GRĖĖN (feat. Prod.eb) - EP"><img src="icons/cd.png" alt=""><div class="text-icon">code:GREEN.wav</div></div>
+        <div style="top:50%; right:50%;" class="block audio" data-title="99 Side A"><img src="icons/cd.png" alt=""><div class="text-icon">99 Side A.wav</div></div>
 
+        <!-- about -->
         <div class="window-box" id="about" data-id="window1" style="height:170px;">
             <div class="header-container">
                 <div id="header">
@@ -46,8 +38,7 @@
                 </div>
             </div>
             <div class="body-container" style="">
-                <div class="text-container"> <span
-                        style="font-family: '95'; background-color: transparent; color: black;">Welcome!</span>
+                <div class="text-container"> <span style="font-family: '95'; background-color: transparent; color: black;">Welcome!</span>
                     <br>This is a short about section for ethan's audio production website. Who knows what will be written here?
                     It could be long, or short - but not too long.
                 </div>
@@ -56,7 +47,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- about 2 -->
         <div class="window-box" id="about" data-id="window2" style="bottom:50%; right: 500; height: 197px;">
             <div class="header-container">
                 <div id="header">
@@ -92,7 +83,7 @@
 
             </div>
         </div>
-
+        <!-- blog display -->
         <div class="window-box" id="blog" data-id="blog1" style="height:500px; width: 400px; right: 50%;">
             <div class="header-container">
                 <div id="header">
@@ -113,7 +104,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- blog content display -->
         <div class="window-box" id="blog" data-id="blog2" style="height:500px; width: 300px;">
             <div class="header-container">
                 <div id="header">
@@ -123,7 +114,6 @@
                     <div class="window-box" id="close-button" data-id="blog2">X</div>
                 </div>
             </div>
-
             <div class="body-container" style="">
                 <div id="text-container"></div>
                 <div id="white-body">
@@ -205,13 +195,38 @@
                                 <div id = "blog-item-text">blog item - month/date/year</div>
                             </div>  -->
                     </div>
-
                 </div>
-
             </div>
         </div>
 
-        <audio id="audioPlayer"></audio>
+        <!-- blog post forum -->
+        <div class="window-box"  id = "blogpost" data-id = "blog3" style="position: fixed; height:500px; width: 700px; right: 100;">
+            <div class="header-container">
+                <div id="header">
+                    <div class="window-title"><img src="icons/search-file.png" alt=""
+                            style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
+                        &nbsp;Notepad Editor - title</div>
+                    <div class="window-box" id="close-button" data-id="blog3">X</div>
+                </div>
+            </div>
+            <div class="body-container" style="" >
+                <div id="white-body-blog" style="background-color: transparent; height: 95%; top:0;">
+                    <form id="form-content">
+                        <div id="time-data">year-month-date 00:00</div>
+                    
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required><br><br>
+                    
+                        <label for="body">Message:</label>
+                        <textarea id="body" name="message" required></textarea>
+                    
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    <audio id="audioPlayer"></audio>
     </html>
 </body>
 

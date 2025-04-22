@@ -18,8 +18,13 @@ let loadedContent = false;
 
 export function blog(dataId) {
   const allBlogs = document.querySelectorAll('#blog');
+  const blogForum = document.querySelectorAll('#blogpost');
+
   if (!blogInitialized) {
     allBlogs.forEach(el => {
+      el.style.display = 'none';
+    });
+    blogForum.forEach(el => {
       el.style.display = 'none';
     });
     blogInitialized = true;
@@ -29,13 +34,23 @@ export function blog(dataId) {
     allBlogs.forEach(el => {
       el.style.display = '';
     });
+    blogForum.forEach(el => {
+      el.style.display = '';
+    });
   }
-
-  const windowToClose = document.querySelector(`#blog[data-id="${dataId}"]`);
-  if (windowToClose) {
+  else if (dataId) {
+    let windowToClose;
+    console.log('windowtoClose=' + dataId)
+    if (dataId == 'blog3') {
+       windowToClose = document.querySelector(`#blogpost[data-id="${dataId}"]`);
+    } else {
+       windowToClose = document.querySelector(`#blog[data-id="${dataId}"]`);  
+    }
+    if (windowToClose) {
     windowToClose.style.display = 'none';
-  } else {
+    } 
   }
+  
   const postsContainer = document.getElementById('blog-item-container');
 
   let dotIntervalStarted = false;
@@ -106,3 +121,53 @@ function loadBlogContent(post) {
   }
 }
 
+export function blogPost() { 
+  const now = new Date();
+  const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
+  const currentYear = now.getFullYear();
+  const currentDate = String(now.getDate()).padStart(2, '0');
+  const currentHour = String(now.getHours()).padStart(2, '0');  
+  const currentMinute = String(now.getMinutes()).padStart(2, '0'); 
+
+
+  const currentTime = `${currentHour}:${currentMinute}`;
+
+  document.getElementById('time-data').innerHTML = `${currentYear}-${currentMonth}-${currentDate}`;
+
+  document.getElementById('form-content').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    // Get the current date
+
+
+    // Gather form data
+    const formData = new FormData(this);
+    const data = {
+        title: formData.get('title'),
+        year: currentYear,
+        month: currentMonth,
+        date: currentDate,
+        time: currentTime,
+        body: formData.get('message')
+    };
+
+    
+    console.log("Form Data:", data);  // Log data to see if it's populated correctly
+
+    // Send data to Apps Script
+    try {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbz6g8NIBQ0FWeOnl6WJ4mMsOhcFPT-rbpSqCZjIbUG75B7N7VS5EH1DK8U7alvjFUcL/exec', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(data),
+        });
+
+        const result = await response.text();  // Get the response text
+        console.log("Response from server:", result);  // Log response
+    } catch (error) {
+        console.error("Error submitting form:", error);  // Log any errors
+    }
+  });
+}

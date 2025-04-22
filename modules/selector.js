@@ -53,7 +53,6 @@ export function spawnDropdown(type) {
   let targetDisplay = null;
   const existingMenu = document.getElementById('menu-container');
   if (existingMenu) {
-    console.log('byebye!');
     existingMenu.remove();
     return;
   }
@@ -145,12 +144,12 @@ export function spawnDropdown(type) {
         setTimeout(() => albumSelect(album), 0);
       } else if (type === 'track') {
         currentTrack = item;
-        console.log(item);
+        // console.log(item);
         trackSelect(currentTrack);
         playSelectedTrack(currentTrack);
 
       }
-      console.log(item + ' selected for ' + type);
+      // console.log(item + ' selected for ' + type);
     });
     menuContainer.appendChild(menuDiv);
   });
@@ -175,8 +174,6 @@ function updatePlayer() {
 }
 
 export async function fetchTracks(album) {
-  console.log(currentAlbum);
-  console.log(currentArtist);
   const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}+${encodeURIComponent(currentArtist)}&entity=musicTrack`);
   const trackData = await trackResponse.json();
 
@@ -207,7 +204,6 @@ export function albumSelect(album = null) {
   }
 
   if (albumTitle && album) {
-    console.log('!!! ALBUM IS: ' + album)
     if (album === 'Ode to You' || album === 'Basement Candy - EP') {
       currentArtist = 'Murdock Street';
     }
@@ -219,7 +215,7 @@ export function albumSelect(album = null) {
       albumTitle.innerHTML = `code:GRĖĖN (feat. Prod.eb) - EP`;
       currentAlbum = 'code:GRĖĖN (feat. Prod.eb) - EP';
       currentArtist = 'Lokadonna';
-      console.log(currentAlbum);
+      // console.log(currentAlbum);
     } else {
       currentAlbum = `${album}`;
       albumTitle.innerHTML = `${album}`;
@@ -230,7 +226,7 @@ export function albumSelect(album = null) {
 }
 
 export function artistSelect(artist = null) {
-  console.log('artistSelect() ' + artist)
+  // console.log('artistSelect() ' + artist)
   if (artist) { //Initialization
     const artistName = document.getElementById("artistName");
     artistName.innerHTML = `${artist}`;
@@ -246,7 +242,7 @@ export function artistSelect(artist = null) {
 
 
 export function trackSelect() {
-  console.log(trackNames);
+  // console.log(trackNames);
   spawnDropdown('track');
 
 }

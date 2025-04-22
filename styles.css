@@ -333,15 +333,7 @@ body {
     overflow-x: none;
 }
 
-#blog-item-container {
-    display: block;
-    left: 0;
-    background-color: transparent;
-    width: 100%;
-    top: 0;
-    /* height: 99%; */
-    overflow-y: auto;
-}
+
 
 ::-webkit-scrollbar {
     width: 12px;
@@ -368,6 +360,16 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+#blog-item-container {
+    display: block;
+    left: 0;
+    background-color: transparent;
+    width: 100%;
+    top: 0;
+    /* height: 99%; */
+    overflow-y: auto;
 }
 
 #white-body-blog {
@@ -423,10 +425,25 @@ body {
     /* padding-left: 5px; */
     padding-top: 10px;
     position: absolute;
-
 }
 
+/* blog-post */
 
+#white-body-blog #text-container {
+    margin-top: 0px;
+    top: 2px;
+    width: 98%;
+    height: 96.5%;
+    overflow-y: auto;
+    /* background-color: red; */
+}
+
+#white-body-blog #text-container:focus {
+    outline: none;
+    cursor: text;
+}
+
+/* blog display items */
 
 #blog-item {
     width: fit-content;
@@ -488,6 +505,86 @@ body {
     mask-position: center;
     cursor: crosshair;
 }
+
+/* blog form */
+
+#form-content {
+    background-color: transparent;
+    margin: 0 auto;
+    padding: 0;
+    width: 90%;
+    font-family: Arial, sans-serif;
+    color: black;
+}
+
+#time-data {
+    padding-top: 15px;
+    background-color: transparent;
+    font-size: 14px;
+    color: black;
+    text-align: center;
+    font-family: 'w95fa';
+}
+
+label {
+    background-color: transparent;
+    display: block;
+    margin-bottom: 5px;
+    color:black;
+    font-family: 'w95fa';
+}
+
+input[type="text"],
+textarea {
+    font-family: 'w95fa';
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    background-color: white;
+    color:black;
+    box-shadow:
+    inset -1px -1px #dfdfdf,
+    inset 1px 1px #808080;
+}
+
+#body {
+    height: 200px;
+    resize: none;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    outline: none;
+    box-shadow:
+    inset -2px -2px #dfdfdf,
+    inset 2px 2px #808080;
+}
+
+button {
+    box-shadow:
+    inset -1px -1px #808080,
+    inset 1px 1px #ffffff,
+    inset -1px 0px #ffffff,
+    -1px -1px 0 0 #dfdfdf,
+    0px -1px 0 0 #dfdfdf,
+    -1px 0px 0 0 #dfdfdf,
+    0px 1px 0 0 #000,
+    1px 1px 0 0 #000,
+    -1px 1px 0 0 #000,
+    1px -1px 0 0 #000;
+    background-color: transparent;
+    color: black;
+    font-family: 'w95fa';
+    padding: 5px;
+}
+
+button:hover {
+
+}
+
+
+
 
 #audioInfo {
     position: absolute;

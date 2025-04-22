@@ -25,7 +25,7 @@ export function spawnPlayer(type, title) {
         document.querySelector('.window-box[data-id="4"] .media-svg')?.classList.add('clicked'); //pause
         document.querySelector('#media-control-button[data-id="3"] .media-svg')?.classList.remove('clicked'); //stop play
         const existingMenu = document.getElementById('menu-container');
-        existingMenu.remove();
+        if (existingMenu) existingMenu.remove();
         return;
     } else {
         const windowContainer = document.createElement('div');
