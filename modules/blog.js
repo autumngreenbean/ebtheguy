@@ -108,11 +108,12 @@ export function blog(dataId) {
 
           blogItem.innerHTML = `
           <img src="icons/notepad.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">
-          <div id="blog-item-text">${title} - ${year}/${month}/${date}</div>
+          <div id="blog-item-text">${title}</div>
         `;
 
           blogItem.addEventListener('click', () => {
             loadBlogContent(post);
+            document.querySelector('#blog #header .window-title').innerHTML = `<img src="icons/search-file.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">&nbsp;${year}/${month}/${date}`;
           });
 
           postsContainer.appendChild(blogItem);
@@ -127,7 +128,7 @@ function loadBlogContent(post) {
   if (textContainer) {
     textContainer.innerText = post.body || "No content found.";
   } else {
-    //error
+
   }
 }
 
@@ -162,30 +163,35 @@ export function blogPost() {
     };
 
     
-    console.log("Form Data:", data);  // Log data to see if it's populated correctly
-
+    console.log("Form Data:", data);  
 
     let dotIntervalStarted = false;
+    const loadingElement = document.getElementById('submit-animation');
 
     function startLoadingAnimation() {
-      if (dotIntervalStarted) return;
-      dotIntervalStarted = true;
-  
-      let dotCount = 0;
-      const interval = setInterval(() => {
-        const dots = document.getElementById('dots');
-        if (!dots) {
-          clearInterval(interval);
-          return;
-        }
-        dotCount = (dotCount + 1) % 4;
-        dots.textContent = '.'.repeat(dotCount);
-      }, 500);
-    }
+        
+        // Make the element visible
+        loadingElement.style.display = 'block';
+    
+        if (dotIntervalStarted) return;
+        dotIntervalStarted = true;
+    
+        let dotCount = 0;
+        const interval = setInterval(() => {
+            const dots = document.getElementById('dot');
+            if (!dots) {
+                clearInterval(interval);
+                return;
+            }
+            dotCount = (dotCount + 1) % 4;
+            dots.textContent = '.'.repeat(dotCount);
+        }, 500);
+    
+        loadingElement.innerHTML = 'Submitting content <span id="dot" style="all: inherit; display: inline; "></span>';
+      }
+    
     startLoadingAnimation();
-  
-    const loadingElement = document.getElementById('submit-animation');
-    const loadingInterval = startLoadingAnimation();
+    
   
     try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbz6g8NIBQ0FWeOnl6WJ4mMsOhcFPT-rbpSqCZjIbUG75B7N7VS5EH1DK8U7alvjFUcL/exec', { 
@@ -195,11 +201,12 @@ export function blogPost() {
             },
             body: new URLSearchParams(data),
         });
+        loadingElement.innerHTML = 'Done!';
 
-        const result = await response.text();  // Get the response text
-        console.log("Response from server:", result);  // Log response
+        const result = await response.text();  
+        console.log("Response from server:", result);  
     } catch (error) {
-        console.error("Error submitting form:", error);  // Log any errors
+        console.error("Error submitting form:", error);  
     }
   });
 }
