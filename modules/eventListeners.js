@@ -68,6 +68,13 @@ export function setupEventListeners() {
             const title = block.dataset.title;
             spawnPlayer('album', title);
         });
+        
+        // Add touch support for mobile
+        block.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            const title = block.dataset.title;
+            spawnPlayer('album', title);
+        });
     });
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -104,5 +111,8 @@ export function setupEventListeners() {
     document.querySelectorAll('.block').forEach(block => {
         let img = block.querySelector('img');
         block.style.setProperty('--mask-url', `url(${img.src})`);
+        
+        // Make desktop icons draggable
+        makeDraggable(block, block);
     });
 }

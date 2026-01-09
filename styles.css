@@ -14,6 +14,14 @@ body {
     -webkit-user-select: none;
     -ms-user-select: none;
     -moz-user-select: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .jersey-20-regular {
@@ -24,9 +32,10 @@ body {
 
 * {
     font-family: '95';
-    background-color: 008080;
+    background-color: #008080;
     color: white;
     user-select: none;
+    box-sizing: border-box;
 }
 
 .window-box {
@@ -51,6 +60,8 @@ body {
         1px 1px 0 0 #000,
         -1px 1px 0 0 #000,
         1px -1px 0 0 #000;
+    max-width: 100vw;
+    max-height: 100vh;
 }
 
 
@@ -99,6 +110,7 @@ body {
     margin-right: 2px;
     user-select: none;
     cursor: pointer;
+    touch-action: manipulation;
 }
 
 .window-box #media-control-button:active {
@@ -198,6 +210,10 @@ body {
     cursor: pointer;
 }
 
+#close-button {
+    touch-action: manipulation;
+}
+
 #close-button-about:active {
     box-shadow:
         inset -1px -1px #dfdfdf,
@@ -207,6 +223,10 @@ body {
 
 #close-button-about:hover {
     cursor: pointer;
+}
+
+#close-button-about {
+    touch-action: manipulation;
 }
 
 .header-container {
@@ -462,6 +482,7 @@ body {
     padding-left: 2px;
     padding-right: 5px;
     margin-top: 5px;
+    touch-action: manipulation;
 }
 
 #blog-item-text {
@@ -577,6 +598,8 @@ button {
     color: black;
     font-family: 'w95fa';
     padding: 5px;
+    touch-action: manipulation;
+    cursor: pointer;
 }
 
 button:hover {
@@ -649,17 +672,229 @@ button:hover {
 }
 
 @media (max-width: 768px) {
-    * {
-        background-color: pink;
+    /* Base adjustments for mobile */
+    .window-box#about {
+        width: 90vw !important;
+        max-width: 350px;
+        height: auto !important;
+        min-height: 200px;
+        left: 50% !important;
+        top: 50% !important;
+        right: auto !important;
+        transform: translate(-50%, -50%);
     }
 
-    .window-box {
-        z-index: 1;
-        width: 350px;
-        height: 300px;
+    /* Audio player responsive sizing */
+    #windowContainer-audio {
+        width: 95vw !important;
+        max-width: 500px !important;
     }
 
+    #windowContainer-audio #window-section {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 220px !important;
+    }
 
+    /* Blog windows - responsive sizing */
+    .window-box#blog[data-id="blog1"] {
+        width: 95vw !important;
+        max-width: 400px;
+        height: 60vh !important;
+        max-height: 500px;
+        left: 50% !important;
+        top: 45% !important;
+        right: auto !important;
+        transform: translate(-50%, -50%);
+    }
+
+    .window-box#blog[data-id="blog2"] {
+        width: 95vw !important;
+        max-width: 400px;
+        height: 70vh !important;
+        max-height: 500px;
+        left: 50% !important;
+        top: 40% !important;
+        right: auto !important;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Blog post form - overlay style but keep menu header visible */
+    .window-box#blogpost[data-id="blog3"] {
+        width: 95vw !important;
+        max-width: 700px;
+        height: 75vh !important;
+        max-height: 600px;
+        left: 50% !important;
+        top: 50% !important;
+        right: auto !important;
+        transform: translate(-50%, -50%);
+        z-index: 100 !important;
+    }
+
+    /* Adjust blog content areas */
+    #white-body {
+        width: 95% !important;
+        height: 75% !important;
+    }
+
+    #white-body-blog {
+        width: 95% !important;
+        height: 80% !important;
+    }
+
+    /* Form adjustments for mobile */
+    #form-content {
+        width: 95%;
+        padding: 5px;
+    }
+
+    #body {
+        height: 150px;
+    }
+
+    /* Desktop icon adjustments */
+    .block {
+        width: 60px;
+        height: 60px;
+        margin: 10px;
+    }
+
+    .text-icon {
+        font-size: 14px;
+    }
+
+    /* Dock adjustments */
+    .dock {
+        height: 45px;
+        padding-left: 2px;
+    }
+
+    .dock .window-box {
+        width: 120px;
+        height: 35px;
+        font-size: 16px;
+        padding-left: 5px;
+    }
+
+    /* Audio player adjustments */
+    #audioInfo {
+        width: 280px;
+    }
+
+    #media-control-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .window-box #media-control-button {
+        width: 60px;
+        margin: 2px;
+    }
+
+    /* Header adjustments */
+    #header .window-title {
+        font-size: 16px;
+    }
+
+    /* Smaller text containers */
+    .body-container #text-container {
+        font-size: 14px;
+    }
+
+    /* Blog item sizing */
+    #blog-item {
+        padding-left: 5px;
+        padding-right: 10px;
+    }
+}
+
+/* Extra small devices (phones in portrait mode) */
+@media (max-width: 480px) {
+    .window-box#about {
+        width: 95vw !important;
+        max-width: none;
+        height: auto !important;
+    }
+
+    .window-box#blog[data-id="blog1"],
+    .window-box#blog[data-id="blog2"] {
+        width: 98vw !important;
+        max-width: none;
+        height: 65vh !important;
+    }
+
+    .window-box#blogpost[data-id="blog3"] {
+        width: 98vw !important;
+        max-width: none;
+        height: 80vh !important;
+        top: 10% !important;
+        transform: translateX(-50%);
+    }
+
+    .dock .window-box {
+        width: 100px;
+        height: 32px;
+        font-size: 14px;
+        padding-left: 3px;
+    }
+
+    .dock .window-box img {
+        width: 16px !important;
+        height: 16px !important;
+    }
+
+    #header .window-title {
+        font-size: 14px;
+    }
+
+    .block {
+        width: 50px;
+        height: 50px;
+        margin: 8px;
+    }
+
+    .text-icon {
+        font-size: 12px;
+    }
+
+    /* Reduce padding for small screens */
+    .window-box#about .body-container .text-container {
+        padding: 10px;
+    }
+
+    #form-content {
+        width: 98%;
+    }
+
+    input[type="text"],
+    textarea {
+        font-size: 12px;
+        padding: 6px;
+    }
+    
+    /* Adjust form when keyboard appears */
+    #blogpost[data-id="blog3"] #white-body-blog {
+        height: 75% !important;
+        overflow-y: auto;
+    }
+}
+
+/* Landscape mode optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+    .window-box#blog[data-id="blog1"],
+    .window-box#blog[data-id="blog2"] {
+        height: 80vh !important;
+    }
+
+    .window-box#blogpost[data-id="blog3"] {
+        height: 85vh !important;
+    }
+
+    #white-body,
+    #white-body-blog {
+        height: 80% !important;
+    }
 }
 
 .media-svg {
@@ -765,6 +1000,8 @@ button:hover {
     align-items: center;
     justify-content: left;
     font-family: 'w95fa';
+    touch-action: manipulation;
+    cursor: pointer;
 }
 
 .dock .window-box:active {

@@ -34,8 +34,16 @@ export function spawnPlayer(type, title) {
         windowContainer.id = 'windowContainer-audio';
         let nextLeft = '200px';
 
-        windowContainer.style.top = nextLeft;
-        windowContainer.style.left = nextLeft;
+        // Mobile optimization: center player on mobile
+        if (window.innerWidth <= 768) {
+            windowContainer.style.top = '50%';
+            windowContainer.style.left = '50%';
+            windowContainer.style.transform = 'translate(-50%, -50%)';
+        } else {
+            windowContainer.style.top = nextLeft;
+            windowContainer.style.left = nextLeft;
+        }
+        
         windowContainer.style.position = 'absolute';
         windowContainer.style.zIndex = '10';
 

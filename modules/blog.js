@@ -46,6 +46,22 @@ export function blog(dataId) {
     }
 });
 
+    // Mobile optimization: position windows appropriately on open
+    if (window.innerWidth <= 768) {
+      const blogContentWindow = document.querySelector('#blog[data-id="blog1"]');
+      const blogMenuWindow = document.querySelector('#blog[data-id="blog2"]');
+      
+      if (blogContentWindow) {
+        blogContentWindow.style.display = 'none'; // Hide content until item clicked
+      }
+      
+      if (blogMenuWindow) {
+        blogMenuWindow.style.top = '10px';
+        blogMenuWindow.style.left = '50%';
+        blogMenuWindow.style.transform = 'translateX(-50%)';
+        blogMenuWindow.style.right = 'auto';
+      }
+    }
 
   }
   else if (dataId) {
@@ -114,6 +130,39 @@ export function blog(dataId) {
           blogItem.addEventListener('click', () => {
             loadBlogContent(post);
             document.querySelector('#blog #header .window-title').innerHTML = `<img src="icons/search-file.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">&nbsp;${year}/${month}/${date}`;
+            
+            // Mobile optimization: Position blog content window to overlay but keep menu visible
+            if (window.innerWidth <= 768) {
+              const blogContentWindow = document.querySelector('#blog[data-id="blog1"]');
+              const blogMenuWindow = document.querySelector('#blog[data-id="blog2"]');
+              
+              if (blogContentWindow && blogMenuWindow) {
+                // Show content window
+                blogContentWindow.style.display = '';
+                
+                // Get menu header height
+                const menuHeader = blogMenuWindow.querySelector('#header');
+                const headerHeight = menuHeader ? menuHeader.offsetHeight : 25;
+                
+                // Position content window slightly below menu header
+                blogContentWindow.style.top = `${headerHeight + 10}px`;
+                blogContentWindow.style.left = '50%';
+                blogContentWindow.style.transform = 'translateX(-50%)';
+                blogContentWindow.style.zIndex = '99';
+                
+                // Ensure menu window stays accessible
+                blogMenuWindow.style.top = '10px';
+                blogMenuWindow.style.left = '50%';
+                blogMenuWindow.style.transform = 'translateX(-50%)';
+                blogMenuWindow.style.zIndex = '98';
+              }
+            } else {
+              // Desktop: just show the window normally
+              const blogContentWindow = document.querySelector('#blog[data-id="blog1"]');
+              if (blogContentWindow) {
+                blogContentWindow.style.display = '';
+              }
+            }
           });
 
           postsContainer.appendChild(blogItem);
