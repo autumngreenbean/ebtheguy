@@ -21,6 +21,22 @@ export function about(dataId) {
     if (!dataId) {
         allAbouts.forEach(el => {
             el.style.display = '';
+            // Clear conflicting positioning styles
+            el.style.right = 'auto';
+            el.style.bottom = 'auto';
+            
+            // Set proper initial position
+            if (!el.style.left || el.style.left === 'auto') {
+                if (window.innerWidth <= 768) {
+                    el.style.left = '50%';
+                    el.style.top = '50%';
+                    el.style.transform = 'translate(-50%, -50%)';
+                } else {
+                    el.style.left = '200px';
+                    el.style.top = '100px';
+                    el.style.transform = 'none';
+                }
+            }
         });
         const aboutWindows = document.querySelectorAll('#about');
         aboutWindows.forEach(win => {

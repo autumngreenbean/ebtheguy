@@ -35,6 +35,9 @@ export function blog(dataId) {
   if (!dataId) {
     allBlogs.forEach(el => {
       el.style.display = '';
+      // Clear conflicting positioning styles
+      el.style.right = 'auto';
+      el.style.bottom = 'auto';
     });
     const blogWindows = document.querySelectorAll('#blog');
     blogWindows.forEach(blo => {
@@ -53,13 +56,31 @@ export function blog(dataId) {
       
       if (blogContentWindow) {
         blogContentWindow.style.display = 'none'; // Hide content until item clicked
+        blogContentWindow.style.left = '50%';
+        blogContentWindow.style.top = '45%';
+        blogContentWindow.style.transform = 'translate(-50%, -50%)';
       }
       
       if (blogMenuWindow) {
         blogMenuWindow.style.top = '10px';
         blogMenuWindow.style.left = '50%';
         blogMenuWindow.style.transform = 'translateX(-50%)';
-        blogMenuWindow.style.right = 'auto';
+      }
+    } else {
+      // Desktop positioning
+      const blogContentWindow = document.querySelector('#blog[data-id="blog1"]');
+      const blogMenuWindow = document.querySelector('#blog[data-id="blog2"]');
+      
+      if (blogContentWindow && !blogContentWindow.style.left) {
+        blogContentWindow.style.left = '300px';
+        blogContentWindow.style.top = '100px';
+        blogContentWindow.style.transform = 'none';
+      }
+      
+      if (blogMenuWindow && !blogMenuWindow.style.left) {
+        blogMenuWindow.style.left = '150px';
+        blogMenuWindow.style.top = '150px';
+        blogMenuWindow.style.transform = 'none';
       }
     }
 
@@ -137,8 +158,10 @@ export function blog(dataId) {
               const blogMenuWindow = document.querySelector('#blog[data-id="blog2"]');
               
               if (blogContentWindow && blogMenuWindow) {
-                // Show content window
+                // Show content window and clear conflicting styles
                 blogContentWindow.style.display = '';
+                blogContentWindow.style.right = 'auto';
+                blogContentWindow.style.bottom = 'auto';
                 
                 // Get menu header height
                 const menuHeader = blogMenuWindow.querySelector('#header');
@@ -151,6 +174,8 @@ export function blog(dataId) {
                 blogContentWindow.style.zIndex = '99';
                 
                 // Ensure menu window stays accessible
+                blogMenuWindow.style.right = 'auto';
+                blogMenuWindow.style.bottom = 'auto';
                 blogMenuWindow.style.top = '10px';
                 blogMenuWindow.style.left = '50%';
                 blogMenuWindow.style.transform = 'translateX(-50%)';
@@ -161,6 +186,8 @@ export function blog(dataId) {
               const blogContentWindow = document.querySelector('#blog[data-id="blog1"]');
               if (blogContentWindow) {
                 blogContentWindow.style.display = '';
+                blogContentWindow.style.right = 'auto';
+                blogContentWindow.style.bottom = 'auto';
               }
             }
           });
