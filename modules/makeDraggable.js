@@ -2,6 +2,8 @@ let zIndexCounter = 2;
 export function makeDraggable(container, handle) {
     let offsetX = 0, offsetY = 0;
     let isDragging = false;
+    let hasMoved = false;
+    let startX = 0, startY = 0;
     const isBlock = container.classList.contains("block");
 
     if (isBlock) {
@@ -19,8 +21,15 @@ export function makeDraggable(container, handle) {
 
     // Touch events for mobile
     handle.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Prevent scrolling while dragging
+        // Only prevent default if we're not clicking on a button/interactive element
+        const target = e.target;
+        if (!target.closest('#close-button, #close-button-about, #about-OK, #media-control-button, #dropdown-button, button')) {
+            // Don't prevent default yet - wait to see if it's a drag or tap
+        }
         const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        hasMoved = false;
         startDrag(touch.clientX, touch.clientY);
         document.addEventListener('touchmove', touchDragMove, { passive: false });
         document.addEventListener('touchend', dragEnd);
@@ -43,9 +52,16 @@ export function makeDraggable(container, handle) {
 
     function touchDragMove(e) {
         if (!isDragging) return;
-        e.preventDefault(); // Prevent scrolling while dragging
         const touch = e.touches[0];
-        updatePosition(touch.clientX, touch.clientY);
+        const moveThreshold = 5; // pixels
+        const moveX = Math.abs(touch.clientX - startX);
+        const moveY = Math.abs(touch.clientY - startY);
+        
+        if (moveX > moveThreshold || moveY > moveThreshold) {
+            hasMoved = true;
+            e.preventDefault(); // Prevent scrolling while dragging
+            updatePosition(touch.clientX, touch.clientY);
+        }
     }
 
     function updatePosition(clientX, clientY) {
@@ -68,6 +84,7 @@ export function makeDraggable(container, handle) {
 
     function dragEnd() {
         isDragging = false;
+        hasMoved = false;
         document.removeEventListener('mousemove', mouseDragMove);
         document.removeEventListener('mouseup', dragEnd);
         document.removeEventListener('touchmove', touchDragMove);

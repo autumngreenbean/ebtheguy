@@ -47,7 +47,15 @@ export function setupEventListeners() {
             const dataID = button.getAttribute("data-id");
             blog(dataID);
             console.log('close-button pressed: ' + dataID);
-
+        });
+        
+        // Add touch support for mobile
+        button.addEventListener("touchend", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const dataID = button.getAttribute("data-id");
+            blog(dataID);
+            console.log('close-button touched: ' + dataID);
         });
     });
 
@@ -57,6 +65,15 @@ export function setupEventListeners() {
         closeAboutButtons.forEach(button => {
             button.addEventListener('click', () => {
                 console.log('about window ' + button.dataset.id + ' closed...');
+                const dataId = button.dataset.id;
+                about(dataId);
+            });
+            
+            // Add touch support for mobile
+            button.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('about window ' + button.dataset.id + ' touched...');
                 const dataId = button.dataset.id;
                 about(dataId);
             });

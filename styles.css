@@ -212,6 +212,9 @@ body {
 
 #close-button {
     touch-action: manipulation;
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
 }
 
 #close-button-about:active {
@@ -227,6 +230,9 @@ body {
 
 #close-button-about {
     touch-action: manipulation;
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
 }
 
 .header-container {
@@ -275,6 +281,9 @@ body {
     text-align: center;
     align-items: center;
     justify-content: center;
+    pointer-events: auto;
+    position: relative;
+    z-index: 20;
 }
 
 #header .aboutbox {

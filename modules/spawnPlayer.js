@@ -36,9 +36,11 @@ export function spawnPlayer(type, title) {
 
         // Mobile optimization: center player on mobile
         if (window.innerWidth <= 768) {
-            windowContainer.style.top = '50%';
-            windowContainer.style.left = '50%';
-            windowContainer.style.transform = 'translate(-50%, -50%)';
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            // Calculate center position without using transform
+            windowContainer.style.left = `${(viewportWidth * 0.025)}px`; // 2.5% margin
+            windowContainer.style.top = '100px';
         } else {
             windowContainer.style.top = nextLeft;
             windowContainer.style.left = nextLeft;
@@ -96,10 +98,20 @@ export function spawnPlayer(type, title) {
                                 button.addEventListener('click', function () {
                                     prevTrack();
                                 });
+                                button.addEventListener('touchend', function (e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    prevTrack();
+                                });
                             }
 
                             if (button.dataset.id === "2") { // Skip button (no toggle)
                                 button.addEventListener('click', function () {
+                                    nextTrack();
+                                });
+                                button.addEventListener('touchend', function (e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
                                     nextTrack();
                                 });
                             }
@@ -116,9 +128,35 @@ export function spawnPlayer(type, title) {
                                     }
                                     play();
                                 });
+                                button.addEventListener('touchend', function (e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    let svgContainer = this.querySelector('.media-svg');
+                                    if (svgContainer) {
+                                        svgContainer.classList.toggle('clicked');
+                                    }
+                                    const stopSvg = document.querySelector('.window-box#media-control-button[data-id="4"] .media-svg');
+                                    if (stopSvg) {
+                                        stopSvg.classList.remove('clicked');
+                                    }
+                                    play();
+                                });
                             }
                             if (button.dataset.id === "4") {
                                 button.addEventListener('click', function () {
+                                    let svgContainer = this.querySelector('.media-svg');
+                                    if (svgContainer) {
+                                        svgContainer.classList.toggle('clicked');
+                                    }
+                                    const playSvg = document.querySelector('.window-box#media-control-button[data-id="3"] .media-svg');
+                                    if (playSvg) {
+                                        playSvg.classList.remove('clicked');
+                                    }
+                                    pause();
+                                });
+                                button.addEventListener('touchend', function (e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
                                     let svgContainer = this.querySelector('.media-svg');
                                     if (svgContainer) {
                                         svgContainer.classList.toggle('clicked');
@@ -147,6 +185,18 @@ export function spawnPlayer(type, title) {
                         closeButtons.forEach(button => {
                             button.addEventListener("click", function () {
                                 console.log("Close button clicked");
+                                if (existingPlayer) {
+                                    console.log('found existing player');
+                                    existingPlayer.style.display = 'none';
+                                }
+                                visible = false;
+                            });
+                            
+                            // Add touch support for mobile
+                            button.addEventListener("touchend", function (e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                console.log("Close button touched");
                                 if (existingPlayer) {
                                     console.log('found existing player');
                                     existingPlayer.style.display = 'none';
