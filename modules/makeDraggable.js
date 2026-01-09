@@ -2,8 +2,7 @@ let zIndexCounter = 2;
 export function makeDraggable(container, handle) {
     let offsetX = 0, offsetY = 0;
     let isDragging = false;
-    let hasMoved = false;
-    let startX = 0, startY = 0;
+    let isTouchDragging = false;
     const isBlock = container.classList.contains("block");
 
     if (isBlock) {
@@ -14,54 +13,54 @@ export function makeDraggable(container, handle) {
 
     // Mouse events
     handle.addEventListener('mousedown', (e) => {
-        startDrag(e.clientX, e.clientY);
-        document.addEventListener('mousemove', mouseDragMove);
-        document.addEventListener('mouseup', dragEnd);
-    });
-
-    // Touch events for mobile
-    handle.addEventListener('touchstart', (e) => {
-        // Only prevent default if we're not clicking on a button/interactive element
-        const target = e.target;
-        if (!target.closest('#close-button, #close-button-about, #about-OK, #media-control-button, #dropdown-button, button')) {
-            // Don't prevent default yet - wait to see if it's a drag or tap
+        // Ignore if clicking on interactive elements
+        if (e.target.closest('#close-button, #close-button-about, #about-OK, #media-control-button, #dropdown-button, button, input, textarea')) {
+            return;
         }
-        const touch = e.touches[0];
-        startX = touch.clientX;
-        startY = touch.clientY;
-        hasMoved = false;
-        startDrag(touch.clientX, touch.clientY);
-        document.addEventListener('touchmove', touchDragMove, { passive: false });
-        document.addEventListener('touchend', dragEnd);
-    });
-
-    function startDrag(clientX, clientY) {
         isDragging = true;
-        offsetX = clientX - container.getBoundingClientRect().left;
-        offsetY = clientY - container.getBoundingClientRect().top;
+        offsetX = e.clientX - container.getBoundingClientRect().left;
+        offsetY = e.clientY - container.getBoundingClientRect().top;
 
         if (!isBlock) {
             container.style.zIndex = zIndexCounter++;
         }
-    }
+
+        document.addEventListener('mousemove', mouseDragMove);
+        document.addEventListener('mouseup', mouseEnd);
+    });
+
+    // Touch events for mobile
+    handle.addEventListener('touchstart', (e) => {
+        // Ignore if touching interactive elements
+        if (e.target.closest('#close-button, #close-button-about, #about-OK, #media-control-button, #dropdown-button, button, input, textarea')) {
+            return;
+        }
+        
+        const touch = e.touches[0];
+        isTouchDragging = true;
+        offsetX = touch.clientX - container.getBoundingClientRect().left;
+        offsetY = touch.clientY - container.getBoundingClientRect().top;
+
+        if (!isBlock) {
+            container.style.zIndex = zIndexCounter++;
+        }
+
+        document.addEventListener('touchmove', touchDragMove, { passive: false });
+        document.addEventListener('touchend', touchEnd);
+        document.addEventListener('touchcancel', touchEnd);
+    });
 
     function mouseDragMove(e) {
         if (!isDragging) return;
+        e.preventDefault();
         updatePosition(e.clientX, e.clientY);
     }
 
     function touchDragMove(e) {
-        if (!isDragging) return;
+        if (!isTouchDragging) return;
+        e.preventDefault(); // Prevent scrolling while dragging
         const touch = e.touches[0];
-        const moveThreshold = 5; // pixels
-        const moveX = Math.abs(touch.clientX - startX);
-        const moveY = Math.abs(touch.clientY - startY);
-        
-        if (moveX > moveThreshold || moveY > moveThreshold) {
-            hasMoved = true;
-            e.preventDefault(); // Prevent scrolling while dragging
-            updatePosition(touch.clientX, touch.clientY);
-        }
+        updatePosition(touch.clientX, touch.clientY);
     }
 
     function updatePosition(clientX, clientY) {
@@ -82,12 +81,16 @@ export function makeDraggable(container, handle) {
         container.style.transform = 'none';
     }
 
-    function dragEnd() {
+    function mouseEnd() {
         isDragging = false;
-        hasMoved = false;
         document.removeEventListener('mousemove', mouseDragMove);
-        document.removeEventListener('mouseup', dragEnd);
+        document.removeEventListener('mouseup', mouseEnd);
+    }
+
+    function touchEnd() {
+        isTouchDragging = false;
         document.removeEventListener('touchmove', touchDragMove);
-        document.removeEventListener('touchend', dragEnd);
+        document.removeEventListener('touchend', touchEnd);
+        document.removeEventListener('touchcancel', touchEnd);
     }
 }
