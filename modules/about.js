@@ -51,11 +51,11 @@ function populateAboutContent() {
         buttonLink.href = button.url;
         buttonLink.target = '_blank';
         buttonLink.rel = 'noopener noreferrer';
-        buttonLink.style.cssText = 'text-decoration: none; color: inherit; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;';
+        buttonLink.style.cssText = 'text-decoration: none; color: black; background-color: transparent; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;';
         
         const textContainer = document.createElement('div');
         textContainer.className = 'text-container';
-        textContainer.style.fontFamily = '95';
+        textContainer.style.cssText = 'font-family: 95; background-color: transparent; color: black;';
         textContainer.textContent = button.text;
         
         buttonLink.appendChild(textContainer);
