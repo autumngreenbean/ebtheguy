@@ -689,7 +689,7 @@ button:hover {
     /* Base adjustments for mobile */
     .window-box#about {
         width: 90vw;
-        max-width: 350px;
+        max-width: 90vw;
         height: auto;
         min-height: 200px;
     }
@@ -1057,9 +1057,16 @@ button:hover {
     display: '';
     justify-content: center;
     align-items: center;
-    width: 500px;
+    width: auto;
+    max-width: 500px;
     height: 160px;
     position: absolute;
+}
+
+@media (min-width: 769px) {
+    .window-box#about {
+        width: 500px;
+    }
 }
 
 

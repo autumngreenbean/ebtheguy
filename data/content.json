@@ -1,0 +1,25 @@
+{
+  "about": {
+    "showWelcomeOnLoad": true,
+    "window1": {
+      "title": "Message box",
+      "message": "This is a short about section for ethan's audio production website. Who knows what will be written here? It could be long, or short - but not too long.",
+      "welcomeText": "Welcome!"
+    },
+    "window2": {
+      "title": "Contact",
+      "email": "myemail@email.com",
+      "contact": "another-contact-field",
+      "buttons": [
+        {
+          "text": "Link here",
+          "url": "https://example.com/link1"
+        },
+        {
+          "text": "Spotify",
+          "url": "https://open.spotify.com/artist/your-artist-id"
+        }
+      ]
+    }
+  }
+}
