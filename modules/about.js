@@ -44,18 +44,18 @@ function populateAboutContent() {
         const buttonDiv = document.createElement('div');
         buttonDiv.className = 'window-box';
         buttonDiv.id = 'about-button';
-        buttonDiv.style.cssText = 'width: 160px; height: 100%; justify-content: center; display: flex; align-items: center;' + 
+        buttonDiv.style.cssText = 'width: 160px; height: 100%; justify-content: center; display: flex; align-items: center; background-color: #c0c0c0;' + 
                                    (index > 0 ? ' margin-left: 30px;' : '');
         
         const buttonLink = document.createElement('a');
         buttonLink.href = button.url;
         buttonLink.target = '_blank';
         buttonLink.rel = 'noopener noreferrer';
-        buttonLink.style.cssText = 'text-decoration: none; color: black; background-color: transparent; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;';
+        buttonLink.style.cssText = 'text-decoration: none; color: black; background-color: #c0c0c0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;';
         
         const textContainer = document.createElement('div');
         textContainer.className = 'text-container';
-        textContainer.style.cssText = 'font-family: 95; background-color: transparent; color: black;';
+        textContainer.style.cssText = 'font-family: 95; background-color: #c0c0c0; color: black;';
         textContainer.textContent = button.text;
         
         buttonLink.appendChild(textContainer);
