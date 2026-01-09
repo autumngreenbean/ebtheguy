@@ -51,11 +51,11 @@ function populateAboutContent() {
         buttonLink.href = button.url;
         buttonLink.target = '_blank';
         buttonLink.rel = 'noopener noreferrer';
-        buttonLink.style.cssText = 'text-decoration: none; color: black; background-color: #c0c0c0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;';
+        buttonLink.style.cssText = 'text-decoration: none; color: black; background-color: inherit; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;';
         
         const textContainer = document.createElement('div');
         textContainer.className = 'text-container';
-        textContainer.style.cssText = 'font-family: 95; background-color: #c0c0c0; color: black;';
+        textContainer.style.cssText = 'font-family: 95; background-color: transparent; color: black;';
         textContainer.textContent = button.text;
         
         buttonLink.appendChild(textContainer);
@@ -73,10 +73,14 @@ function populateAboutContent() {
                 welcomeWindow.style.bottom = 'auto';
                 
                 if (window.innerWidth <= 768) {
+                    welcomeWindow.style.width = '90vw';
+                    welcomeWindow.style.maxWidth = '90vw';
                     welcomeWindow.style.left = '50%';
                     welcomeWindow.style.top = '50%';
                     welcomeWindow.style.transform = 'translate(-50%, -50%)';
                 } else {
+                    welcomeWindow.style.width = '';
+                    welcomeWindow.style.maxWidth = '';
                     welcomeWindow.style.left = '200px';
                     welcomeWindow.style.top = '100px';
                     welcomeWindow.style.transform = 'none';
@@ -114,10 +118,14 @@ export function about(dataId) {
             // Set proper initial position
             if (!el.style.left || el.style.left === 'auto') {
                 if (window.innerWidth <= 768) {
+                    el.style.width = '90vw';
+                    el.style.maxWidth = '90vw';
                     el.style.left = '50%';
                     el.style.top = '50%';
                     el.style.transform = 'translate(-50%, -50%)';
                 } else {
+                    el.style.width = '';
+                    el.style.maxWidth = '';
                     el.style.left = '200px';
                     el.style.top = '100px';
                     el.style.transform = 'none';
