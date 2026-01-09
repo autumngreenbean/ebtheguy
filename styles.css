@@ -688,62 +688,46 @@ button:hover {
 @media (max-width: 768px) {
     /* Base adjustments for mobile */
     .window-box#about {
-        width: 90vw !important;
+        width: 90vw;
         max-width: 350px;
-        height: auto !important;
+        height: auto;
         min-height: 200px;
-        left: 50% !important;
-        top: 50% !important;
-        right: auto !important;
-        transform: translate(-50%, -50%);
     }
 
     /* Audio player responsive sizing */
     #windowContainer-audio {
-        width: 95vw !important;
-        max-width: 500px !important;
+        width: 95vw;
+        max-width: 500px;
     }
 
     #windowContainer-audio #window-section {
-        width: 100% !important;
-        height: auto !important;
-        min-height: 220px !important;
+        width: 100%;
+        height: auto;
+        min-height: 220px;
     }
 
     /* Blog windows - responsive sizing */
     .window-box#blog[data-id="blog1"] {
-        width: 95vw !important;
+        width: 95vw;
         max-width: 400px;
-        height: 60vh !important;
+        height: 60vh;
         max-height: 500px;
-        left: 50% !important;
-        top: 45% !important;
-        right: auto !important;
-        transform: translate(-50%, -50%);
     }
 
     .window-box#blog[data-id="blog2"] {
-        width: 95vw !important;
+        width: 95vw;
         max-width: 400px;
-        height: 70vh !important;
+        height: 70vh;
         max-height: 500px;
-        left: 50% !important;
-        top: 40% !important;
-        right: auto !important;
-        transform: translate(-50%, -50%);
     }
 
     /* Blog post form - overlay style but keep menu header visible */
     .window-box#blogpost[data-id="blog3"] {
-        width: 95vw !important;
+        width: 95vw;
         max-width: 700px;
-        height: 75vh !important;
+        height: 75vh;
         max-height: 600px;
-        left: 50% !important;
-        top: 50% !important;
-        right: auto !important;
-        transform: translate(-50%, -50%);
-        z-index: 100 !important;
+        z-index: 100;
     }
 
     /* Adjust blog content areas */
@@ -826,24 +810,22 @@ button:hover {
 /* Extra small devices (phones in portrait mode) */
 @media (max-width: 480px) {
     .window-box#about {
-        width: 95vw !important;
+        width: 95vw;
         max-width: none;
-        height: auto !important;
+        height: auto;
     }
 
     .window-box#blog[data-id="blog1"],
     .window-box#blog[data-id="blog2"] {
-        width: 98vw !important;
+        width: 98vw;
         max-width: none;
-        height: 65vh !important;
+        height: 65vh;
     }
 
     .window-box#blogpost[data-id="blog3"] {
-        width: 98vw !important;
+        width: 98vw;
         max-width: none;
-        height: 80vh !important;
-        top: 10% !important;
-        transform: translateX(-50%);
+        height: 80vh;
     }
 
     .dock .window-box {
@@ -898,16 +880,16 @@ button:hover {
 @media (max-width: 768px) and (orientation: landscape) {
     .window-box#blog[data-id="blog1"],
     .window-box#blog[data-id="blog2"] {
-        height: 80vh !important;
+        height: 80vh;
     }
 
     .window-box#blogpost[data-id="blog3"] {
-        height: 85vh !important;
+        height: 85vh;
     }
 
     #white-body,
     #white-body-blog {
-        height: 80% !important;
+        height: 80%;
     }
 }
 
