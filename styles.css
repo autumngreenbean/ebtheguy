@@ -688,8 +688,8 @@ button:hover {
 @media (max-width: 768px) {
     /* Base adjustments for mobile */
     .window-box#about {
-        width: 90vw;
-        max-width: 90vw;
+        width: 93vw;
+        max-width: 93vw;
         height: auto;
         min-height: 200px;
     }

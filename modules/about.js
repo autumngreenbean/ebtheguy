@@ -73,8 +73,8 @@ function populateAboutContent() {
                 welcomeWindow.style.bottom = 'auto';
                 
                 if (window.innerWidth <= 768) {
-                    welcomeWindow.style.width = '90vw';
-                    welcomeWindow.style.maxWidth = '90vw';
+                    welcomeWindow.style.width = '93vw';
+                    welcomeWindow.style.maxWidth = '93vw';
                     welcomeWindow.style.left = '50%';
                     welcomeWindow.style.top = '50%';
                     welcomeWindow.style.transform = 'translate(-50%, -50%)';
@@ -118,8 +118,8 @@ export function about(dataId) {
             // Set proper initial position
             if (!el.style.left || el.style.left === 'auto') {
                 if (window.innerWidth <= 768) {
-                    el.style.width = '90vw';
-                    el.style.maxWidth = '90vw';
+                    el.style.width = '93vw';
+                    el.style.maxWidth = '93vw';
                     el.style.left = '50%';
                     el.style.top = '50%';
                     el.style.transform = 'translate(-50%, -50%)';
