@@ -7,12 +7,12 @@ import { makeDraggable } from './makeDraggable.js';
 let hasInitialized = false;
 let contentData = null;
 
-// Fetch content data from JSON
+// Fetch content data from data-service
 async function loadContentData() {
     if (!contentData) {
         try {
-            const response = await fetch('./data/content.json');
-            contentData = await response.json();
+            const data = await window.dataService.getAboutData();
+            contentData = { about: data };
             populateAboutContent();
         } catch (error) {
             console.error('Error loading content data:', error);

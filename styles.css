@@ -1035,6 +1035,8 @@ button:hover {
     inset -1px -1px #dfdfdf,
     inset 1px 1px #808080;
     outline: 1px dotted black;
+    height:10px;
+
 }
 
 .window-box#about .body-container .text-container {

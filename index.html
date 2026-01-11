@@ -56,7 +56,7 @@
                 It could be long, or short - but not too long.</span>
             </div>
             <div class="window-box"
-                style="width: 30%; height: 20%; justify-content: center; display: flex; align-items: center;"
+                style=" width: 30%; height: 25px; justify-content: center; display: flex; align-items: center; margin-bottom: 10px;"
                 id="about-button">
                 <div class="text-container" style="font-family: '95';" id="about-OK" data-id="window1">OK</div>
             </div>
@@ -247,6 +247,9 @@
 </body>
 
 <script type="module">
+    // Initialize data service first
+    import './modules/data-service.js';
+    
     import { spawnPlayer } from './modules/spawnPlayer.js';
     import { setupEventListeners } from './modules/eventListeners.js';
 

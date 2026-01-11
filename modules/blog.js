@@ -6,7 +6,7 @@ Close buttons on blog windows have a data-id attached to them, which will pass t
 
 The function:
 - Closes blog windows on load 
-- fetches blog content from an external Google Sheets spreadsheet
+- fetches blog content from static JSON file (updated by Google Sheets)
 - Displays blog content in a menu display and full-display text editor
 - Creates and displays a loading animation while blog content loads 
 
@@ -122,15 +122,8 @@ export function blog(dataId) {
   const loadingElement = document.getElementById('loading-animation');
   const loadingInterval = startLoadingAnimation();
 
-  fetch('https://script.google.com/macros/s/AKfycbzFVHWMBNfvmtr8D07lJoZ-PpPo80O8x89jWX2iU6jf1Rz4znaEMEYNEEEPBcDLSJ8-/exec')
-
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-
+  // Fetch blog posts from static JSON via data-service
+  window.dataService.getBlogData()
     .then(posts => {
       if (!loadedContent) {
         clearInterval(loadingInterval);
@@ -197,6 +190,13 @@ export function blog(dataId) {
         });
       }
     })
+    .catch(error => {
+      console.error('Error loading blog posts:', error);
+      if (!loadedContent) {
+        clearInterval(loadingInterval);
+        loadingElement.innerHTML = 'Failed to load blog posts.';
+      }
+    });
 }
 
 function loadBlogContent(post) {
@@ -208,81 +208,18 @@ function loadBlogContent(post) {
   }
 }
 
+// NOTE: blogPost() function for direct blog posting has been disabled.
+// Blog posts are now managed through Google Sheets, which automatically
+// updates the content.json file via GitHub API.
+// To add new blog posts, edit the "Blog" sheet in your Google Sheets document.
 export function blogPost() { 
-  const now = new Date();
-  const currentMonth = String(now.getMonth() + 1).padStart(2, '0');
-  const currentYear = now.getFullYear();
-  const currentDate = String(now.getDate()).padStart(2, '0');
-  const currentHour = String(now.getHours()).padStart(2, '0');  
-  const currentMinute = String(now.getMinutes()).padStart(2, '0'); 
-
-
-  const currentTime = `${currentHour}:${currentMinute}`;
-
-  document.getElementById('time-data').innerHTML = `${currentYear}-${currentMonth}-${currentDate}`;
-
-  document.getElementById('form-content').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    // Get the current date
-
-
-    // Gather form data
-    const formData = new FormData(this);
-    const data = {
-        title: formData.get('title'),
-        year: currentYear,
-        month: currentMonth,
-        date: currentDate,
-        time: currentTime,
-        body: formData.get('message')
-    };
-
-    
-    console.log("Form Data:", data);  
-
-    let dotIntervalStarted = false;
-    const loadingElement = document.getElementById('submit-animation');
-
-    function startLoadingAnimation() {
-        
-        // Make the element visible
-        loadingElement.style.display = 'block';
-    
-        if (dotIntervalStarted) return;
-        dotIntervalStarted = true;
-    
-        let dotCount = 0;
-        const interval = setInterval(() => {
-            const dots = document.getElementById('dot');
-            if (!dots) {
-                clearInterval(interval);
-                return;
-            }
-            dotCount = (dotCount + 1) % 4;
-            dots.textContent = '.'.repeat(dotCount);
-        }, 500);
-    
-        loadingElement.innerHTML = 'Submitting content <span id="dot" style="all: inherit; display: inline; "></span>';
-      }
-    
-    startLoadingAnimation();
-    
+  console.log('Blog posting is now managed through Google Sheets.');
+  console.log('Please edit the Blog sheet in your Google Sheets document to add new posts.');
   
-    try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbz6g8NIBQ0FWeOnl6WJ4mMsOhcFPT-rbpSqCZjIbUG75B7N7VS5EH1DK8U7alvjFUcL/exec', { 
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams(data),
-        });
-        loadingElement.innerHTML = 'Done!';
-
-        const result = await response.text();  
-        console.log("Response from server:", result);  
-    } catch (error) {
-        console.error("Error submitting form:", error);  
-    }
-  });
+  // Display message to user if they try to use the old posting interface
+  const loadingElement = document.getElementById('submit-animation');
+  if (loadingElement) {
+    loadingElement.style.display = 'block';
+    loadingElement.innerHTML = 'Blog posting is now managed through Google Sheets. Please edit your sheet to add posts.';
+  }
 }
