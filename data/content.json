@@ -3,7 +3,7 @@
     "showWelcomeOnLoad": true,
     "window1": {
       "title": "Message box",
-      "message": "This is a short about section for ethan's audio production website. Who knows what will be written here? It could be long, or short - but not too long.",
+      "message": "Will this update ?",
       "welcomeText": "Initial Deployment test!"
     },
     "window2": {
@@ -93,5 +93,5 @@
       ]
     }
   ],
-  "timestamp": "2026-01-11T21:49:40.789Z"
+  "timestamp": "2026-01-11T21:49:51.786Z"
 }
