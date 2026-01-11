@@ -4,7 +4,7 @@
     "window1": {
       "title": "Message box",
       "message": "This is a short about section for ethan's audio production website. Who knows what will be written here? It could be long, or short - but not too long.",
-      "welcomeText": "Welcome!"
+      "welcomeText": "Initial Deployment test!"
     },
     "window2": {
       "title": "Contact",
@@ -27,17 +27,17 @@
       "title": "First Post",
       "body": "This is the body content of the first blog post. You can edit this from Google Sheets!",
       "year": "2026",
-      "month": "01",
+      "month": "1",
       "date": "11",
-      "time": "12:00"
+      "time": "Sat Dec 30 1899 12:00:00 GMT-0800 (Pacific Standard Time)"
     },
     {
       "title": "Second Post",
       "body": "This is another blog post. Add more posts in the Google Sheet and they will appear here automatically!",
       "year": "2026",
-      "month": "01",
+      "month": "1",
       "date": "10",
-      "time": "15:30"
+      "time": "Sat Dec 30 1899 15:30:00 GMT-0800 (Pacific Standard Time)"
     }
   ],
   "musicPlayers": [
@@ -49,8 +49,8 @@
           "displayName": "Basement-Candy.wav",
           "icon": "cd.png",
           "position": {
-            "top": "15%",
-            "right": "90%"
+            "top": "0.15",
+            "right": "0.9"
           }
         },
         {
@@ -58,8 +58,8 @@
           "displayName": "Ode-to-You.wav",
           "icon": "cd.png",
           "position": {
-            "top": "75%",
-            "right": "10%"
+            "top": "0.75",
+            "right": "0.1"
           }
         }
       ]
@@ -68,30 +68,30 @@
       "artist": "Lokadonna",
       "albums": [
         {
-          "title": "code:GRĖĖN (feat. Prod.eb) - EP",
+          "title": "code:GR??N (feat. Prod.eb) - EP",
           "displayName": "code:GREEN.wav",
           "icon": "cd.png",
           "position": {
-            "top": "20%",
-            "right": "20%"
+            "top": "0.2",
+            "right": "0.2"
           }
         }
       ]
     },
     {
-      "artist": "tsunamë",
+      "artist": "tsunam?",
       "albums": [
         {
           "title": "99 Side A",
           "displayName": "99 Side A.wav",
           "icon": "cd.png",
           "position": {
-            "top": "50%",
-            "right": "50%"
+            "top": "0.5",
+            "right": "0.5"
           }
         }
       ]
     }
   ],
-  "timestamp": "2026-01-11T12:00:00.000Z"
+  "timestamp": "2026-01-11T21:49:40.789Z"
 }
