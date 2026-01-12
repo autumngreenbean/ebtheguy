@@ -98,8 +98,8 @@
       "artist": "Otto Benson",
       "albums": [
         {
-          "title": "Peaanut",
-          "displayName": "Peaanut",
+          "title": "Peanut",
+          "displayName": "Peanut",
           "icon": "cd.png",
           "position": {
             "top": "50%",
@@ -110,5 +110,5 @@
       ]
     }
   ],
-  "timestamp": "2026-01-12T02:17:38.864Z"
+  "timestamp": "2026-01-12T02:17:43.228Z"
 }
