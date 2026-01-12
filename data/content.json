@@ -102,13 +102,13 @@
           "displayName": "Peanut",
           "icon": "cd.png",
           "position": {
-            "top": "50%",
-            "right": "50%"
+            "top": "0.5",
+            "right": "0.2"
           },
           "appleAlbumId": "1859874134"
         }
       ]
     }
   ],
-  "timestamp": "2026-01-12T02:18:07.891Z"
+  "timestamp": "2026-01-12T02:18:19.861Z"
 }
