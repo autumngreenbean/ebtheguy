@@ -314,16 +314,17 @@ function fetchWithJsonp(url) {
 }
 
 export function albumSelect(album = null, albumId = null) { 
-  const albumTitle = document.getElementById("albumTitle");
-  const artistName = document.getElementById('artistName');
+  const albumTitleElement = document.getElementById("albumTitle");
+  const artistNameElement = document.getElementById('artistName');
 
   if (album === null) {
     spawnDropdown('album');
     return;
   }
 
-  if (albumTitle && album) {
+  if (albumTitleElement && album) {
     console.log(`albumSelect called with: album="${album}", albumId="${albumId}"`);
+    console.log(`Current albumArtistMap:`, albumArtistMap);
     
     // Store the album ID if provided directly
     if (albumId) {
@@ -337,9 +338,11 @@ export function albumSelect(album = null, albumId = null) {
     
     // Look up artist from dynamic map
     currentArtist = albumArtistMap[album];
+    console.log(`Artist lookup result: "${currentArtist}" for album: "${album}"`);
     
     if (!currentArtist) {
       console.warn(`Artist not found for album: ${album}. Checking for partial matches...`);
+      console.warn(`Available albums in map:`, Object.keys(albumArtistMap));
       // Try to find a match with special character variations
       const normalizedAlbum = album.replace(/[^\w\s]/g, '').toLowerCase();
       for (const [mappedAlbum, mappedArtist] of Object.entries(albumArtistMap)) {
@@ -354,11 +357,15 @@ export function albumSelect(album = null, albumId = null) {
     
     // Set the album and artist in the UI
     currentAlbum = album;
-    albumTitle.innerHTML = album;
+    albumTitleElement.innerHTML = album;
     
     // Update artist display
-    if (artistName && currentArtist) {
-      artistName.innerHTML = currentArtist;
+    console.log(`Updating artist display - Element exists: ${!!artistNameElement}, Artist: ${currentArtist}`);
+    if (artistNameElement && currentArtist) {
+      artistNameElement.innerHTML = currentArtist;
+      console.log(`✅ Artist name set to: ${currentArtist}`);
+    } else {
+      console.error(`❌ Failed to set artist name - Element: ${!!artistNameElement}, Artist: ${currentArtist}`);
     }
     
     console.log(`Final state - Album: ${currentAlbum}, Artist: ${currentArtist}, ID: ${currentAlbumId || 'none'}`);
