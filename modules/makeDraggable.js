@@ -1,4 +1,4 @@
-let zIndexCounter = 2;  
+let zIndexCounter = 100;  
 export function makeDraggable(container, handle) {
     let offsetX = 0, offsetY = 0;
     let isDragging = false;

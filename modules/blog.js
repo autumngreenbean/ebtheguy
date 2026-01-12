@@ -145,11 +145,12 @@ export function blog(dataId) {
             loadBlogContent(post);
             document.querySelector('#blog #header .window-title').innerHTML = `<img src="icons/search-file.png" alt="" style="padding-top: 1px; width:20px; height: 20px; background-color: transparent; padding-right: 2px;">&nbsp;${year}/${month}/${date}`;
             
+            // Get both windows
+            const blogContentWindow = document.querySelector('#blog[data-id="blog1"]');
+            const blogMenuWindow = document.querySelector('#blog[data-id="blog2"]');
+            
             // Mobile optimization: Position blog content window to overlay but keep menu visible
             if (window.innerWidth <= 768) {
-              const blogContentWindow = document.querySelector('#blog[data-id="blog1"]');
-              const blogMenuWindow = document.querySelector('#blog[data-id="blog2"]');
-              
               if (blogContentWindow && blogMenuWindow) {
                 // Show content window and clear conflicting styles
                 blogContentWindow.style.display = '';
@@ -164,23 +165,28 @@ export function blog(dataId) {
                 blogContentWindow.style.top = `${headerHeight + 10}px`;
                 blogContentWindow.style.left = '50%';
                 blogContentWindow.style.transform = 'translateX(-50%)';
-                blogContentWindow.style.zIndex = '99';
                 
-                // Ensure menu window stays accessible
-                blogMenuWindow.style.right = 'auto';
-                blogMenuWindow.style.bottom = 'auto';
-                blogMenuWindow.style.top = '10px';
-                blogMenuWindow.style.left = '50%';
-                blogMenuWindow.style.transform = 'translateX(-50%)';
-                blogMenuWindow.style.zIndex = '98';
+                // Use higher z-index for content window to ensure it's on top
+                const currentMaxZ = Math.max(
+                  parseInt(blogContentWindow.style.zIndex) || 0,
+                  parseInt(blogMenuWindow.style.zIndex) || 0
+                );
+                blogContentWindow.style.zIndex = String(currentMaxZ + 2);
+                blogMenuWindow.style.zIndex = String(currentMaxZ + 1);
               }
             } else {
-              // Desktop: just show the window normally
-              const blogContentWindow = document.querySelector('#blog[data-id="blog1"]');
+              // Desktop: show the window and bring it to front
               if (blogContentWindow) {
                 blogContentWindow.style.display = '';
                 blogContentWindow.style.right = 'auto';
                 blogContentWindow.style.bottom = 'auto';
+                
+                // Bring editor window to front on desktop
+                const currentMaxZ = Math.max(
+                  parseInt(blogContentWindow.style.zIndex) || 0,
+                  parseInt(blogMenuWindow?.style.zIndex) || 0
+                );
+                blogContentWindow.style.zIndex = String(currentMaxZ + 1);
               }
             }
           });
