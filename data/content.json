@@ -3,8 +3,8 @@
     "showWelcomeOnLoad": true,
     "window1": {
       "title": "Message box",
-      "message": "Will this update ?",
-      "welcomeText": "Initial Deployment test!"
+      "message": "???",
+      "welcomeText": "Welcome!"
     },
     "window2": {
       "title": "Contact",
@@ -71,11 +71,11 @@
           "title": "code:GR??N (feat. Prod.eb) - EP",
           "displayName": "code:GREEN.wav",
           "icon": "cd.png",
-          "appleAlbumId": "1715533205",
           "position": {
             "top": "0.2",
             "right": "0.2"
-          }
+          },
+          "appleAlbumId": "1715533205"
         }
       ]
     },
@@ -86,14 +86,14 @@
           "title": "99 Side A",
           "displayName": "99 Side A.wav",
           "icon": "cd.png",
-          "appleAlbumId": "1527805750",
           "position": {
             "top": "0.5",
             "right": "0.5"
-          }
+          },
+          "appleAlbumId": "1527805750"
         }
       ]
     }
   ],
-  "timestamp": "2026-01-12T01:51:10.662Z"
+  "timestamp": "2026-01-12T01:57:57.270Z"
 }
