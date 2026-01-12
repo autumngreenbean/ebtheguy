@@ -760,6 +760,7 @@ button:hover {
 
     .text-icon {
         font-size: 14px;
+        background-color: transparent;
     }
 
     /* Dock adjustments */
@@ -888,6 +889,7 @@ button:hover {
 
     .text-icon {
         font-size: 12px;
+        background-color: transparent;
     }
 
     /* Reduce padding for small screens */
@@ -1017,6 +1019,7 @@ button:hover {
     padding-top: 5px;
     font-size: 16px;
     font-family: 'w95fa';
+    background-color: transparent;
 }
 
 /* dock */

@@ -89,11 +89,16 @@ export function spawnDropdown(type) {
   }
 
   if (type == 'album') {
+    // Dynamic album list based on current artist
     if (currentArtist == 'Murdock Street') {
       list = ['Basement Candy - EP', 'Ode to You'];
-      targetDisplay = document.getElementById("albumTitle");
-      dropdownButton = document.querySelector('[data-id="1"]');
+    } else if (currentArtist == 'Lokadonna') {
+      list = ['code:GRĖĖN (feat. Prod.eb) - EP'];
+    } else if (currentArtist == 'tsunamë') {
+      list = ['99 Side A'];
     }
+    targetDisplay = document.getElementById("albumTitle");
+    dropdownButton = document.querySelector('[data-id="1"]');
   }
 
   if (type == 'track') {
@@ -218,10 +223,23 @@ export async function fetchTracks(album) {
     const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}+${encodeURIComponent(currentArtist)}&entity=musicTrack&limit=200`);
     trackData = await trackResponse.json();
 
-    if (trackData.results && trackData.results.length > 1) {
-      tracks = trackData.results.filter(item =>
-        item.wrapperType === "track" && item.artistName === currentArtist
-      );
+    if (trackData.results && trackData.results.length > 0) {
+      // More flexible filtering - check if artist names match loosely
+      tracks = trackData.results.filter(item => {
+        if (item.wrapperType !== "track") return false;
+        
+        // Normalize artist names for comparison (remove special chars, lowercase)
+        const normalizeStr = (str) => str.toLowerCase()
+          .replace(/[ėēę]/g, 'e')
+          .replace(/[äàáâã]/g, 'a')
+          .replace(/[öòóôõ]/g, 'o')
+          .trim();
+        
+        const itemArtist = normalizeStr(item.artistName || '');
+        const searchArtist = normalizeStr(currentArtist);
+        
+        return itemArtist.includes(searchArtist) || searchArtist.includes(itemArtist);
+      });
       
       if (tracks.length > 0) {
         trackNames = tracks.map(item => item.trackName);
@@ -244,6 +262,7 @@ export function albumSelect(album = null, albumId = null) {
 
   if (album === null) {
     spawnDropdown('album');
+    return;
   }
 
   if (albumTitle && album) {
@@ -255,25 +274,32 @@ export function albumSelect(album = null, albumId = null) {
       currentAlbumId = albumIdMap[album] || null;
     }
     
+    // Set artist and album based on album name
     if (album === 'Ode to You' || album === 'Basement Candy - EP') {
       currentArtist = 'Murdock Street';
-    }
-
-    if (album === '99 Side A') {
+      currentAlbum = album;
+      albumTitle.innerHTML = album;
+    } else if (album === '99 Side A') {
       currentArtist = "tsunamë";
-    }
-    if (album === "code:GRÄ–Ä–N (feat. Prod.eb) - EP" || album === "code:GRĖĖN (feat. Prod.eb) - EP") {
-      albumTitle.innerHTML = `code:GRĖĖN (feat. Prod.eb) - EP`;
-      currentAlbum = 'code:GRĖĖN (feat. Prod.eb) - EP';
+      currentAlbum = '99 Side A';
+      albumTitle.innerHTML = '99 Side A';
+    } else if (album === "code:GRÄ–Ä–N (feat. Prod.eb) - EP" || album === "code:GRĖĖN (feat. Prod.eb) - EP" || album.includes("code:GR")) {
+      // Handle various encodings of the album name
       currentArtist = 'Lokadonna';
-      // console.log(currentAlbum);
+      currentAlbum = 'code:GRĖĖN (feat. Prod.eb) - EP';
+      albumTitle.innerHTML = 'code:GRĖĖN (feat. Prod.eb) - EP';
     } else {
-      currentAlbum = `${album}`;
-      albumTitle.innerHTML = `${album}`;
+      // Generic fallback
+      currentAlbum = album;
+      albumTitle.innerHTML = album;
     }
-    artistName.innerHTML = currentArtist;
     
-    console.log(`Album selected: ${currentAlbum}, ID: ${currentAlbumId || 'none'}`);
+    // Update artist display
+    if (artistName) {
+      artistName.innerHTML = currentArtist;
+    }
+    
+    console.log(`Album selected: ${currentAlbum}, Artist: ${currentArtist}, ID: ${currentAlbumId || 'none'}`);
     setTimeout(() => fetchTracks(), 0);
   }
 }

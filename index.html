@@ -23,20 +23,9 @@
         </div>
     </div>
 
-    <div style="top:15%; right:90%;" class="block audio" data-title="Basement Candy - EP"><img src="icons/cd.png"
-            alt="">
-        <div class="text-icon">Basement-Candy.wav</div>
-    </div>
-    <div style="top:75%; right:10%;" class="block audio" data-title="Ode to You"><img src="icons/cd.png" alt="">
-        <div class="text-icon">Ode-to-You.wav</div>
-    </div>
-    <div style="top:20%; right:20%;" class="block audio" data-title="code:GRĖĖN (feat. Prod.eb) - EP"><img
-            src="icons/cd.png" alt="">
-        <div class="text-icon">code:GREEN.wav</div>
-    </div>
-    <div style="top:50%; right:50%;" class="block audio" data-title="99 Side A"><img src="icons/cd.png" alt="">
-        <div class="text-icon">99 Side A.wav</div>
-    </div>
+    <!-- CD Icons are now generated dynamically from data/content.json -->
+    <!-- See modules/generateCDs.js -->
+    <!-- To add new CDs, edit the Google Sheet "Music Players" tab -->
 
     <!-- about -->
     <div class="window-box" id="about" data-id="window1" style="height:auto; top: 50%; right: 50%;">
@@ -252,7 +241,11 @@
     
     import { spawnPlayer } from './modules/spawnPlayer.js';
     import { setupEventListeners } from './modules/eventListeners.js';
+    import { generateCDs } from './modules/generateCDs.js';
 
+    // Generate CD icons from data
+    generateCDs();
+    
     spawnPlayer();
     setupEventListeners();
 </script>
