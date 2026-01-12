@@ -691,7 +691,7 @@ button:hover {
         width: 93vw;
         max-width: 93vw;
         height: auto;
-        min-height: 200px;
+        min-height: 100px;
     }
 
     /* Audio player responsive sizing */
@@ -775,18 +775,54 @@ button:hover {
         padding-left: 5px;
     }
 
-    /* Audio player adjustments */
+    #albumTitle.white-body {
+        width: 73%;
+        height: 25px;
+        padding-left: 5px;
+        /* background-color: red; */
+    }
+
+    #trackTitle.white-body {
+        width: 73%;
+        height: 25px;
+        padding-left: 5px;
+        /* background-color: red; */
+    }
+
+    #artistName.white-body {
+        width: 73%;
+        height: 25px;
+        padding-left: 5px;
+        /* background-color: red; */
+    }
+
+    /* Audio player adjustments for mobile */
+    #menu-container {
+        width: 200px !important;
+    }
+
     #audioInfo {
-        width: 280px;
+        width: 58%;
+        position: absolute;
+        right: 0;
+    }
+
+    .audioInfo-label {
+        position: absolute;
+        left: 0;
+        /* width: 100px; */
+        /* background-color: blue; */
     }
 
     #media-control-container {
+        bottom: 20%;
         flex-wrap: wrap;
         justify-content: center;
+        width:55%
     }
 
     .window-box #media-control-button {
-        width: 60px;
+        width: 40px;
         margin: 2px;
     }
 
@@ -891,6 +927,30 @@ button:hover {
     #white-body-blog {
         height: 80%;
     }
+}
+
+/* Menu Container */
+#menu-container {
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    padding: 1px;
+    z-index: 1000;
+    width: 260px;
+}
+
+#menu-container > div {
+    padding-left: 2px;
+    font-family: 'w95fa';
+    background-color: transparent;
+    color: black;
+    margin-bottom: 1px;
+    cursor: pointer;
+}
+
+#menu-container > div:hover {
+    background-color: #0a246a;
+    color: white;
 }
 
 .media-svg {

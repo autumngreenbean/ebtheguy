@@ -84,12 +84,6 @@ export function spawnDropdown(type) {
 
   const menuContainer = document.createElement('div');
   menuContainer.id = 'menu-container';
-  menuContainer.style.position = 'absolute';  // Position relative to windowContainer-audio
-  menuContainer.style.backgroundColor = 'white';
-  menuContainer.style.border = '1px solid black';
-  menuContainer.style.padding = '1px';
-  menuContainer.style.zIndex = '1000';
-  menuContainer.style.width = '260px';
 
   const scrollbar = document.createElement('div');
   scrollbar.style.position = 'absolute';
@@ -110,12 +104,6 @@ export function spawnDropdown(type) {
   list.forEach(item => {
     const menuDiv = document.createElement('div');
     menuDiv.textContent = item;
-    menuDiv.style.paddingLeft = '2px';
-    menuDiv.style.fontFamily = 'w95fa';
-    menuDiv.style.backgroundColor = 'transparent';
-    menuDiv.style.color = 'black';
-    menuDiv.style.marginBottom = '1px';
-    menuDiv.style.cursor = 'pointer';
 
     menuDiv.addEventListener('mouseenter', () => {
       menuDiv.style.backgroundColor = '#0a246a';
