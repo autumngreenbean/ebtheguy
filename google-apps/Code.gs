@@ -16,7 +16,10 @@
  * 12. Click "Deploy" and copy the Web App URL
  * 
  * AUTOMATIC UPDATES:
- * - Whenever you edit the sheet, it automatically updates the website JSON file
+ * - Whenever you edit the sheet, it waits 30 seconds before updating the website
+ * - Multiple edits within 30 seconds are batched into a single update
+ * - This prevents excessive GitHub API calls during editing sessions
+ * - To change the delay, modify the sleep time in the onSheetEdit function (default: 30000ms = 30 seconds)
  * - Install an onEdit trigger (Run > installTrigger) to enable automatic updates
  */
 
@@ -50,8 +53,9 @@ function installTrigger() {
   
   SpreadsheetApp.getUi().alert(
     'Trigger Installed!',
-    'The website will now automatically update when you edit the sheet.\n\n' +
-    'Run "updateGitHubFile" manually to push the current data to the website right now.',
+    'The website will now automatically update 30 seconds after you finish editing the sheet.\n\n' +
+    'Multiple edits within 30 seconds will be batched into a single update.\n\n' +
+    'Run "updateGitHubFile" manually to push the current data to the website immediately.',
     SpreadsheetApp.getUi().ButtonSet.OK
   );
 }
@@ -60,14 +64,31 @@ function installTrigger() {
  * Called automatically when sheet is edited (with debouncing)
  */
 function onSheetEdit(e) {
-  // Debounce - wait 5 seconds for multiple edits, then update
-  Utilities.sleep(5000);
+  // Store the timestamp of this edit
+  const scriptProperties = PropertiesService.getScriptProperties();
+  const now = new Date().getTime();
+  scriptProperties.setProperty('LAST_EDIT_TIME', now.toString());
   
-  try {
-    updateGitHubFile();
-  } catch (error) {
-    console.error('Auto-update failed:', error);
-    // Don't show error to user during auto-update
+  // Schedule a delayed update check (30 seconds from now)
+  // This allows multiple edits to accumulate before pushing to GitHub
+  Utilities.sleep(30000); // 30 second delay
+  
+  // Check if any newer edits happened while we were sleeping
+  const lastEditTime = parseInt(scriptProperties.getProperty('LAST_EDIT_TIME') || '0');
+  const timeSinceEdit = new Date().getTime() - lastEditTime;
+  
+  // Only update if no edits happened in the last 30 seconds
+  // (i.e., this is the last edit in the batch)
+  if (timeSinceEdit >= 29000) { // Allow 1 second tolerance
+    try {
+      console.log('Updating GitHub after batch edit...');
+      updateGitHubFile();
+    } catch (error) {
+      console.error('Auto-update failed:', error);
+      // Don't show error to user during auto-update
+    }
+  } else {
+    console.log('Skipping update - newer edit detected');
   }
 }
 

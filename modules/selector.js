@@ -22,6 +22,8 @@ let tracks = [];
 let trackNames = [];
 let isPlaying = false;
 let albumIdMap = {}; // Dynamic map of album titles to IDs
+let albumArtistMap = {}; // Dynamic map of album titles to artist names
+let artistAlbumsMap = {}; // Dynamic map of artist names to their albums
 
 let currentTrackIndex = 0;
 const audioPlayer = document.getElementById("audioPlayer");
@@ -30,23 +32,39 @@ const trackTitle = document.getElementById("trackTitle");
 const artistName = document.getElementById("artistName");
 const albumTitle = document.getElementById("albumTitle");
 
-// Load album IDs from data service on initialization
+// Load album IDs and artist mappings from data service on initialization
 async function loadAlbumIdMap() {
   try {
     const musicData = await window.dataService.getMusicPlayersData();
     albumIdMap = {};
+    albumArtistMap = {};
+    artistAlbumsMap = {};
     
     musicData.forEach(artist => {
+      const artistName = artist.artist;
+      artistAlbumsMap[artistName] = [];
+      
       artist.albums.forEach(album => {
+        const albumTitle = album.title;
+        
+        // Map album title to artist name
+        albumArtistMap[albumTitle] = artistName;
+        
+        // Map album title to album ID (if exists)
         if (album.appleAlbumId) {
-          albumIdMap[album.title] = album.appleAlbumId;
+          albumIdMap[albumTitle] = album.appleAlbumId;
         }
+        
+        // Store album list for each artist
+        artistAlbumsMap[artistName].push(albumTitle);
       });
     });
     
     console.log('Album ID map loaded:', albumIdMap);
+    console.log('Album-Artist map loaded:', albumArtistMap);
+    console.log('Artist-Albums map loaded:', artistAlbumsMap);
   } catch (error) {
-    console.error('Error loading album IDs:', error);
+    console.error('Error loading album data:', error);
   }
 }
 
@@ -83,19 +101,16 @@ export function spawnDropdown(type) {
   }
 
   if (type == 'artist') {
-    list = ['Murdock Street', 'Lokadonna', 'tsunamë'];
+    // Dynamic artist list from loaded data
+    list = Object.keys(artistAlbumsMap);
     targetDisplay = document.getElementById("artistName");
     dropdownButton = document.querySelector('[data-id="3"]');
   }
 
   if (type == 'album') {
     // Dynamic album list based on current artist
-    if (currentArtist == 'Murdock Street') {
-      list = ['Basement Candy - EP', 'Ode to You'];
-    } else if (currentArtist == 'Lokadonna') {
-      list = ['code:GRĖĖN (feat. Prod.eb) - EP'];
-    } else if (currentArtist == 'tsunamë') {
-      list = ['99 Side A'];
+    if (currentArtist && artistAlbumsMap[currentArtist]) {
+      list = artistAlbumsMap[currentArtist];
     }
     targetDisplay = document.getElementById("albumTitle");
     dropdownButton = document.querySelector('[data-id="1"]');
@@ -318,31 +333,31 @@ export function albumSelect(album = null, albumId = null) {
       // Look up album ID from dynamically loaded map
       currentAlbumId = albumIdMap[album] || null;
       console.log(`Looked up album ID from map: ${currentAlbumId || 'not found'}`);
-      console.log(`Available album IDs in map:`, albumIdMap);
     }
     
-    // Set artist and album based on album name
-    if (album === 'Ode to You' || album === 'Basement Candy - EP') {
-      currentArtist = 'Murdock Street';
-      currentAlbum = album;
-      albumTitle.innerHTML = album;
-    } else if (album === '99 Side A') {
-      currentArtist = "tsunamë";
-      currentAlbum = '99 Side A';
-      albumTitle.innerHTML = '99 Side A';
-    } else if (album === "code:GRÄ–Ä–N (feat. Prod.eb) - EP" || album === "code:GRĖĖN (feat. Prod.eb) - EP" || album.includes("code:GR")) {
-      // Handle various encodings of the album name
-      currentArtist = 'Lokadonna';
-      currentAlbum = 'code:GRĖĖN (feat. Prod.eb) - EP';
-      albumTitle.innerHTML = 'code:GRĖĖN (feat. Prod.eb) - EP';
-    } else {
-      // Generic fallback
-      currentAlbum = album;
-      albumTitle.innerHTML = album;
+    // Look up artist from dynamic map
+    currentArtist = albumArtistMap[album];
+    
+    if (!currentArtist) {
+      console.warn(`Artist not found for album: ${album}. Checking for partial matches...`);
+      // Try to find a match with special character variations
+      const normalizedAlbum = album.replace(/[^\w\s]/g, '').toLowerCase();
+      for (const [mappedAlbum, mappedArtist] of Object.entries(albumArtistMap)) {
+        const normalizedMapped = mappedAlbum.replace(/[^\w\s]/g, '').toLowerCase();
+        if (normalizedMapped === normalizedAlbum) {
+          currentArtist = mappedArtist;
+          console.log(`Found artist via normalization: ${currentArtist}`);
+          break;
+        }
+      }
     }
+    
+    // Set the album and artist in the UI
+    currentAlbum = album;
+    albumTitle.innerHTML = album;
     
     // Update artist display
-    if (artistName) {
+    if (artistName && currentArtist) {
       artistName.innerHTML = currentArtist;
     }
     
@@ -352,15 +367,18 @@ export function albumSelect(album = null, albumId = null) {
 }
 
 export function artistSelect(artist = null) {
-  // console.log('artistSelect() ' + artist)
-  if (artist) { //Initialization
-    const artistName = document.getElementById("artistName");
-    artistName.innerHTML = `${artist}`;
+  if (artist) { // Initialization
+    const artistNameElement = document.getElementById("artistName");
+    artistNameElement.innerHTML = `${artist}`;
     currentArtist = artist;
-    if (artist === 'Murdock Street') albumSelect('Basement Candy - EP');
-    if (artist === 'tsunamë') albumSelect('99 Side A');
-    if (artist === 'Lokadonna') albumSelect('code:GRĖĖN (feat. Prod.eb) - EP');
-
+    
+    // Dynamically select the first album for this artist
+    if (artistAlbumsMap[artist] && artistAlbumsMap[artist].length > 0) {
+      const firstAlbum = artistAlbumsMap[artist][0];
+      albumSelect(firstAlbum);
+    } else {
+      console.warn(`No albums found for artist: ${artist}`);
+    }
   } else {
     spawnDropdown('artist');
   }
