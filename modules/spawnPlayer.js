@@ -14,12 +14,12 @@ let visible = false;
 import { makeDraggable } from './makeDraggable.js';
 import { albumSelect, trackSelect, artistSelect, prevTrack, nextTrack, play, pause } from './selector.js';
 
-export function spawnPlayer(type, title) {
+export function spawnPlayer(type, title, albumId = null) {
 
     const existingPlayer = document.getElementById('windowContainer-audio');
 
     if (existingPlayer) {
-        albumSelect(title);
+        albumSelect(title, albumId);
         existingPlayer.style.display = '';
         visible = true;
         document.querySelector('.window-box[data-id="4"] .media-svg')?.classList.add('clicked'); //pause

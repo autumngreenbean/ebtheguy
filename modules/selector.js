@@ -197,8 +197,12 @@ export async function fetchTracks(album) {
   // If we have an album ID, use the lookup API (more reliable)
   if (currentAlbumId) {
     try {
-      const lookupResponse = await fetch(`https://itunes.apple.com/lookup?id=${currentAlbumId}&entity=song&limit=200`);
-      trackData = await lookupResponse.json();
+      console.log(`Fetching tracks from iTunes API for album ID: ${currentAlbumId}`);
+      
+      // Use JSONP to avoid CORS issues
+      trackData = await fetchWithJsonp(`https://itunes.apple.com/lookup?id=${currentAlbumId}&entity=song&limit=200`);
+      
+      console.log(`iTunes API response:`, trackData);
       
       if (trackData.results && trackData.results.length > 1) {
         // First result is the album, rest are tracks
@@ -207,6 +211,7 @@ export async function fetchTracks(album) {
         );
         
         if (tracks.length > 0) {
+          console.log(`Found ${tracks.length} tracks`);
           trackNames = tracks.map(item => item.trackName);
           setTimeout(() => updatePlayer(), 0);
           return;
@@ -214,14 +219,15 @@ export async function fetchTracks(album) {
       }
     } catch (error) {
       console.error('Error fetching tracks by album ID:', error);
+      console.error('Error details:', error.message);
       // Fall through to search method
     }
   }
   
   // Fallback to search API
   try {
-    const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}+${encodeURIComponent(currentArtist)}&entity=musicTrack&limit=200`);
-    trackData = await trackResponse.json();
+    const trackResponse = await fetchWithJsonp(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}+${encodeURIComponent(currentArtist)}&entity=musicTrack&limit=200`);
+    trackData = trackResponse;
 
     if (trackData.results && trackData.results.length > 0) {
       // More flexible filtering - check if artist names match loosely
@@ -252,8 +258,44 @@ export async function fetchTracks(album) {
   }
   
   // No tracks found
-  trackTitle.innerText = "No tracks found.";
-  setTimeout(() => updatePlayer(), 0);
+  const trackTitleElement = document.getElementById("trackTitle");
+  if (trackTitleElement) {
+    trackTitleElement.innerText = "No tracks found.";
+  }
+  console.warn('No tracks found for album:', currentAlbum, 'artist:', currentArtist);
+}
+
+// Helper function to fetch using JSONP (avoids CORS issues)
+function fetchWithJsonp(url) {
+  return new Promise((resolve, reject) => {
+    const callbackName = 'jsonpCallback_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+    const script = document.createElement('script');
+    const timeoutId = setTimeout(() => {
+      cleanup();
+      reject(new Error('JSONP request timeout'));
+    }, 10000);
+    
+    window[callbackName] = (data) => {
+      cleanup();
+      resolve(data);
+    };
+    
+    function cleanup() {
+      clearTimeout(timeoutId);
+      delete window[callbackName];
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
+    }
+    
+    script.onerror = () => {
+      cleanup();
+      reject(new Error('JSONP request failed'));
+    };
+    
+    script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + callbackName;
+    document.head.appendChild(script);
+  });
 }
 
 export function albumSelect(album = null, albumId = null) { 
@@ -266,12 +308,17 @@ export function albumSelect(album = null, albumId = null) {
   }
 
   if (albumTitle && album) {
+    console.log(`albumSelect called with: album="${album}", albumId="${albumId}"`);
+    
     // Store the album ID if provided directly
     if (albumId) {
       currentAlbumId = albumId;
+      console.log(`Using provided album ID: ${albumId}`);
     } else {
       // Look up album ID from dynamically loaded map
       currentAlbumId = albumIdMap[album] || null;
+      console.log(`Looked up album ID from map: ${currentAlbumId || 'not found'}`);
+      console.log(`Available album IDs in map:`, albumIdMap);
     }
     
     // Set artist and album based on album name
@@ -299,7 +346,7 @@ export function albumSelect(album = null, albumId = null) {
       artistName.innerHTML = currentArtist;
     }
     
-    console.log(`Album selected: ${currentAlbum}, Artist: ${currentArtist}, ID: ${currentAlbumId || 'none'}`);
+    console.log(`Final state - Album: ${currentAlbum}, Artist: ${currentArtist}, ID: ${currentAlbumId || 'none'}`);
     setTimeout(() => fetchTracks(), 0);
   }
 }

@@ -78,18 +78,20 @@ function createCDIcon(container, artistName, album) {
   // Create text label
   const textIcon = document.createElement('div');
   textIcon.className = 'text-icon';
+    textIcon.style.backgroundColor = 'transparent';
+
   textIcon.textContent = album.displayName;
   cdBlock.appendChild(textIcon);
   
-  // Add click event listener
+  // Add click event listener - pass both title and album ID
   cdBlock.addEventListener('click', () => {
-    spawnPlayer('album', album.title);
+    spawnPlayer('album', album.title, album.appleAlbumId);
   });
   
   // Add touch support for mobile
   cdBlock.addEventListener('touchend', (e) => {
     e.preventDefault();
-    spawnPlayer('album', album.title);
+    spawnPlayer('album', album.title, album.appleAlbumId);
   });
   
   // Make draggable - do this AFTER adding to DOM
