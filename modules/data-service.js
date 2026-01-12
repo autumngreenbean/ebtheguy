@@ -153,6 +153,7 @@ class DataService {
               title: "code:GRĖĖN (feat. Prod.eb) - EP",
               displayName: "code:GREEN.wav",
               icon: "cd.png",
+              appleAlbumId: "1715533205",
               position: {
                 top: "20%",
                 right: "20%"
@@ -167,6 +168,7 @@ class DataService {
               title: "99 Side A",
               displayName: "99 Side A.wav",
               icon: "cd.png",
+              appleAlbumId: "1527805750",
               position: {
                 top: "50%",
                 right: "50%"

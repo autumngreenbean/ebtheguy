@@ -15,11 +15,13 @@ The functions:
 
 let currentArtist;
 let currentAlbum;
+let currentAlbumId; // Store Apple Music album ID
 let currentTrack;
 let initialize = false;
 let tracks = [];
 let trackNames = [];
 let isPlaying = false;
+let albumIdMap = {}; // Dynamic map of album titles to IDs
 
 let currentTrackIndex = 0;
 const audioPlayer = document.getElementById("audioPlayer");
@@ -27,6 +29,29 @@ const albumCover = document.getElementById("albumCover-container");
 const trackTitle = document.getElementById("trackTitle");
 const artistName = document.getElementById("artistName");
 const albumTitle = document.getElementById("albumTitle");
+
+// Load album IDs from data service on initialization
+async function loadAlbumIdMap() {
+  try {
+    const musicData = await window.dataService.getMusicPlayersData();
+    albumIdMap = {};
+    
+    musicData.forEach(artist => {
+      artist.albums.forEach(album => {
+        if (album.appleAlbumId) {
+          albumIdMap[album.title] = album.appleAlbumId;
+        }
+      });
+    });
+    
+    console.log('Album ID map loaded:', albumIdMap);
+  } catch (error) {
+    console.error('Error loading album IDs:', error);
+  }
+}
+
+// Initialize the album ID map when the module loads
+loadAlbumIdMap();
 
 function playSelectedTrack(trackName) {
   const existingMenu = document.getElementById('menu-container');
@@ -162,28 +187,58 @@ function updatePlayer() {
 }
 
 export async function fetchTracks(album) {
-  const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}+${encodeURIComponent(currentArtist)}&entity=musicTrack`);
-  const trackData = await trackResponse.json();
+  let trackData;
+  
+  // If we have an album ID, use the lookup API (more reliable)
+  if (currentAlbumId) {
+    try {
+      const lookupResponse = await fetch(`https://itunes.apple.com/lookup?id=${currentAlbumId}&entity=song&limit=200`);
+      trackData = await lookupResponse.json();
+      
+      if (trackData.results && trackData.results.length > 1) {
+        // First result is the album, rest are tracks
+        tracks = trackData.results.slice(1).filter(item => 
+          item.wrapperType === "track" && item.kind === "song"
+        );
+        
+        if (tracks.length > 0) {
+          trackNames = tracks.map(item => item.trackName);
+          setTimeout(() => updatePlayer(), 0);
+          return;
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching tracks by album ID:', error);
+      // Fall through to search method
+    }
+  }
+  
+  // Fallback to search API
+  try {
+    const trackResponse = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(currentAlbum)}+${encodeURIComponent(currentArtist)}&entity=musicTrack&limit=200`);
+    trackData = await trackResponse.json();
 
-  if (trackData.results && trackData.results.length > 1) {
-    tracks = trackData.results.filter(item =>
-      item.wrapperType === "track" && item.artistName === currentArtist
-    );
-  if (tracks.length > 0) {
-    trackNames = tracks.map(item => item.trackName);
-    setTimeout(() => updatePlayer(), 0);
-    return;
-  } else {
-    trackTitle.innerText = "No tracks found.";
-    setTimeout(() => updatePlayer(), 0);
+    if (trackData.results && trackData.results.length > 1) {
+      tracks = trackData.results.filter(item =>
+        item.wrapperType === "track" && item.artistName === currentArtist
+      );
+      
+      if (tracks.length > 0) {
+        trackNames = tracks.map(item => item.trackName);
+        setTimeout(() => updatePlayer(), 0);
+        return;
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching tracks by search:', error);
   }
-  } else {
-    trackTitle.innerText = "No tracks found.";
-    setTimeout(() => updatePlayer(), 0);
-  }
+  
+  // No tracks found
+  trackTitle.innerText = "No tracks found.";
+  setTimeout(() => updatePlayer(), 0);
 }
 
-export function albumSelect(album = null) { 
+export function albumSelect(album = null, albumId = null) { 
   const albumTitle = document.getElementById("albumTitle");
   const artistName = document.getElementById('artistName');
 
@@ -192,6 +247,14 @@ export function albumSelect(album = null) {
   }
 
   if (albumTitle && album) {
+    // Store the album ID if provided directly
+    if (albumId) {
+      currentAlbumId = albumId;
+    } else {
+      // Look up album ID from dynamically loaded map
+      currentAlbumId = albumIdMap[album] || null;
+    }
+    
     if (album === 'Ode to You' || album === 'Basement Candy - EP') {
       currentArtist = 'Murdock Street';
     }
@@ -209,6 +272,8 @@ export function albumSelect(album = null) {
       albumTitle.innerHTML = `${album}`;
     }
     artistName.innerHTML = currentArtist;
+    
+    console.log(`Album selected: ${currentAlbum}, ID: ${currentAlbumId || 'none'}`);
     setTimeout(() => fetchTracks(), 0);
   }
 }

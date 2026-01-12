@@ -302,19 +302,20 @@ function setupMusicPlayersSheet(sheet) {
   sheet.setColumnWidth(4, 100);  // Icon
   sheet.setColumnWidth(5, 100);  // Position Top
   sheet.setColumnWidth(6, 100);  // Position Right
+  sheet.setColumnWidth(7, 120);  // Apple Album ID
   
   // Set headers
-  const headers = [['Artist', 'Album Title', 'Display Name', 'Icon', 'Position Top', 'Position Right']];
-  sheet.getRange('A1:F1').setValues(headers).setFontWeight('bold').setBackground('#f3f3f3');
+  const headers = [['Artist', 'Album Title', 'Display Name', 'Icon', 'Position Top', 'Position Right', 'Apple Album ID']];
+  sheet.getRange('A1:G1').setValues(headers).setFontWeight('bold').setBackground('#f3f3f3');
   
   // Add sample music players
   const samplePlayers = [
-    ['Murdock Street', 'Basement Candy - EP', 'Basement-Candy.wav', 'cd.png', '15%', '90%'],
-    ['Murdock Street', 'Ode to You', 'Ode-to-You.wav', 'cd.png', '75%', '10%'],
-    ['Lokadonna', 'code:GRĖĖN (feat. Prod.eb) - EP', 'code:GREEN.wav', 'cd.png', '20%', '20%'],
-    ['tsunamë', '99 Side A', '99 Side A.wav', 'cd.png', '50%', '50%']
+    ['Murdock Street', 'Basement Candy - EP', 'Basement-Candy.wav', 'cd.png', '15%', '90%', ''],
+    ['Murdock Street', 'Ode to You', 'Ode-to-You.wav', 'cd.png', '75%', '10%', ''],
+    ['Lokadonna', 'code:GRĖĖN (feat. Prod.eb) - EP', 'code:GREEN.wav', 'cd.png', '20%', '20%', '1715533205'],
+    ['tsunamë', '99 Side A', '99 Side A.wav', 'cd.png', '50%', '50%', '1527805750']
   ];
-  sheet.getRange(2, 1, samplePlayers.length, 6).setValues(samplePlayers);
+  sheet.getRange(2, 1, samplePlayers.length, 7).setValues(samplePlayers);
   
   // Freeze header row
   sheet.setFrozenRows(1);
@@ -435,14 +436,14 @@ function getMusicPlayersData() {
   }
   
   // Get data starting from row 2 (row 1 has headers)
-  const dataRange = sheet.getRange('A2:F100');
+  const dataRange = sheet.getRange('A2:G100');
   const values = dataRange.getValues();
   
   // Organize by artist
   const artistsMap = {};
   
   for (let i = 0; i < values.length; i++) {
-    const [artist, albumTitle, displayName, icon, posTop, posRight] = values[i];
+    const [artist, albumTitle, displayName, icon, posTop, posRight, appleAlbumId] = values[i];
     
     // Stop at first empty row
     if (!artist && !albumTitle) {
@@ -459,7 +460,7 @@ function getMusicPlayersData() {
         };
       }
       
-      artistsMap[artistName].albums.push({
+      const albumData = {
         title: albumTitle.toString().trim(),
         displayName: displayName ? displayName.toString().trim() : albumTitle.toString().trim(),
         icon: icon ? icon.toString().trim() : 'cd.png',
@@ -467,7 +468,14 @@ function getMusicPlayersData() {
           top: posTop ? posTop.toString().trim() : '50%',
           right: posRight ? posRight.toString().trim() : '50%'
         }
-      });
+      };
+      
+      // Only add appleAlbumId if it exists and is not empty
+      if (appleAlbumId && appleAlbumId.toString().trim()) {
+        albumData.appleAlbumId = appleAlbumId.toString().trim();
+      }
+      
+      artistsMap[artistName].albums.push(albumData);
     }
   }
   
