@@ -95,20 +95,20 @@
       ]
     },
     {
-      "artist": "Otto Benson",
+      "artist": "Khotin",
       "albums": [
         {
-          "title": "Peanut",
-          "displayName": "Peanut",
+          "title": "Beautiful You",
+          "displayName": "Beautiful You",
           "icon": "cd.png",
           "position": {
             "top": "0.5",
             "right": "0.2"
           },
-          "appleAlbumId": "1859874134"
+          "appleAlbumId": "1451235592"
         }
       ]
     }
   ],
-  "timestamp": "2026-01-12T02:18:24.822Z"
+  "timestamp": "2026-01-12T02:31:20.609Z"
 }
