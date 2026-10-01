@@ -25,7 +25,7 @@
   "blog": [
     {
       "title": "First Post",
-      "body": "This is the body content of the first blog post. You can edit this from Google Sheets!",
+      "body": "Testing text here..",
       "year": "2026",
       "month": "1",
       "date": "11",
@@ -93,22 +93,7 @@
           "appleAlbumId": "1527805750"
         }
       ]
-    },
-    {
-      "artist": "Khotin",
-      "albums": [
-        {
-          "title": "Beautiful You",
-          "displayName": "Beautiful You",
-          "icon": "cd.png",
-          "position": {
-            "top": "0.5",
-            "right": "0.2"
-          },
-          "appleAlbumId": "1451235592"
-        }
-      ]
     }
   ],
-  "timestamp": "2026-01-12T02:36:39.536Z"
+  "timestamp": "2026-10-01T17:02:23.457Z"
 }
